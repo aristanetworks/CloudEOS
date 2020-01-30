@@ -1,0 +1,4 @@
+# Auto-added to .git/config by configure.sh to be able to run "git push review"
+[remote "review"]
+	url = @REPO_ORIGIN@
+	push = HEAD:refs/for/master
