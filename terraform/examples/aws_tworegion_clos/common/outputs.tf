@@ -1,6 +1,5 @@
-
 output "topology" {
-  value = "adhip"
+  value = "sonu"
 }
 
 output "keypair_name" {
@@ -57,10 +56,10 @@ output "availability_zone" {
   }
 }
 
-output "host_amis" {                                                                                
-    value = {                                                                                       
-      us-west-1 = "ami-035dbbb5f679b91cd"                                                           
-      us-east-1 = "ami-0b161e951484253ab"                                                           
-      us-east-2 = "ami-083064f66d3878ff7"                                                           
-    }                                                                                               
+output "host_amis" {
+    value = {
+      us-west-1 = "ami-035dbbb5f679b91cd"
+      us-east-1 = "ami-0b161e951484253ab"
+      us-east-2 = "ami-083064f66d3878ff7"
+    }
 }

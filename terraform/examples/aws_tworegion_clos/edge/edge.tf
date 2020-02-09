@@ -1,21 +1,12 @@
-
 module "globals" {
   source = "../common"
-  #topology = "${module.globals.topology}"
 }
 
-/*
-provider "aws" {
-  region = "${module.globals.aws_regions["region1"]}"
-  //access_key = "ASIARHBIZHWNO5PC3VNW"
-  //secret_key = "T9rJlqUgGdJKwccck2feZlOHhO4Xop1GMdfmLQ1k"
-}
-*/
 provider "arista" {
-  cvaas_domain = "${module.globals.cvaas["domain"]}"
-  cvaas_username = "${module.globals.cvaas["username"]}"
-  cvaas_server = "${module.globals.cvaas["server"]}"
-  service_account_web_token = "${module.globals.cvaas["service_token"]}"
+  cvaas_domain = module.globals.cvaas["domain"]
+  cvaas_username = module.globals.cvaas["username"]
+  cvaas_server = module.globals.cvaas["server"]
+  service_account_web_token = module.globals.cvaas["service_token"]
 }
 
 //=================Region1 Edge CloudEOS1===============================

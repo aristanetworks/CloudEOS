@@ -1,8 +1,7 @@
-
 //=================Region2 Edge CloudEOS1===============================
 module "Region2EdgeVpc" {
   source        = "../../../module/arista/aws/vpc"
-  topology_name  = "${module.globals.topology}"
+  topology_name  = module.globals.topology
   clos_name      = "${module.globals.topology}-clos"
   wan_name      = "${module.globals.topology}-wan"
   role          = "CloudEdge"
@@ -11,16 +10,16 @@ module "Region2EdgeVpc" {
   tags = {
     Name = "${module.globals.topology}-Region2EdgeVpc"
   }
-  region = "${module.globals.aws_regions["region2"]}"
+  region = module.globals.aws_regions["region2"]
 }
 
 module "Region2EdgeSubnet" {
   source = "../../../module/arista/aws/subnet"
   subnet_zones = {
-    "100.2.0.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone1", "" )
-    "100.2.1.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone1", "" )
-    "100.2.2.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone2", "" )
-    "100.2.3.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone2", "" )
+    "100.2.0.0/24" = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone1", "" )
+    "100.2.1.0/24" = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone1", "" )
+    "100.2.2.0/24" = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone2", "" )
+    "100.2.3.0/24" = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone2", "" )
   }
   subnet_names = {
     "100.2.0.0/24" = "${module.globals.topology}-Region2EdgeSubnet0"
@@ -37,8 +36,8 @@ module "Region2CloudEOSEdge1" {
   source        = "../../../module/arista/aws/cloudEOS"
   role          = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
-  cloudeos_ami = "${module.globals.eos_amis[module.Region2EdgeVpc.region]}"
-  keypair_name = "${module.globals.keypair_name}"
+  cloudeos_ami = module.globals.eos_amis[module.Region2EdgeVpc.region]
+  keypair_name = module.globals.keypair_name
   vpc_info      = module.Region2EdgeVpc.vpc_info
   intf_names    = ["${module.globals.topology}-Region2Edge1Intf0", "${module.globals.topology}-Region2Edge1Intf1"]
   interface_types = {
@@ -50,7 +49,7 @@ module "Region2CloudEOSEdge1" {
     "${module.globals.topology}-Region2Edge1Intf1" = module.Region2EdgeSubnet.vpc_subnets[1]
   }
   private_ips       = { "0" : ["100.2.0.101"], "1" : ["100.2.1.101"] }
-  availability_zone = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone1", "" )
+  availability_zone = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone1", "" )
   region            = module.Region2EdgeVpc.region
   tags = {
     "Name" = "${module.globals.topology}-Region2CloudEOSEdge1"
@@ -58,13 +57,14 @@ module "Region2CloudEOSEdge1" {
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
+
 /*
 module "Region2CloudEOSEdge2" {
   source        = "../../../module/arista/aws/cloudEOS"
   role          = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
-  cloudeos_ami = "${module.globals.eos_amis[module.Region2EdgeVpc.region]}"
-  keypair_name = "${module.globals.keypair_name}"
+  cloudeos_ami = module.globals.eos_amis[module.Region2EdgeVpc.region]
+  keypair_name = module.globals.keypair_name
   vpc_info      = module.Region2EdgeVpc.vpc_info
   intf_names    = ["${module.globals.topology}-Region2Edge2Intf0", "${module.globals.topology}-Region2Edge2Intf1"]
   interface_types = {
@@ -76,13 +76,13 @@ module "Region2CloudEOSEdge2" {
     "${module.globals.topology}-Region2Edge2Intf1" = module.Region2EdgeSubnet.vpc_subnets[3]
   }
   private_ips       = { "0" : ["100.2.2.101"], "1" : ["100.2.3.101"] }
-  availability_zone = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone2", "" )
+  availability_zone = lookup( module.globals.availability_zone[module.Region2EdgeVpc.region], "zone2", "" )
   region            = module.Region2EdgeVpc.region
   tags = {
     "Name" = "${module.globals.topology}-Region2CloudEOSEdge2"
   }
   filename = "../../../userdata/eos_ipsec_config.tpl"
-  public_route_table_id = module.Region2CloudEOSEdge1.route_table_public                             
+  public_route_table_id = module.Region2CloudEOSEdge1.route_table_public
   internal_route_table_id = module.Region2CloudEOSEdge1.route_table_internal
 }
 */
@@ -144,4 +144,3 @@ module "Region2CloudEOSEdge2" {
 #   primary  = true
 #   filename = "../../../userdata/eos_ipsec_config.tpl"
 # }
-
