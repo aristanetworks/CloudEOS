@@ -19,7 +19,7 @@ resource "aws_instance" "host" {
          key_name = var.keypair_name
 
          network_interface {
-            network_interface_id = "${aws_network_interface.intf.id}"
+            network_interface_id = aws_network_interface.intf.id
             device_index = 0
          }
 }
