@@ -1,14 +1,14 @@
 
-### Update Input variables
+# Update Input variables
 Before deploying resources look at the input parameters passed to terraform like ami,
 instance_type, regions etc.
 
-File containing input parameters: *input_vars.tfvars*
+File containing input parameters: **input_vars.tfvars**
 
 You can update the values based on your requirement. Make sure you change the topology name
 so it doesn't collide with others !
 
-# create Topology, Route Reflector, Edge and Leaf Routers
+# Create Topology, Route Reflector, Edge and Leaf Routers
 
 It's necessary to create resources in the following order.
 1. Topology and Route Reflector
@@ -22,7 +22,7 @@ Assuming current directory to be this directory. Execute to below commands to
 create topology and route reflector.
 
 ```bash
-cd examples/aws_tworegion_clos/topology/
+cd topology
 terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
@@ -32,7 +32,7 @@ terraform apply -var-file=../input_vars.tfvars
 Assuming current directory to be this directory.
 
 ```bash
-cd examples/aws_tworegion_clos/edge/
+cd edge
 terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
@@ -42,11 +42,13 @@ terraform apply -var-file=../input_vars.tfvars
 Assuming current directory to be this directory.
 
 ```bash
-cd examples/aws_tworegion_clos/leaf/
+cd leaf
 terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
+
+**Don't forget to terraform destroy..see steps at the end**
 
 # For Linux 
 1. To create Topology and Route Reflector
@@ -55,7 +57,7 @@ Assuming current directory to be this directory. Execute to below commands to
 create topology and route reflector.
 
 ```bash
-cd examples/aws_tworegion_clos/topology/
+cd topology
 terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
@@ -65,7 +67,7 @@ terraform apply -var-file=../input_vars.tfvars
 Assuming current directory to be this directory.
 
 ```bash
-cd examples/aws_tworegion_clos/edge/
+cd edge
 terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
@@ -76,7 +78,7 @@ terraform apply -var-file=../input_vars.tfvars
 Assuming current directory to be this directory.
 
 ```bash
-cd examples/aws_tworegion_clos/leaf/
+cd leaf
 terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
@@ -85,23 +87,20 @@ terraform apply -var-file=../input_vars.tfvars
 # To destroy resources
 
 It's necessary to destroy in following order
-1. Leaf
-2. Edge
-3. Topology and Route Reflector
 
-1. To destory Leaf resources
+1. Destory Leaf resources
 
 ```bash
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-2.To destory Edge resources
+2. Destory Edge resources
 
 ```bash
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-3. To destory Topology and Route Reflector resources
+3. Destory Topology and Route Reflector resources
 
 ```bash
 terraform destroy -var-file=../input_vars.tfvars
