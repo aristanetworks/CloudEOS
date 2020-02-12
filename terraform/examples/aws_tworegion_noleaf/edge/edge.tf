@@ -56,8 +56,8 @@ provider "arista" {
 #   source        = "../../../module/arista/aws/cloudEOS"
 #   role          = "CloudEdge"
 #   topology_name = module.Region1EdgeVpc.topology_name
-#   cloudeos_ami = "${module.globals.eos_amis[module.Region1EdgeVpc.region]}"
-#   keypair_name = "${module.globals.keypair_name}"
+#   cloudeos_ami = module.globals.eos_amis[module.Region1EdgeVpc.region]
+#   keypair_name = module.globals.keypair_name[module.Region1EdgeVpc.region]
 #   vpc_info      = module.Region1EdgeVpc.vpc_info
 #   intf_names    = ["${module.globals.topology}-Region1Edge1Intf0", "${module.globals.topology}-Region1Edge1Intf1"]
 #   interface_types = {
@@ -118,8 +118,8 @@ provider "arista" {
 #   source        = "../../../module/arista/aws/cloudEOS"
 #   role          = "CloudEdge"
 #   topology_name = module.Region2EdgeVpc.topology_name
-#   cloudeos_ami = "${module.globals.eos_amis[module.Region2EdgeVpc.region]}"
-#   keypair_name = "${module.globals.keypair_name}"
+#   cloudeos_ami = module.globals.eos_amis[module.Region2EdgeVpc.region]
+#   keypair_name = module.globals.keypair_name[module.Region2EdgeVpc.region]
 #   vpc_info      = module.Region2EdgeVpc.vpc_info
 #   intf_names    = ["${module.globals.topology}-Region2Edge1Intf0", "${module.globals.topology}-Region2Edge1Intf1"]
 #   interface_types = {

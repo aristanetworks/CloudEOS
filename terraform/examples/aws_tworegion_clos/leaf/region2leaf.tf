@@ -32,7 +32,7 @@ module "Region2Leaf1CloudEOS1" {
   role = "CloudLeaf"
   topology_name = module.Region2Leaf1Vpc.topology_name
   cloudeos_ami = module.globals.eos_amis[module.Region2Leaf1Vpc.region]
-  keypair_name = module.globals.keypair_name
+  keypair_name = module.globals.keypair_name[module.Region2Leaf1Vpc.region]
   vpc_info = module.Region2Leaf1Vpc.vpc_info
   intf_names = [
     "${module.globals.topology}-Region2Leaf1CloudEOS1Intf0",
@@ -63,7 +63,7 @@ module "Region2Leaf1host1" {
 		source = "../../../module/arista/aws/host"
 		ami = module.globals.host_amis[module.Region2Leaf1Vpc.region]
 		instance_type = "c5.xlarge"
-		keypair_name = "systest"
+		keypair_name = module.globals.keypair_name[module.Region2Leaf1Vpc.region]
 		subnet_id = module.Region2Leaf1Subnet.vpc_subnets[1]
 		private_ips = ["101.2.1.102"]
 		tags = {
@@ -106,7 +106,7 @@ module "Region2Leaf2CloudEOS1" {
   role = "CloudLeaf"
   topology_name = module.Region2Leaf2Vpc.topology_name
   cloudeos_ami = module.globals.eos_amis[module.Region2Leaf2Vpc.region]
-  keypair_name = module.globals.keypair_name
+  keypair_name = module.globals.keypair_name[module.Region2Leaf2Vpc.region]
   vpc_info = module.Region2Leaf2Vpc.vpc_info
   intf_names = [
     "${module.globals.topology}-Region2Leaf2CloudEOS1Intf0",
@@ -137,7 +137,7 @@ module "Region2Leaf2host1" {
 		source = "../../../module/arista/aws/host"
 		ami = module.globals.host_amis[module.Region2Leaf2Vpc.region]
 		instance_type = "c5.xlarge"
-		keypair_name = "systest"
+		keypair_name = module.globals.keypair_name[module.Region2Leaf2Vpc.region]
 		subnet_id = module.Region2Leaf2Subnet.vpc_subnets[1]
 		private_ips = ["102.2.1.102"]
 		tags = {

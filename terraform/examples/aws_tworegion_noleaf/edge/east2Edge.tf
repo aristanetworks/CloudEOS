@@ -37,7 +37,7 @@ module "East2CloudEOSEdge1" {
   role          = "CloudEdge"
   topology_name = module.East2EdgeVpc.topology_name
   cloudeos_ami = module.globals.eos_amis[module.East2EdgeVpc.region]
-  keypair_name = module.globals.keypair_name
+  keypair_name = module.globals.keypair_name[module.East2EdgeVpc.region]
   vpc_info      = module.East2EdgeVpc.vpc_info
   intf_names    = ["${module.globals.topology}-East2Edge1Intf0", "${module.globals.topology}-East2Edge1Intf1"]
   interface_types = {
@@ -63,7 +63,7 @@ module "East2CloudEOSEdge2" {
   role          = "CloudEdge"
   topology_name = module.East2EdgeVpc.topology_name
   cloudeos_ami = module.globals.eos_amis[module.East2EdgeVpc.region]
-  keypair_name = module.globals.keypair_name
+  keypair_name = module.globals.keypair_name[module.East2EdgeVpc.region]
   vpc_info      = module.East2EdgeVpc.vpc_info
   intf_names    = ["${module.globals.topology}-East2Edge2Intf0", "${module.globals.topology}-East2Edge2Intf1"]
   interface_types = {

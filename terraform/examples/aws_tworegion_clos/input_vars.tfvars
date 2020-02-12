@@ -1,6 +1,9 @@
 topology = "demoEft"
 
-keypair_name = "systest"
+keypair_name = { us-west-1 : "systest",
+                 us-west-2 : "systest",
+                 us-east-1 : "systest",
+                 us-east-2 : "systest" }
 
 cvaas = { domain : "apiserver.cv-play.corp.arista.io", 
           username : "admin", 

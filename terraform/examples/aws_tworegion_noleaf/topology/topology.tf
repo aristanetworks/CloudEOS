@@ -73,7 +73,7 @@ module "CloudEOSRR1" {
   role = "CloudEdge"
   topology_name = module.RRVpc.topology_name
   cloudeos_ami = module.globals.eos_amis[module.RRVpc.region]
-  keypair_name = module.globals.keypair_name
+  keypair_name = module.globals.keypair_name[module.RRVpc.region]
   vpc_info = module.RRVpc.vpc_info
   intf_names = ["${module.globals.topology}-RRIntf0"]
   interface_types = {
