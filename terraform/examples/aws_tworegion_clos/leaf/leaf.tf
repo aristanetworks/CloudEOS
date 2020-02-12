@@ -1,5 +1,5 @@
 module "globals" {
-  source = "../common"
+  source = "../../../module/arista/common"
   topology = var.topology
   keypair_name = var.keypair_name
   cvaas = var.cvaas

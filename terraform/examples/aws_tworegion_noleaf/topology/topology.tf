@@ -12,8 +12,6 @@ module "globals" {
 
 provider "aws" {
   region = module.globals.aws_regions["region1"]
-  access_key = "AKIARHBIZHWNJRWBJJJ3"
-  secret_key = "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"
 }
 
 provider "arista" {
@@ -25,10 +23,10 @@ provider "arista" {
 
 resource "arista_topology" "topology" {
   topology_name           = module.globals.topology
-  bgp_asn                 = "65000-65100" // Range of BGP ASN’s used for topology
-  vtep_ip_cidr            = "5.0.0.0/16"  // CIDR block for VTEP IPs on veos
-  terminattr_ip_cidr      = "6.0.0.0/16"  // Loopback IP range on veos
-  dps_controlplane_cidr   = "7.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
+  bgp_asn                 = "65200-65300" // Range of BGP ASN’s used for topology
+  vtep_ip_cidr            = "8.0.0.0/16"  // CIDR block for VTEP IPs on veos
+  terminattr_ip_cidr      = "9.0.0.0/16"  // Loopback IP range on veos
+  dps_controlplane_cidr   = "11.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
 }
 resource "arista_clos" "clos" {
   name              = "${module.globals.topology}-clos"

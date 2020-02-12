@@ -12,8 +12,6 @@ module "globals" {
 
 provider "aws" {
   region = module.globals.aws_regions["region1"]
-  access_key = "AKIARHBIZHWNJRWBJJJ3"
-  secret_key = "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"
 }
 
 provider "arista" {
@@ -25,10 +23,10 @@ provider "arista" {
 
 resource "arista_topology" "topology" {
   topology_name           = module.globals.topology
-  bgp_asn                 = "65000-65100" // Range of BGP ASN’s used for topology
-  vtep_ip_cidr            = "5.0.0.0/16"  // CIDR block for VTEP IPs on veos
-  terminattr_ip_cidr      = "6.0.0.0/16"  // Loopback IP range on veos
-  dps_controlplane_cidr   = "7.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
+  bgp_asn                 = "65200-65300" // Range of BGP ASN’s used for topology
+  vtep_ip_cidr            = "8.0.0.0/16"  // CIDR block for VTEP IPs on veos
+  terminattr_ip_cidr      = "9.0.0.0/16"  // Loopback IP range on veos
+  dps_controlplane_cidr   = "11.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
 }
 resource "arista_clos" "clos" {
   name              = "${module.globals.topology}-clos"
@@ -61,9 +59,11 @@ module "RRSubnet" {
   source = "../../../module/arista/aws/subnet"
   subnet_zones = {
     "10.0.0.0/24" = lookup( module.globals.availability_zone[module.RRVpc.region], "zone1", "" )
+    "10.0.1.0/24" = lookup( module.globals.availability_zone[module.RRVpc.region], "zone2", "" )
   }
   subnet_names = {
     "10.0.0.0/24" = "${module.globals.topology}-RRSubnet0"
+    "10.0.1.0/24" = "${module.globals.topology}-RR2Subnet0"
   }
   vpc_id        = module.RRVpc.vpc_id[0]
   topology_name = module.RRVpc.topology_name
@@ -91,6 +91,33 @@ module "CloudEOSRR1" {
   region = module.RRVpc.region
   tags = {
     "Name" = "${module.globals.topology}-CloudEosRR1"
+    "RouteReflector" = "True"
+  }
+  is_rr = true
+  primary = true
+  filename = "../../../userdata/eos_ipsec_config.tpl"
+}
+module "CloudEOSRR2" {
+  source = "../../../module/arista/aws/cloudEOS"
+  role = "CloudEdge"
+  topology_name = module.RRVpc.topology_name
+  cloudeos_ami = module.globals.eos_amis[module.RRVpc.region]
+  keypair_name = module.globals.keypair_name
+  vpc_info = module.RRVpc.vpc_info
+  intf_names = ["${module.globals.topology}-RR2Intf0"]
+  interface_types = {
+    "${module.globals.topology}-RR2Intf0" = "public"
+  }
+  subnetids = {
+    "${module.globals.topology}-RR2Intf0" = module.RRSubnet.vpc_subnets[1]
+  }
+  private_ips = {
+    "0": ["10.0.1.101"]
+  }
+  availability_zone = lookup( module.globals.availability_zone[module.RRVpc.region], "zone2", "" )
+  region = module.RRVpc.region
+  tags = {
+    "Name" = "${module.globals.topology}-CloudEosRR2"
     "RouteReflector" = "True"
   }
   is_rr = true
