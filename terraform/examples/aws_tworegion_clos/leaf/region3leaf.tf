@@ -57,7 +57,6 @@ module "Region3Leaf1CloudEOS1" {
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
-/*
 module "Region3Leaf1host1" {
 		region = module.globals.aws_regions["region3"]
 		source = "../../../module/arista/aws/host"
@@ -70,7 +69,6 @@ module "Region3Leaf1host1" {
 				"Name" = "${module.globals.topology}-Region3Leaf1host"
 		}
 }
-*/
 
 //=================Region3 Leaf2 CloudEOS1===============================
 module "Region3Leaf2Vpc" {
@@ -131,7 +129,6 @@ module "Region3Leaf2CloudEOS1" {
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
-/*
 module "Region3Leaf2host1" {
 		region = module.globals.aws_regions["region3"]
 		source = "../../../module/arista/aws/host"
@@ -144,5 +141,4 @@ module "Region3Leaf2host1" {
 				"Name" = "${module.globals.topology}-Region3Leaf2host"
 		}
 }
-*/
 
