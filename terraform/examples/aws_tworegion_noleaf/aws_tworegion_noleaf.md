@@ -1,11 +1,22 @@
+
 # Update Input variables
 Before deploying resources look at the input parameters passed to terraform like ami,
 instance_type, regions etc.
 
 File containing input parameters: **input_vars.tfvars**
 
-You can update the values based on your requirement. Make sure you change the topology name
-so it doesn't collide with others !
+You can update the values based on your requirement. 
+
+Make sure you change the following so it doesn't collide with others !
+- Topology name 
+- vtep_ip_cidr   - CIDR block for VTEP IPs 
+- terminattr_ip_cidr -  IP range for terminattr source
+- dps_controlplane_cidr -  Block for Dps Control Plane IPs 
+- keypairs to login to the router
+
+These fields are commented out in input_vars.tfvars. Please uncomment them and modify them appropriately. Otherwise terraform plan execution will prompt for various inputs.
+
+**Please dont forget to udpate [CloudEOS SE MultiCloud POC CIDR Reservations](https://docs.google.com/spreadsheets/d/1HkANmxzbowQlqqQHdI2e8qcZ1LqY7QDaTnr-BofdhLg/edit?usp=sharing "CloudEOS SE MultiCloud POC CIDR Reservations") with the CIDRS you are using. If you leave it with defaults it results in undefined behavior and will have to destroy on conflicting resources and recreate all affected topologies.**
 
 # Create Topology, Route Reflector, Edge and Leaf Routers
 

@@ -1,9 +1,21 @@
-topology = "demoEft"
+// Please uncomment the following lines and modify them for your deployment
+// update CloudEOS SE MultiCloud POC CIDR Reservations https://docs.google.com/spreadsheets/d/1HkANmxzbowQlqqQHdI2e8qcZ1LqY7QDaTnr-BofdhLg/edit?usp=sharing
 
-keypair_name = { us-west-1 : "systest",
-                 us-west-2 : "systest",
-                 us-east-1 : "systest",
-                 us-east-2 : "systest" }
+// topology = "CloudEOSEft"
+
+// vtep_ip_cidr            = "5.0.0.0/16"  // CIDR block for VTEP IPs 
+// terminattr_ip_cidr      = "6.0.0.0/16"  // Loopback IP range for terminattr source
+// dps_controlplane_cidr   = "7.0.0.0/16"  // CIDR block for Dps Control Plane IPs 
+
+// keypair_name = { us-west-1 : "systest",
+//                  us-west-2 : "systest",
+//                  us-east-1 : "systest",
+//                  us-east-2 : "systest" }
+
+// Follow [CloudEOS SE MultiCloud POC Guide](https://docs.google.com/document/d/1DW9niGGAMtc0LGWt2OBlaGZQBTWDlTYgygnEli2JNoo/edit#) and create containers on CVAAS. They can be containers with no configlets attached to them or you can have any configlet that contains configuration that you want to push to the router when it comes up
+
+// clos_cv_container = "CloudLeaf"
+// wan_cv_container  = "CloudEdge"
 
 // for play replace staging to play below
 cvaas = { domain : "apiserver.cv-staging.corp.arista.io", 

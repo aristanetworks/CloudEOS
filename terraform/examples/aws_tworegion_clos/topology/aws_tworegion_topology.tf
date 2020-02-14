@@ -25,21 +25,21 @@ provider "arista" {
 
 resource "arista_topology" "topology" {
   topology_name           = module.globals.topology
-  bgp_asn                 = "65000-65100" // Range of BGP ASN’s used for topology
-  vtep_ip_cidr            = "5.0.0.0/16"  // CIDR block for VTEP IPs on veos
-  terminattr_ip_cidr      = "6.0.0.0/16"  // Loopback IP range on veos
-  dps_controlplane_cidr   = "7.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
+  bgp_asn                 = "65000-65100"              // Range of BGP ASN’s used for topology
+  vtep_ip_cidr            = var.vtep_ip_cidr           // CIDR block for VTEP IPs on veos
+  terminattr_ip_cidr      = var.terminattr_ip_cidr     // Loopback IP range on veos
+  dps_controlplane_cidr   = var.dps_controlplane_cidr  // CIDR block for Dps Control Plane IPs on veos
 }
 resource "arista_clos" "clos" {
   name              = "${module.globals.topology}-clos"
   topology_name     = arista_topology.topology.topology_name
-  cv_container_name = "CloudLeaf"
+  cv_container_name = var.clos_cv_container
 }
 
 resource "arista_wan" "wan" {
   name              = "${module.globals.topology}-wan"
   topology_name     = arista_topology.topology.topology_name
-  cv_container_name = "CloudEdge"
+  cv_container_name = var.wan_cv_container
 }
 
 module "RRVpc" {

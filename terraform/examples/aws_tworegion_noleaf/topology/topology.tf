@@ -31,13 +31,13 @@ resource "arista_topology" "topology" {
 resource "arista_clos" "clos" {
   name              = "${module.globals.topology}-clos"
   topology_name     = arista_topology.topology.topology_name
-  cv_container_name = "CloudLeaf"
+  cv_container_name = var.clos_cv_container
 }
 
 resource "arista_wan" "wan" {
   name              = "${module.globals.topology}-wan"
   topology_name     = arista_topology.topology.topology_name
-  cv_container_name = "CloudEdge"
+  cv_container_name = var.wan_cv_container
 }
 
 module "RRVpc" {
