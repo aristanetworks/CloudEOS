@@ -24,10 +24,11 @@ provider "arista" {
 resource "arista_topology" "topology" {
   topology_name           = module.globals.topology
   bgp_asn                 = "65200-65300" // Range of BGP ASN’s used for topology
-  vtep_ip_cidr            = "8.0.0.0/16"  // CIDR block for VTEP IPs on veos
-  terminattr_ip_cidr      = "9.0.0.0/16"  // Loopback IP range on veos
-  dps_controlplane_cidr   = "11.0.0.0/16"  // CIDR block for Dps Control Plane IPs on veos
+  vtep_ip_cidr            = var.vtep_ip_cidr           // CIDR block for VTEP IPs on veos
+  terminattr_ip_cidr      = var.terminattr_ip_cidr     // Loopback IP range on veos
+  dps_controlplane_cidr   = var.dps_controlplane_cidr  // CIDR block for Dps Control Plane IPs on veos
 }
+
 resource "arista_clos" "clos" {
   name              = "${module.globals.topology}-clos"
   topology_name     = arista_topology.topology.topology_name

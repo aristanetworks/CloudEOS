@@ -12,7 +12,6 @@ Make sure you change the following so it doesn't collide with others !
 - vtep_ip_cidr   - CIDR block for VTEP IPs 
 - terminattr_ip_cidr -  IP range for terminattr source
 - dps_controlplane_cidr -  Block for Dps Control Plane IPs 
-- keypairs to login to the router
 
 These fields are commented out in input_vars.tfvars. Please uncomment them and modify them appropriately. Otherwise terraform plan execution will prompt for various inputs.
 
