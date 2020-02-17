@@ -3,7 +3,7 @@ locals {
 }
 
 resource "arista_veos_config" "veos" {
-  count = var.topology_name != "" ? 1 : 0
+  count = length( values(var.subnetids) ) != 0 && var.topology_name != "" ? 1 : 0
   cloud_provider = "aws"
   topology_name = var.topology_name // ListTopology will get us clos_name, wan_name
   role = var.role
