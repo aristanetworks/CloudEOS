@@ -32,10 +32,7 @@ wget http://dist/release/CloudEOS-Terraform/SE-EFT1/terraform-plugins.tar.gz -O 
 
 AWS Credentials through Vault Please follow through this [doc](https://docs.google.com/document/d/1BDiVeMnygyjO3suVvEWMm0nJPWdDxlTEpRswfkgqjO4/edit "AWS Credentials through Vault") and make sure you can get AWS access key and secrets. Set the credentials setup the following env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY by using export commands in bash. 
 
-Optionally you if you want to write them to the aws CLI native path
-echo "[default]" > ~/.aws/credentials
-echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
-echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+Run all terraform commands with the above environment variables setup
 
 # Topology Examples : Go the respective example folders and follow instructions. 
 
