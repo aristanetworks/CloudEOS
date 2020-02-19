@@ -10,6 +10,7 @@ and incur expenses.
 1) Public cloud account credentials eg AWS Access key and secret
 2) Terraform installed on your laptop/server
 3) Security webtoken for CloudVision
+4) Create one or more Containers in CVaaS which will be used to provision the routers
 
 # Arista CloudVision Terraform provider 
 
