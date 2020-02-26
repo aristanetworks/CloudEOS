@@ -18,15 +18,15 @@ output "allIntfIds" {
 }
 
 output "intfname_to_id" {
-  value = zipmap( var.intf_names, aws_network_interface.allIntfs.*.id )
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(var.intf_names) > 0 ? zipmap( var.intf_names, aws_network_interface.allIntfs.*.id ) : {}
 }
 
 output "intf_private_ips" {
-  value = zipmap( aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.private_ips )
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(aws_network_interface.allIntfs.*.private_ips) > 0 ? zipmap( aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.private_ips ) : {}
 }
 
 output "intf_to_subnets" {
-  value = zipmap(aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.subnet_id)
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? zipmap(aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.subnet_id) : {}
 }
 
 output "route_table_public" {

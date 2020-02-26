@@ -6,12 +6,12 @@ provider "aws" {
 }
 
 locals {
-  private_intfs = matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"])
+  private_intfs = length(aws_network_interface.allIntfs.*.id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
   route_table_id = length(aws_route_table.route_table_public.*.id) > 0 ? aws_route_table.route_table_public[0].id : var.public_route_table_id
   internal_route_table_id = length(aws_route_table.route_table_internal.*.id) > 0 ? aws_route_table.route_table_internal[0].id : var.internal_route_table_id
-  private_subnets = matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"])
-  public_subnets = matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public", "internal"])
-  internal_subnets = matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"])
+  private_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"]) : []
+  public_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public"] ) : []
+  internal_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"]) : []
   local_vpc_cidr = var.vpc_info != [] ? var.vpc_info[4][0] : ""
   vpc_id = var.vpc_info != []  ? length(var.vpc_info[0]) > 0 ? var.vpc_info[0][0] : var.vpc_id : var.vpc_id
   sg_id = var.vpc_info != []  ? length(var.vpc_info[2]) > 0 ? var.vpc_info[2] : [var.sg_id] : [var.sg_id]
@@ -33,7 +33,7 @@ resource "aws_network_interface" "allIntfs" {
   count 	        = length( var.intf_names )
   subnet_id         = values(var.subnetids)[count.index]
   source_dest_check = false
-  security_groups   = count.index == 0 && local.public_intf_num > 0 ? local.sg_id : null
+  security_groups   = count.index == 0 && contains(values(var.interface_types), ["public"] ) ? local.sg_id : null
   private_ips       = lookup(var.private_ips, tostring(count.index), null)
 }
 

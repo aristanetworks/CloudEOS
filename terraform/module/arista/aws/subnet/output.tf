@@ -7,5 +7,5 @@ output "vpc_subnets" {
 }
 output "subnet_cidr" {
   description = "map of subnet cidr to id"
-  value = zipmap(keys(var.subnet_names), aws_subnet.subnet.*.id)
+  value = length(aws_subnet.subnet.*.id) > 0 ? zipmap(keys(var.subnet_names), aws_subnet.subnet.*.id) : {}
 }
