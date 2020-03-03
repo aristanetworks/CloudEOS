@@ -39,10 +39,10 @@ aws_regions = { region1 : "us-west-1",
                 region2 : "us-east-1",
                 region3 : "us-east-2" }
 
-eos_amis = { us-west-1 : "ami-06c9d181b46328b47",
-             us-west-2 : "ami-07e432e3903bafe05",
-             us-east-1 : "ami-02cfb0ab93718c454",
-             us-east-2 : "ami-09a466b4086fa3492" }
+eos_amis = { us-west-1 : "ami-017900c328c2edfbe",
+             us-west-2 : "ami-0c6aba6a8b862f7ac",
+             us-east-1 : "ami-0ee27fb355f900646",
+             us-east-2 : "ami-0f3dd5c4e5e81f9f4" }
 
 availability_zone = { us-west-1 : {zone1 : "us-west-1b", zone2 : "us-west-1c"},
                       us-east-1 : {zone1 : "us-east-1b", zone2 : "us-east-1c"},
