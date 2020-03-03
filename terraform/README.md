@@ -59,3 +59,55 @@ there isn't a host VM added here.
 
 Please follow examples/aws_tworegion_noleaf/aws_tworegion_noleaf.md
 
+# Setting username and password for host
+
+To login to host you can use various steps listed below:
+
+## Using pem file
+Copy the pem file to the cloudeos then ssh to device using pem file.
+
+## Using default username
+If you have not provided a custom username and passwd in terraform host
+module then you can login to the host using "cloudeos" username and "cloudeos1234!" password.
+
+## Using custom username and password
+To setup a custom username and password, you need to set the below variables in host terraform module.
+
+```
+username = "foo"
+passwd = "$1$SaltSalt$YhgRYajLPrYevs14poKBQ0"
+```
+
+The above password is generated from plain-test password "secret" using a salt "SaltSalt" usign the following command.
+
+```
+openssl passwd -1 -salt SaltSalt secret
+```
+
+Example
+
+```
+module "Region2Leaf1host1" {
+                source = "../../../module/arista/aws/host"
+                instance_type = "c5.xlarge"                            
+                username = "foo"
+                passwd = "$1$SaltSalt$YhgRYajLPrYevs14poKBQ0"
+                // ...
+}
+```
+
+# iPerf Command Examples
+
+Iperf commands:
+
+## TCP
+```bash
+iperf3 -s -p 5005 -I 1
+iperf3 -c 10.19.1.133 -p -P 8 5005 -t 600 -I 1
+```
+
+## UDP
+```bash
+iperf3 -s -p 5005 -I 1
+iperf3 -c 10.19.1.133 -u -p 5005 -b 500M -P 8 --length 900 -t 600 -i 1
+```

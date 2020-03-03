@@ -115,4 +115,3 @@ terraform destroy -var-file=../input_vars.tfvars
 ```bash
 terraform destroy -var-file=../input_vars.tfvars
 ```
-
