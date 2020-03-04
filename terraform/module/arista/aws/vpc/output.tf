@@ -25,16 +25,21 @@ output "sg_id" {
   value = length(aws_security_group.allowSSHIKE.*.id) > 0 ? aws_security_group.allowSSHIKE[0].id : ""
 }
 
+output "sg_default_id" {
+  value = aws_default_security_group.default.*.id
+}
+
 locals {
   peer_id = length(aws_vpc_peering_connection.vpc_peer.*.id) > 0 ? aws_vpc_peering_connection.vpc_peer.*.id : []
   igw_id  = length(aws_internet_gateway.internetGateway.*.id) > 0 ? [aws_internet_gateway.internetGateway[0].id] : []
   sg_id   = length(aws_security_group.allowSSHIKE.*.id) > 0 ? [aws_security_group.allowSSHIKE[0].id] : []
   arista_vpc_id = length(arista_vpc.vpc.*.id) > 0 ? arista_vpc.vpc[0].id : ""
   peervpcidr = var.role == "CloudLeaf" && length(arista_vpc_config.vpc.*.id) > 0 ? arista_vpc_config.vpc[0].peervpcidr : "0.0.0.0/0"
+  sg_default_id = length(aws_default_security_group.default.*.id) > 0 ? aws_default_security_group.default.*.id : []
 }
 
 output "vpc_info" {
-  value = [[aws_vpc.vpc.id], local.igw_id, local.sg_id, local.peer_id, [aws_vpc.vpc.cidr_block], [local.arista_vpc_id], [local.peervpcidr]]
+  value = [[aws_vpc.vpc.id], local.igw_id, local.sg_id, local.peer_id, [aws_vpc.vpc.cidr_block], [local.arista_vpc_id], [local.peervpcidr], local.sg_default_id]
 }
 
 output "topology_name" {

@@ -21,6 +21,7 @@ locals {
   public_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]))
   private_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["private"]))
   internal_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"]))
+  sg_default_id = var.vpc_info != []  ? length(var.vpc_info[7]) > 0 ? var.vpc_info[7] : [var.sg_id] : [var.sg_id]
 }
 
 resource "aws_eip" "eip" {
@@ -137,6 +138,7 @@ resource "aws_instance" "veosVm" {
   user_data = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   //user_data = arista_veos_config.veos[0].bootstrap_cfg
   tags = var.tags
+  iam_instance_profile = var.iam_instance_profile
 }
 
 resource "aws_network_interface_attachment" "secondary_intf" {
@@ -172,4 +174,14 @@ resource "aws_route_table_association" "rr_route_map_public" {
   count = var.is_rr == true && var.role == "CloudEdge" ? local.public_intf_num : 0
   route_table_id = aws_route_table.rr_route_table_public[0].id
   subnet_id = local.public_subnets[count.index]
+}
+
+resource "aws_vpc_endpoint" "endpoint" {
+  count              = (var.cloud_ha != "" && var.primary == false) ? 1 : 0
+  vpc_id             = local.vpc_id
+  service_name       = "com.amazonaws.${var.region}.ec2"
+  vpc_endpoint_type  = "Interface"
+  security_group_ids = local.sg_default_id
+  subnet_ids         = concat(var.primary_internal_subnetids, local.internal_subnets)
+  private_dns_enabled = true
 }

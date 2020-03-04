@@ -69,7 +69,14 @@ variable "interface_types" {
 }
 
 variable "cloud_ha" {
+  description = "Cloud HA name. Must be same between HA pairs and unique within VPC."
   default = ""
+}
+
+variable "primary_internal_subnetids" {
+  description = "Internal subnet IDs of Cloud HA primary node"
+  type = list(string)
+  default = []
 }
 
 variable "availability_zone" {
@@ -123,4 +130,10 @@ variable "is_rr" {
 
 variable "existing_userdata" {
   default = false
+}
+
+variable "iam_instance_profile" {
+  description = "Name of the IAM profile the instance is referring to"
+  type = string
+  default = ""
 }

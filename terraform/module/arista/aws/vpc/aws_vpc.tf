@@ -9,6 +9,8 @@ resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block[0]
   tags       = var.tags
   depends_on = [arista_vpc_config.vpc[0]]
+  enable_dns_support = true
+  enable_dns_hostnames = true
 }
 
 resource "aws_default_security_group" "default" {

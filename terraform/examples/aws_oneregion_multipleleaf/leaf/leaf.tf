@@ -79,7 +79,9 @@ module "Leaf1CloudEOS1" {
          "Name" = "${module.globals.topology}-Leaf1CloudEOS1"
          "Cnps" = "dev"
   }
+  cloud_ha = "leaf1"
   primary = true
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -109,7 +111,10 @@ module "Leaf1CloudEOS2" {
          "Name" = "${module.globals.topology}-Leaf1CloudEOS2"
          "Cnps" = "dev"
   }
+  cloud_ha = "leaf1"
   internal_route_table_id = module.Leaf1CloudEOS1.route_table_internal
+  primary_internal_subnetids = [module.Leaf1Subnet.vpc_subnets[0]]
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -185,7 +190,9 @@ module "Leaf2CloudEOS1" {
          "Name" = "${module.globals.topology}-Leaf2CloudEOS1"
          "Cnps" = "prod"
   }
+  cloud_ha = "leaf2"
   primary = true
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -215,7 +222,10 @@ module "Leaf2CloudEOS2" {
          "Name" = "${module.globals.topology}-Leaf2CloudEOS2"
          "Cnps" = "prod"
   }
+  cloud_ha = "leaf2"
   internal_route_table_id = module.Leaf2CloudEOS1.route_table_internal
+  primary_internal_subnetids = [module.Leaf2Subnet.vpc_subnets[0]]
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -278,7 +288,9 @@ module "Leaf3CloudEOS1" {
          "Name" = "${module.globals.topology}-Leaf3CloudEOS1"
          "Cnps" = "dev"
   }
+  cloud_ha = "leaf3"
   primary = true
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -308,7 +320,10 @@ module "Leaf3CloudEOS2" {
          "Name" = "${module.globals.topology}-Leaf3CloudEOS2"
          "Cnps" = "dev"
   }
+  cloud_ha = "leaf3"
   internal_route_table_id = module.Leaf3CloudEOS1.route_table_internal
+  primary_internal_subnetids = [module.Leaf3Subnet.vpc_subnets[0]]
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -384,7 +399,9 @@ module "Leaf4CloudEOS1" {
          "Name" = "${module.globals.topology}-Leaf4CloudEOS1"
          "Cnps" = "prod"
   }
+  cloud_ha = "leaf4"
   primary = true
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -414,7 +431,10 @@ module "Leaf4CloudEOS2" {
          "Name" = "${module.globals.topology}-Leaf4CloudEOS2"
          "Cnps" = "prod"
   }
+  cloud_ha = "leaf4"
   internal_route_table_id = module.Leaf4CloudEOS1.route_table_internal
+  primary_internal_subnetids = [module.Leaf4Subnet.vpc_subnets[0]]
+  iam_instance_profile = var.aws_iam_instance_profile
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 
