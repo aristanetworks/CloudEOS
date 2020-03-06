@@ -1,3 +1,6 @@
+// Copyright (c) 2020 Arista Networks, Inc.
+// Use of this source code is governed by the Apache License 2.0
+// that can be found in the COPYING file.
 output "vpc_subnets" {
   description = "The ids of subnets created inside the new vpc"
   value       = arista_subnet.subnet.*.computed_subnet_id
