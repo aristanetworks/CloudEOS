@@ -120,7 +120,6 @@ module "Leaf1host1" {
 		instance_type = "c5.xlarge"
 		keypair_name = module.globals.keypair_name[module.Leaf1Vpc.region]
 		subnet_id = module.Leaf1Subnet.vpc_subnets[1]
-                vpc_id = module.Leaf1Vpc.vpc_id[0]
 		private_ips = ["101.2.1.102"]
 		tags = {
 				"Name" = "${module.globals.topology}-Leaf1host"
@@ -320,7 +319,6 @@ module "Leaf3host1" {
 		instance_type = "c5.xlarge"
 		keypair_name = module.globals.keypair_name[module.Leaf3Vpc.region]
 		subnet_id = module.Leaf3Subnet.vpc_subnets[1]
-                vpc_id = module.Leaf3Vpc.vpc_id[0]
 		private_ips = ["103.2.1.102"]
 		tags = {
 				"Name" = "${module.globals.topology}-Leaf3host"
