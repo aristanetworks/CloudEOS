@@ -26,7 +26,7 @@ Follow the steps at https://learn.hashicorp.com/terraform/getting-started/instal
 
 '''
 cd CloudEOS/terraform
-wget http://dist/release/CloudEOS-Terraform/SE-EFT1/terraform-plugins.tar.gz -O - | tar -xz
+./setup.sh
 '''
 
 ## Setup AWS Credentials
