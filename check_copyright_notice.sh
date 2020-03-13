@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2019 Arista Networks, Inc.
 # Use of this source code is governed by the Apache License 2.0
-# that can be found in the COPYING file.
+# that can be found in the LICENSE file.
 
 notice='Copyright \(c\) 20[0-9][0-9] Arista Networks, Inc.'
 files=`git diff-tree --no-commit-id --name-only --diff-filter=ACMR -r HEAD | \

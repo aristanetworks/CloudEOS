@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 variable "subnet_id" {}
 variable "private_ips" {}
 variable "ami" {}
@@ -9,10 +9,10 @@ variable "tags" {}
 variable "keypair_name" {}
 variable "region" {}
 variable "username" {
-  type = string
+  type    = string
   default = "cloudeos"
 }
 variable "passwd" {
-  type = string
+  type    = string
   default = "$1$SaltSalt$KWR36KJWI.AWkjpD1KU850"
 }

@@ -1,86 +1,86 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 provider "aws" {
   region = var.region
 }
 
 locals {
-  private_intfs = length(aws_network_interface.allIntfs.*.id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
-  route_table_id = length(aws_route_table.route_table_public.*.id) > 0 ? aws_route_table.route_table_public[0].id : var.public_route_table_id
+  private_intfs           = length(aws_network_interface.allIntfs.*.id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
+  route_table_id          = length(aws_route_table.route_table_public.*.id) > 0 ? aws_route_table.route_table_public[0].id : var.public_route_table_id
   internal_route_table_id = length(aws_route_table.route_table_internal.*.id) > 0 ? aws_route_table.route_table_internal[0].id : var.internal_route_table_id
-  private_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"]) : []
-  public_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public"] ) : []
-  internal_subnets = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"]) : []
-  local_vpc_cidr = var.vpc_info != [] ? var.vpc_info[4][0] : ""
-  vpc_id = var.vpc_info != []  ? length(var.vpc_info[0]) > 0 ? var.vpc_info[0][0] : var.vpc_id : var.vpc_id
-  sg_id = var.vpc_info != []  ? length(var.vpc_info[2]) > 0 ? var.vpc_info[2] : [var.sg_id] : [var.sg_id]
-  igw_id = var.vpc_info != [] ? length(var.vpc_info[1]) > 0 ? var.vpc_info[1][0] : var.igw_id : var.igw_id
-  peering_id = var.vpc_info != [] ? length(var.vpc_info[3]) > 0 ? var.vpc_info[3][0] : var.peer_connection_id : var.peer_connection_id
-  peer_vpc_cidr = var.vpc_info != [] ? length(var.vpc_info[6]) > 0 ? var.vpc_info[6][0] : "0.0.0.0/0" : "0.0.0.0/0"
-  public_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]))
-  private_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["private"]))
-  internal_intf_num = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"]))
-  sg_default_id = var.vpc_info != []  ? length(var.vpc_info[7]) > 0 ? var.vpc_info[7] : [var.sg_id] : [var.sg_id]
+  private_subnets         = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"]) : []
+  public_subnets          = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public"]) : []
+  internal_subnets        = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"]) : []
+  local_vpc_cidr          = var.vpc_info != [] ? var.vpc_info[4][0] : ""
+  vpc_id                  = var.vpc_info != [] ? length(var.vpc_info[0]) > 0 ? var.vpc_info[0][0] : var.vpc_id : var.vpc_id
+  sg_id                   = var.vpc_info != [] ? length(var.vpc_info[2]) > 0 ? var.vpc_info[2] : [var.sg_id] : [var.sg_id]
+  igw_id                  = var.vpc_info != [] ? length(var.vpc_info[1]) > 0 ? var.vpc_info[1][0] : var.igw_id : var.igw_id
+  peering_id              = var.vpc_info != [] ? length(var.vpc_info[3]) > 0 ? var.vpc_info[3][0] : var.peer_connection_id : var.peer_connection_id
+  peer_vpc_cidr           = var.vpc_info != [] ? length(var.vpc_info[6]) > 0 ? var.vpc_info[6][0] : "0.0.0.0/0" : "0.0.0.0/0"
+  public_intf_num         = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]))
+  private_intf_num        = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["private"]))
+  internal_intf_num       = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"]))
+  sg_default_id           = var.vpc_info != [] ? length(var.vpc_info[7]) > 0 ? var.vpc_info[7] : [var.sg_id] : [var.sg_id]
 }
 
 resource "aws_eip" "eip" {
-  count		        = local.public_intf_num
+  count             = local.public_intf_num
   vpc               = true
   network_interface = aws_network_interface.allIntfs.*.id[index(var.intf_names, matchkeys(keys(var.interface_types), values(var.interface_types), ["public"])[count.index])]
 }
 
 resource "aws_network_interface" "allIntfs" {
-  count 	        = length( var.intf_names )
+  count             = length(var.intf_names)
   subnet_id         = values(var.subnetids)[count.index]
   source_dest_check = false
-  security_groups   = count.index == 0 && contains(values(var.interface_types), ["public"] ) ? local.sg_id : null
+  security_groups   = count.index == 0 && contains(values(var.interface_types), ["public"]) ? local.sg_id : null
   private_ips       = lookup(var.private_ips, tostring(count.index), null)
 }
 
 resource "aws_route_table" "route_table_public" {
-  count = var.primary && var.is_rr == false ? local.public_intf_num : 0
+  count  = var.primary && var.is_rr == false ? local.public_intf_num : 0
   vpc_id = local.vpc_id
 }
 
 resource "aws_route_table" "route_table_private" {
-  count = var.role != "none" && local.private_intf_num > 0 ? 1 : 0
+  count  = var.role != "none" && local.private_intf_num > 0 ? 1 : 0
   vpc_id = local.vpc_id
 }
 
 resource "aws_route" "lan_default_route" {
-  count = local.private_intf_num
-  route_table_id = aws_route_table.route_table_private[0].id
+  count                  = local.private_intf_num
+  route_table_id         = aws_route_table.route_table_private[0].id
   destination_cidr_block = "0.0.0.0/0"
-  network_interface_id = local.private_intfs[count.index]
+  network_interface_id   = local.private_intfs[count.index]
 }
 
 resource "aws_route_table" "route_table_internal" {
-  count = var.primary ? local.internal_intf_num : 0
+  count  = var.primary ? local.internal_intf_num : 0
   vpc_id = local.vpc_id
 }
 
 resource "aws_route" "wan_default_route" {
-  count = var.primary && var.is_rr == false ? var.topology_name != "" ? local.public_intf_num : var.peervpccidr != "" ? local.public_intf_num : 0 : 0
-  destination_cidr_block = var.topology_name != "" ? local.peer_vpc_cidr : var.peervpccidr
-  route_table_id = local.route_table_id
-  gateway_id = var.role == "CloudEdge" ? local.igw_id : null
+  count                     = var.primary && var.is_rr == false ? var.topology_name != "" ? local.public_intf_num : var.peervpccidr != "" ? local.public_intf_num : 0 : 0
+  destination_cidr_block    = var.topology_name != "" ? local.peer_vpc_cidr : var.peervpccidr
+  route_table_id            = local.route_table_id
+  gateway_id                = var.role == "CloudEdge" ? local.igw_id : null
   vpc_peering_connection_id = var.role == "CloudLeaf" ? local.peering_id : null
 }
 
 resource "aws_route" "internal_default_route" {
-  count = var.primary && var.role == "CloudLeaf" ? var.topology_name != "" ? local.internal_intf_num : var.peervpccidr != "" ? local.internal_intf_num : 0 : 0
-  destination_cidr_block = var.topology_name != "" ? local.peer_vpc_cidr : var.peervpccidr
-  route_table_id = local.internal_route_table_id
+  count                     = var.primary && var.role == "CloudLeaf" ? var.topology_name != "" ? local.internal_intf_num : var.peervpccidr != "" ? local.internal_intf_num : 0 : 0
+  destination_cidr_block    = var.topology_name != "" ? local.peer_vpc_cidr : var.peervpccidr
+  route_table_id            = local.internal_route_table_id
   vpc_peering_connection_id = local.peering_id
 }
 
 //Every Private Interface has its own route table. We associate different routes to every route table
 //based on the next hop Private ENI.
 resource "aws_route_table_association" "route_map_private" {
-  count = local.private_intf_num
+  count          = local.private_intf_num
   route_table_id = aws_route_table.route_table_private.*.id[count.index]
-  subnet_id = local.private_subnets[count.index]
+  subnet_id      = local.private_subnets[count.index]
 }
 
 //Internal interfaces on a Leaf will only create a route table for the primary. For secondary veos
@@ -88,16 +88,16 @@ resource "aws_route_table_association" "route_map_private" {
 //route table to the subnet.
 //RR shouldn't have an internal Interface
 resource "aws_route_table_association" "route_map_internal" {
-  count = local.internal_intf_num
+  count          = local.internal_intf_num
   route_table_id = local.internal_route_table_id
-  subnet_id = local.internal_subnets[count.index]
+  subnet_id      = local.internal_subnets[count.index]
 }
 
 resource "aws_route_table_association" "route_map_public" {
   //count = var.role != "none" ? length(matchkeys(keys(var.interface_types), values(var.interface_types), ["public", "internal"])) : 0
-  count = var.role != "none" && var.is_rr == false ? local.public_intf_num : 0
+  count          = var.role != "none" && var.is_rr == false ? local.public_intf_num : 0
   route_table_id = local.route_table_id
-  subnet_id = local.public_subnets[count.index]
+  subnet_id      = local.public_subnets[count.index]
 }
 /*
 data "template_file" "user_data" {
@@ -112,12 +112,12 @@ data "template_file" "user_data" {
 */
 
 data "template_file" "user_data_precreated" {
-  count = var.existing_userdata == true ? 1 : 0
+  count    = var.existing_userdata == true ? 1 : 0
   template = file(var.filename)
 }
 
 data "template_file" "user_data_specific" {
-  count = var.existing_userdata == false ? 1 : 0
+  count    = var.existing_userdata == false ? 1 : 0
   template = file(var.filename)
   vars = {
     bootstrap_cfg = arista_veos_config.veos[0].bootstrap_cfg
@@ -137,12 +137,12 @@ resource "aws_instance" "veosVm" {
   }
   user_data = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   //user_data = arista_veos_config.veos[0].bootstrap_cfg
-  tags = var.tags
+  tags                 = var.tags
   iam_instance_profile = var.iam_instance_profile
 }
 
 resource "aws_network_interface_attachment" "secondary_intf" {
-  count		       = length( var.intf_names ) - 1
+  count                = length(var.intf_names) - 1
   instance_id          = aws_instance.veosVm.id
   network_interface_id = aws_network_interface.allIntfs.*.id[count.index + 1]
   device_index         = count.index + 1
@@ -152,36 +152,36 @@ resource "aws_network_interface_attachment" "secondary_intf" {
 resource "aws_route" "peering_route" {
   count = var.role == "CloudLeaf" && var.primary ? var.topology_name != "" ? 1 : var.peerroutetableid1 != [] ? 1 : 0 : 0
   //route_table_id = var.topology_name != "" ? tolist(arista_veos_config.veos[0].peerroutetableid1)[count.index] : var.peerroutetableid1[count.index]
-  route_table_id = tolist(arista_veos_config.veos[0].peerroutetableid1)[0]
-  destination_cidr_block = local.local_vpc_cidr
+  route_table_id            = tolist(arista_veos_config.veos[0].peerroutetableid1)[0]
+  destination_cidr_block    = local.local_vpc_cidr
   vpc_peering_connection_id = local.peering_id
 }
 
 //RR Specific Resources
 resource "aws_route_table" "rr_route_table_public" {
-  count = var.is_rr == true && var.role == "CloudEdge" && var.primary ? 1 : 0
+  count  = var.is_rr == true && var.role == "CloudEdge" && var.primary ? 1 : 0
   vpc_id = local.vpc_id
 }
 
 resource "aws_route" "rr_wan_default_route" {
-  count = var.is_rr && var.role == "CloudEdge" && var.primary ? 1 : 0
+  count                  = var.is_rr && var.role == "CloudEdge" && var.primary ? 1 : 0
   destination_cidr_block = "0.0.0.0/0"
-  route_table_id = aws_route_table.rr_route_table_public[0].id
-  gateway_id = local.igw_id
+  route_table_id         = aws_route_table.rr_route_table_public[0].id
+  gateway_id             = local.igw_id
 }
 
 resource "aws_route_table_association" "rr_route_map_public" {
-  count = var.is_rr == true && var.role == "CloudEdge" ? local.public_intf_num : 0
+  count          = var.is_rr == true && var.role == "CloudEdge" ? local.public_intf_num : 0
   route_table_id = aws_route_table.rr_route_table_public[0].id
-  subnet_id = local.public_subnets[count.index]
+  subnet_id      = local.public_subnets[count.index]
 }
 
 resource "aws_vpc_endpoint" "endpoint" {
-  count              = (var.cloud_ha != "" && var.primary == false) ? 1 : 0
-  vpc_id             = local.vpc_id
-  service_name       = "com.amazonaws.${var.region}.ec2"
-  vpc_endpoint_type  = "Interface"
-  security_group_ids = local.sg_default_id
-  subnet_ids         = concat(var.primary_internal_subnetids, local.internal_subnets)
+  count               = (var.cloud_ha != "" && var.primary == false) ? 1 : 0
+  vpc_id              = local.vpc_id
+  service_name        = "com.amazonaws.${var.region}.ec2"
+  vpc_endpoint_type   = "Interface"
+  security_group_ids  = local.sg_default_id
+  subnet_ids          = concat(var.primary_internal_subnetids, local.internal_subnets)
   private_dns_enabled = true
 }

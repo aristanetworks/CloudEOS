@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 output "topology" {
   value = var.topology
 }
@@ -14,11 +14,11 @@ output "cvaas" {
 }
 
 output "instance_type" {
-  value=var.instance_type
+  value = var.instance_type
 }
 
 output "aws_regions" {
-   value = var.aws_regions
+  value = var.aws_regions
 }
 
 output "eos_amis" {

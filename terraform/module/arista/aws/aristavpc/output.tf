@@ -1,9 +1,9 @@
 locals {
-  peer_id = length(aws_vpc_peering_connection.vpc_peer.*.id) > 0 ? aws_vpc_peering_connection.vpc_peer.*.id : []
-  igw_id  = var.igw_id != "" ? [var.igw_id] : []
-  sg_id   = var.sg_id != ""? [var.sg_id] : []
+  peer_id       = length(aws_vpc_peering_connection.vpc_peer.*.id) > 0 ? aws_vpc_peering_connection.vpc_peer.*.id : []
+  igw_id        = var.igw_id != "" ? [var.igw_id] : []
+  sg_id         = var.sg_id != "" ? [var.sg_id] : []
   arista_vpc_id = length(arista_vpc.vpc.*.id) > 0 ? arista_vpc.vpc[0].id : ""
-  peervpcidr = var.role == "CloudLeaf" && length(arista_vpc_config.vpc.*.id) > 0 ? arista_vpc_config.vpc[0].peervpcidr : "0.0.0.0/0"
+  peervpcidr    = var.role == "CloudLeaf" && length(arista_vpc_config.vpc.*.id) > 0 ? arista_vpc_config.vpc[0].peervpcidr : "0.0.0.0/0"
 }
 
 output "vpc_info" {

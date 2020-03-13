@@ -1,23 +1,23 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 /* Used in arista_veos_config resource */
 variable "cv_container" {
   description = "container to which cvp should add this device"
-  default = ""
-  type = string
+  default     = ""
+  type        = string
 }
 
 variable "instance_type" {
   default = "c5.xlarge"
-  type = string
+  type    = string
 }
 
 /* Used by arista_veos_config, aws_network_interface and arista_veos_status */
 variable "vpc_id" {
   description = "vpc id"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "vpc_info" {
@@ -65,18 +65,18 @@ variable "filename" {
 
 variable "interface_types" {
   description = "Interface types"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "cloud_ha" {
   description = "Cloud HA name. Must be same between HA pairs and unique within VPC."
-  default = ""
+  default     = ""
 }
 
 variable "primary_internal_subnetids" {
   description = "Internal subnet IDs of Cloud HA primary node"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "availability_zone" {
@@ -85,7 +85,7 @@ variable "availability_zone" {
 
 variable "role" {
   description = "One of CloudLeaf/CloudEdge/CloudSpine"
-  default = ""
+  default     = ""
 }
 
 variable "peer_connection_id" {
@@ -134,6 +134,6 @@ variable "existing_userdata" {
 
 variable "iam_instance_profile" {
   description = "Name of the IAM profile the instance is referring to"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }

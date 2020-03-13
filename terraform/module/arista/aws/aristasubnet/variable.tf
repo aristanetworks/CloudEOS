@@ -7,9 +7,9 @@ variable "vpc_id" {
 }
 
 variable "cloud_provider" {
-         description = "aws, azure or gcp"
-         type = string
-         default = "aws"
+  description = "aws, azure or gcp"
+  type        = string
+  default     = "aws"
 }
 
 variable "topology_name" {

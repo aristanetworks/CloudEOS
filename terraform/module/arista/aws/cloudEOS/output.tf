@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 //Consumed by aws_instance
 /*
 output "bootstrap_cfg" {
@@ -18,11 +18,11 @@ output "allIntfIds" {
 }
 
 output "intfname_to_id" {
-  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(var.intf_names) > 0 ? zipmap( var.intf_names, aws_network_interface.allIntfs.*.id ) : {}
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(var.intf_names) > 0 ? zipmap(var.intf_names, aws_network_interface.allIntfs.*.id) : {}
 }
 
 output "intf_private_ips" {
-  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(aws_network_interface.allIntfs.*.private_ips) > 0 ? zipmap( aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.private_ips ) : {}
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(aws_network_interface.allIntfs.*.private_ips) > 0 ? zipmap(aws_network_interface.allIntfs.*.id, aws_network_interface.allIntfs.*.private_ips) : {}
 }
 
 output "intf_to_subnets" {

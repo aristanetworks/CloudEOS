@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
+// that can be found in the LICENSE file.
 variable "tags" {
   description = "Tags for the new VPC"
   type        = map(string)
@@ -14,7 +14,7 @@ variable "cidr_block" {
 
 variable "igw_name" {
   description = "Name of the internet gw"
-  default = ""
+  default     = ""
 }
 
 variable "create_vpc" {
@@ -27,14 +27,14 @@ variable "create_igw" {
 
 variable "role" {
   description = "CloudEdge/CloudSpine/CloudLeaf"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "overlay_connection_type" {
   description = "Overlay connection type: dps/vxlan/ipsec"
-  type = string
-  default = "dps"
+  type        = string
+  default     = "dps"
 }
 
 variable "peer_vpc_id" {

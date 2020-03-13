@@ -7,12 +7,12 @@ variable "tags" {
 variable "cidr_block" {
   description = "CIDR block"
   type        = list(string)
-  default = []
+  default     = []
 }
 
 variable "igw_name" {
   description = "Name of the internet gw"
-  default = ""
+  default     = ""
 }
 
 variable "create_vpc" {
@@ -25,8 +25,8 @@ variable "create_igw" {
 
 variable "role" {
   description = "CloudEdge/CloudSpine/CloudLeaf"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "peer_vpc_id" {
@@ -51,16 +51,16 @@ variable "wan_name" {
 
 variable "igw_id" {
   description = "Internet Gateway ID"
-  default = ""
+  default     = ""
 }
 variable "sg_id" {
   description = "Security group ID"
-  default = ""
+  default     = ""
 }
 
 variable "vpc_cidr" {
   description = "VPC CIDR"
-  default = ""
+  default     = ""
 }
 variable "vpc_id" {
   default = ""

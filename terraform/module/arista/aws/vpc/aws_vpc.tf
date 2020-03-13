@@ -1,15 +1,15 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
-// that can be found in the COPYING file.
-provider "aws" {      
-  region = var.region 
+// that can be found in the LICENSE file.
+provider "aws" {
+  region = var.region
 }
 
 resource "aws_vpc" "vpc" {
-  cidr_block = var.cidr_block[0]
-  tags       = var.tags
-  depends_on = [arista_vpc_config.vpc[0]]
-  enable_dns_support = true
+  cidr_block           = var.cidr_block[0]
+  tags                 = var.tags
+  depends_on           = [arista_vpc_config.vpc[0]]
+  enable_dns_support   = true
   enable_dns_hostnames = true
 }
 
@@ -82,11 +82,11 @@ resource "aws_internet_gateway" "internetGateway" {
 //The number of vpc_peering links is equal to the number of peers returned by CloudDeploy
 //Count cannot be an output varaiable: https://github.com/hashicorp/terraform/issues/18923
 resource "aws_vpc_peering_connection" "vpc_peer" {
-  count         = var.role == "CloudLeaf" ? var.topology_name != "" ? 1 : var.topology_name == "" && var.peer_vpc_id != "" ? 1 : 0 : 0
-  peer_vpc_id   = var.topology_name != "" ? arista_vpc_config.vpc[0].peer_vpc_id : var.peer_vpc_id
-  vpc_id        = aws_vpc.vpc.id
-  auto_accept   = true
+  count       = var.role == "CloudLeaf" ? var.topology_name != "" ? 1 : var.topology_name == "" && var.peer_vpc_id != "" ? 1 : 0 : 0
+  peer_vpc_id = var.topology_name != "" ? arista_vpc_config.vpc[0].peer_vpc_id : var.peer_vpc_id
+  vpc_id      = aws_vpc.vpc.id
+  auto_accept = true
   tags = {
-    Name = format("peering %s and %v", aws_vpc.vpc.id, arista_vpc_config.vpc[0].peer_vpc_id )
+    Name = format("peering %s and %v", aws_vpc.vpc.id, arista_vpc_config.vpc[0].peer_vpc_id)
   }
 }
