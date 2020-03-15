@@ -34,7 +34,7 @@ resource "aws_network_interface" "allIntfs" {
   count             = length(var.intf_names)
   subnet_id         = values(var.subnetids)[count.index]
   source_dest_check = false
-  security_groups   = count.index == 0 && contains(values(var.interface_types), ["public"]) ? local.sg_id : null
+  security_groups   = count.index == 0 && contains(values(var.interface_types), "public") ? local.sg_id : null
   private_ips       = lookup(var.private_ips, tostring(count.index), null)
 }
 
