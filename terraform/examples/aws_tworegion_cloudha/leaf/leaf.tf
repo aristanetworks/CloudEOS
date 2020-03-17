@@ -187,9 +187,10 @@ module "Region2Leaf2CloudEOS1" {
     "Name" = "${var.topology}-Region2Leaf2CloudEOS1"
     "Cnps" = "Prod"
   }
-  cloud_ha = "leaf2"
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  cloud_ha             = "leaf2"
+  iam_instance_profile = var.aws_iam_instance_profile
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
 }
 
 module "Region2Leaf2host1" {
@@ -434,9 +435,10 @@ module "Region3Leaf2CloudEOS1" {
     "Name" = "${var.topology}-Region3Leaf2CloudEOS1"
     "Cnps" = "Dev"
   }
-  cloud_ha = "leaf4"
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  cloud_ha             = "leaf4"
+  iam_instance_profile = var.aws_iam_instance_profile
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
 }
 
 module "Region3Leaf2host1" {
