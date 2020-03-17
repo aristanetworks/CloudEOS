@@ -30,7 +30,8 @@ resource "arista_wan" "wan" {
   topology_name     = arista_topology.topology.topology_name
   cv_container_name = var.wan_cv_container
 }
-
+//RRs not required for one region topologies. Uncomment if you want multiple regions.
+/*
 module "RRVpc" {
   source        = "../../../module/arista/aws/vpc"
   topology_name = arista_topology.topology.topology_name
@@ -115,3 +116,4 @@ module "CloudEOSRR2" {
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
+*/

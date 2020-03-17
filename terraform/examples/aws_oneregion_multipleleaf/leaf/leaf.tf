@@ -110,13 +110,14 @@ module "Leaf1host1" {
   region        = var.aws_regions["region2"]
   source        = "../../../module/arista/aws/host"
   ami           = var.host_amis[module.Leaf1Vpc.region]
-  instance_type = "c5.xlarge"
+  instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf1Vpc.region]
   subnet_id     = module.Leaf1Subnet.vpc_subnets[1]
   private_ips   = ["101.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf1host"
+    "Name" = "${var.topology}-Leaf1Devhost"
   }
+
 }
 
 // Leaf2
@@ -215,6 +216,20 @@ module "Leaf2CloudEOS2" {
   primary_internal_subnetids = [module.Leaf2Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+}
+
+module "Leaf2host1" {
+  region        = var.aws_regions["region2"]
+  source        = "../../../module/arista/aws/host"
+  ami           = var.host_amis[module.Leaf2Vpc.region]
+  instance_type = "t2.medium"
+  keypair_name  = var.keypair_name[module.Leaf2Vpc.region]
+  subnet_id     = module.Leaf2Subnet.vpc_subnets[1]
+  private_ips   = ["102.2.1.102"]
+  tags = {
+    "Name" = "${var.topology}-Leaf2Prodhost1"
+  }
+
 }
 
 //Leaf3
@@ -319,13 +334,14 @@ module "Leaf3host1" {
   region        = var.aws_regions["region2"]
   source        = "../../../module/arista/aws/host"
   ami           = var.host_amis[module.Leaf3Vpc.region]
-  instance_type = "c5.xlarge"
+  instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf3Vpc.region]
   subnet_id     = module.Leaf3Subnet.vpc_subnets[1]
   private_ips   = ["103.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf3host"
+    "Name" = "${var.topology}-Leaf3DevHost"
   }
+
 }
 
 //Leaf4
@@ -424,6 +440,18 @@ module "Leaf4CloudEOS2" {
   primary_internal_subnetids = [module.Leaf4Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+}
+module "Leaf4host1" {
+  region        = var.aws_regions["region2"]
+  source        = "../../../module/arista/aws/host"
+  ami           = var.host_amis[module.Leaf4Vpc.region]
+  instance_type = "t2.medium"
+  keypair_name  = var.keypair_name[module.Leaf4Vpc.region]
+  subnet_id     = module.Leaf4Subnet.vpc_subnets[1]
+  private_ips   = ["104.2.1.102"]
+  tags = {
+    "Name" = "${var.topology}-Leaf4ProdHost"
+  }
 }
 
 /*
