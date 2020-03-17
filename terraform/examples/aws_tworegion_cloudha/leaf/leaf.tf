@@ -448,7 +448,7 @@ module "Region3Leaf2host1" {
   subnet_id     = module.Region3Leaf2Subnet.vpc_subnets[1]
   private_ips   = ["111.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Region3Leaf2host"
+    "Name" = "${var.topology}-Region3Leaf2host1"
   }
 }
 
@@ -475,7 +475,7 @@ module "Region3Leaf2CloudEOS2" {
   availability_zone = var.availability_zone[module.Region3Leaf2Vpc.region]["zone2"]
   region            = module.Region3Leaf2Vpc.region
   tags = {
-    "Name" = "${var.topology}-Region3Leaf2CloudEOS1"
+    "Name" = "${var.topology}-Region3Leaf2CloudEOS2"
     "Cnps" = "Dev"
   }
   cloud_ha                   = "leaf4"
@@ -494,6 +494,6 @@ module "Region3Leaf2host2" {
   subnet_id     = module.Region3Leaf2Subnet.vpc_subnets[3]
   private_ips   = ["111.2.3.102"]
   tags = {
-    "Name" = "${var.topology}-Region3Leaf2host"
+    "Name" = "${var.topology}-Region3Leaf2host2"
   }
 }
