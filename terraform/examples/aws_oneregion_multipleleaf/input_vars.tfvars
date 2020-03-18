@@ -1,35 +1,27 @@
-// Please uncomment the following lines and modify them for your deployment
-// update CloudEOS SE MultiCloud POC CIDR Reservations https://docs.google.com/spreadsheets/d/1HkANmxzbowQlqqQHdI2e8qcZ1LqY7QDaTnr-BofdhLg/edit?usp=sharing
-// Follow [CloudEOS SE MultiCloud POC Guide](https://docs.google.com/document/d/1DW9niGGAMtc0LGWt2OBlaGZQBTWDlTYgygnEli2JNoo/edit#) and create containers on CVAAS. They can be containers with no configlets attached to them or you can have any configlet that contains configuration that you want to push to the router when it comes up
+// PLEASE CUSTOMIZE file for your deployment
+topology = "AWS_MULTILEAF"
 
-// All the lines below need to the customized and uncommented before you run terraform
-// topology = "CloudEOSEft"
+## CloudEOS network requires three subnets for control plane
+vtep_ip_cidr          = "172.16.0.0/24" // CIDR block for VTEP IPs
+terminattr_ip_cidr    = "172.16.1.0/24" // Loopback IP range for CloudVision connectivity
+dps_controlplane_cidr = "172.16.2.0/24" // CIDR block for VXLAN/Dps Control Plane IPs
 
-// vtep_ip_cidr            = "5.0.0.0/16"  // CIDR block for VTEP IPs 
-// terminattr_ip_cidr      = "6.0.0.0/16"  // Loopback IP range for terminattr source
-// dps_controlplane_cidr   = "7.0.0.0/16"  // CIDR block for Dps Control Plane IPs 
+keypair_name = {
+  us-west-1 : "systest",
+  us-west-2 : "systest",
+  us-east-1 : "systest",
+  us-east-2 : "systest"
+}
 
-// keypair_name = { us-west-1 : "systest",
-//                  us-west-2 : "systest",
-//                  us-east-1 : "systest",
-//                  us-east-2 : "systest" }
+clos_cv_container = "CloudEOS"
+wan_cv_container  = "CloudEOS"
 
-// clos_cv_container = "CloudLeaf"
-// wan_cv_container  = "CloudEdge"
-
-// All of the above lines need to the customized and uncommented before you run terraform
-
-// for play replace staging to play below
+## Get service_token from Arista Contact
 cvaas = {
-  domain : "apiserver.cv-staging.corp.arista.io",
+  domain : "apiserver.arista.io",
   username : "admin",
-  server : "www.cv-staging.corp.arista.io",
-  // service token for cv_play c-clouddeploy tenant
-  // service_token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjExMywiZHNuIjoiYWRtaW4iLCJkc3QiOiJ1c2VyIiwiZW1haWwiOiJmYW55YW5nQGFyaXN0YS5jb20iLCJzaWQiOiIyYzBlNjM3OWVkNmZmZjI2ZjcxNDk5ZWQxZDgwMzIwODBiM2Q1N2M0ODI1NDY4NjhhM2Y0NjgyODg0M2NlYTEwLUs1eTRDMTFHang3UlNGTTFtcEdqMFE0Q2EydjktTVZUbWlhUThWS1oifQ.lcAkM52EmJjYQslKKHYGBPZrz5BBk37EBDuvZkcTp8brXpdjpY5ogxUfDPeyhEeqN0eMA8qg8HuGVOcpb93YCg"
-  // service token for cv_play arista-systest-poc tenant
-  // service_token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjE3MCwiZHNuIjoiYWRtaW4iLCJkc3QiOiJ1c2VyIiwiZW1haWwiOiJkYWlzeUBhcmlzdGEuY29tIiwic2lkIjoiZGM4YjE4NmJhOTljYTcwZWFlNzgzMTg5ZjgwNmIxMDBiYWJiZWQ2MDhhMGI1ZDJlZmVjOGJhNTVkNGIyZjQzMS1HVWFZby1tVkRUWnpTS0E1c3FHeGJnVFVUYk9JSU5PTDYzbkNRZmUwIn0.Dnilu_-A9cBvEHEuYl_L7mdxtpGd2amRE16wZx9ra0guUT6CToNfWQFqkcypRkKLXYEsEhZKHcdN_WcoL64RQg"
-  // service token for cv_staging c-arista tenant
-  service_token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjgsImRzbiI6ImFkbWluIiwiZHN0IjoidXNlciIsImVtYWlsIjoieGd1b0BhcmlzdGEuY29tIiwic2lkIjoiOWY2MjA4ZDI4YWMxY2U5YjRiZjI3ZjgzYTMzNjljNjZhZDFlZjRiMDVhMzViMjEzNjUwMzJmMzZiNGNmZDMzNi1RaVNfeU1XRkVZVEtBTHVmMW9aY0o2YTJNS3lwQjFXR0pLdmJIRTFQIn0.9t_h7lhs7CpACwKYLBiSKbdHPid7oXe9SNe3Ai5g9hhRtZNlN0cR2lHCv6fvjhk1LPBcYQfRgP5ya0v8NyUM-g"
+  server : "www.arista.io/",
+  service_token = ""
 }
 
 instance_type = {
@@ -63,4 +55,6 @@ host_amis = {
   us-east-2 : "ami-083064f66d3878ff7"
 }
 
+## AWS IAM profile name that allows CloudEOS router to modify AWS routing tables
+## to setup Cloud HA
 aws_iam_instance_profile = "awslogs2"
