@@ -2,27 +2,22 @@
 
 This folder has Terraform scripts to launch and configure CloudEOS in various public clouds.
 
-Note that following the instructions will cause instances to be launched in your public cloud
-and incur expenses. 
+*Note that following the instructions will cause instances to be launched in your public cloud and incur expenses. Make sure you destroy the resources after testing*
 
 # Prerequisites
 
 1) Public cloud account credentials eg AWS Access key and secret
 2) Terraform installed on your laptop/server
-3) Security webtoken for CloudVision
-4) Create one or more Containers in CVaaS which will be used to provision the routers
-
-# Arista CloudVision Terraform provider 
-
-Since the provider isn't an offical Terraform provider yet, the terraform plugin folder has to be downloaded.
-
-# Steps
+3) Security webtoken for CloudVision, Arista Terraform provider plugins - Please contact Arista to get them
+4) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide"
 
 ## Installing Terraform
 
 Follow the steps at https://learn.hashicorp.com/terraform/getting-started/install.html 
 
 ## Get AWS and Arista providers
+
+Since the Arista Terraform provider isn't bundled with terraform yet please contact Arista to get terraform-arista-plugin_latest.tar.gz and save it CloudEOS/terraform folder.
 
 '''
 cd CloudEOS/terraform
@@ -31,37 +26,136 @@ cd CloudEOS/terraform
 
 ## Setup AWS Credentials
 
-AWS Credentials through Vault Please follow through this [doc](https://docs.google.com/document/d/1BDiVeMnygyjO3suVvEWMm0nJPWdDxlTEpRswfkgqjO4/edit "AWS Credentials through Vault") and make sure you can get AWS access key and secrets. Set the credentials setup the following env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY by using export commands in bash. 
+Security credentials for AWS from your IT Team or from your AWS account; Terraform will need these to authenticate with AWS and create resources. 
 
-Run all terraform commands with the above environment variables setup
+Set the following environment variables in your shell
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_SESSION_TOKEN
 
-# Topology Examples : Go the respective example folders and follow instructions. 
+Run the terraform deployment with the above environment variables set.
 
-The directories containes examples. While you will only have to modify the input_vars.tfvars file to get the topologies to work, feel free to modify the code to create your own topologies to suit the customer’s requirement. 
+# Deploying Topologies
 
-## Two AWS Regions with leaf routers
-This topology lets you create a multi-region setup with 2 Edge VPCs in different regions and
-leaf VPCs connected to those Edge VPCs. Leaf VPCs also create host VMs with iperf installed.
-These hosts are connected to the Leaf CloudEOS instances and can be used to test end-end connectivity.
-and can be used
-Please follow examples/aws_tworegion_clos/aws_tworegion_clos.md
+The examples directory contains terraform files for various topologies that you can deploy. While you will only have to modify the input_vars.tfvars file to get the topologies to work, feel free to modify the code to create your own topologies to suit your requirement. 
 
-## One AWS Region with multiple leaf routers
-This topology has a single Edge VPC with multiple Leaf VPCs(4) connected to it. Every VPC has 2 CloudEOS
-instances each. And the Leaf VPCs have hosts behind it with iperf installed.
+## Change directory to the example topology
 
-Please follow examples/aws_oneregion_multileaf/aws_oneregion_multileaf.md
+It is recommended that if this is the first time, try out "aws_oneregion_multipleleaf" and then "aws_tworegion_cloudha"
 
-## Two AWS Regions with no leaf routers
-This topology lets you create a multi-region setup with 2 Edge VPCs in 2 different regions. There
-are no Leaf VPCs created in this topology and can help test WAN connectivity across regions.Note, that 
-there isn't a host VM added here.
+```bash
+cd examples/aws_oneregion_multipleleaf
+```
 
-Please follow examples/aws_tworegion_noleaf/aws_tworegion_noleaf.md
+## Update Input variables
 
-# Setting username and password for host
+Please update the input parameters in **input_vars.tfvars** for the example topology before you deploy them. 
 
-To login to host you can use various steps listed below:
+## Create Topology, Route Reflector, Edge and Leaf Routers
+
+It's necessary to create resources in the following order.
+1. Topology and Route Reflector
+2. Edge
+3. Leaf
+
+## For MAC OS
+1. To create Topology and Route Reflector
+
+*Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 or createing edge reources*
+
+Assuming current directory to be this directory. Execute to below commands to
+create topology and route reflector.
+
+```bash
+cd topology
+terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+2. To create Edge resources
+Assuming current directory to be this directory.
+
+```bash
+cd edge
+terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+3. To create Leaf resources
+Assuming current directory to be this directory.
+
+```bash
+cd leaf
+terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+**Don't forget to terraform destroy..see steps at the end**
+
+## For Linux 
+1. To create Topology and Route Reflector
+
+Assuming current directory to be this directory. Execute to below commands to create topology and route reflector.
+
+*Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 or createing edge reources*
+
+
+```bash
+cd topology
+terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+2. To create Edge resources
+Assuming current directory to be this directory.
+
+```bash
+cd edge
+terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+3. To create Leaf resources
+
+Assuming current directory to be this directory.
+
+```bash
+cd leaf
+terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform plan -var-file=../input_vars.tfvars
+terraform apply -var-file=../input_vars.tfvars
+```
+
+## To destroy resources
+
+It's necessary to destroy in following order
+
+1. Destory Leaf resources
+
+```bash
+terraform destroy -var-file=../input_vars.tfvars
+```
+
+2. Destory Edge resources
+
+```bash
+terraform destroy -var-file=../input_vars.tfvars
+```
+
+3. Destory Topology and Route Reflector resources
+
+```bash
+terraform destroy -var-file=../input_vars.tfvars
+```
+
+# LINUX host for testing : Setting username and password 
+
+The Linux host comes with iperf3 installed. To login to host you can use various steps listed below:
 
 ## Using pem file
 Copy the pem file to the cloudeos then ssh to device using pem file.
@@ -95,7 +189,6 @@ module "Region2Leaf1host1" {
                 // ...
 }
 ```
-
 # iPerf Command Examples
 
 Iperf commands:

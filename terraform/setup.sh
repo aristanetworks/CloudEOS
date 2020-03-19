@@ -4,13 +4,23 @@
 
 rm -r .terraform/ > /dev/null 2>&1
 
+usage="$(basename "$0") [-h] [-d URL] [-f path] Install terraform plugins
+
+where:
+    -h  show this help text
+    -d  URL to download Arista Terraform plugins
+    -f  Filesystem path to Arista Terraform plugins (default is ./terraform-arista-plugin_latest.tar.gz)"
+
 ## specify a URL or path to terraform-arista-plugin_latest.tar.gz
-while getopts d:f: option
+while getopts hd:f: option
 do
 case "${option}"
 in
 d) URL=${OPTARG};;
 f) TARFILE=${OPTARG};;
+h) echo "$usage"
+   exit
+   ;;
 esac
 done
 
@@ -41,10 +51,12 @@ else
         TARFILE="./terraform-arista-plugin_latest.tar.gz"
     fi
     if [ ! -e $TARFILE ]; then
-        echo Arista Terraform plugin file $TARFILE not found
+        echo
+        echo ERROR Arista Terraform plugin file $TARFILE not found
         rm -r .terraform/
-        exit
+        exit 1
     fi
+    echo Extract provider-arista binaries from $TARFILE
     tar -xf $TARFILE
 fi
 
