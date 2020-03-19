@@ -20,25 +20,11 @@ These fields are commented out in input_vars.tfvars. Please uncomment them and m
 # Create Topology, Route Reflector, Edge and Leaf Routers
 
 It's necessary to create resources in the following order.
-1. Topology and Route Reflector
-2. Edge
-3. Leaf
+1. Topology, Edges and Route Reflector
+2. Leaf
 
 # For MAC OS
-1. To create Topology and Route Reflector
-
-Assuming current directory to be this directory. Execute to below commands to
-create topology and route reflector.
-
-```bash
-cd topology
-terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
-terraform plan -var-file=../input_vars.tfvars
-terraform apply -var-file=../input_vars.tfvars
-```
-
-2. To create Edge resources
-Assuming current directory to be this directory.
+1. To create Edges, Topology and Route Reflector
 
 ```bash
 cd edge
@@ -47,7 +33,7 @@ terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
 
-3. To create Leaf resources
+2. To create Leaf resources
 Assuming current directory to be this directory.
 
 ```bash
@@ -60,19 +46,7 @@ terraform apply -var-file=../input_vars.tfvars
 **Don't forget to terraform destroy..see steps at the end**
 
 # For Linux 
-1. To create Topology and Route Reflector
-
-Assuming current directory to be this directory. Execute to below commands to
-create topology and route reflector.
-
-```bash
-cd topology
-terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
-terraform plan -var-file=../input_vars.tfvars
-terraform apply -var-file=../input_vars.tfvars
-```
-
-2. To create Edge resources
+1. To create Topology, Edge and Route Reflector resources
 Assuming current directory to be this directory.
 
 ```bash
@@ -82,7 +56,7 @@ terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
 
-3. To create Leaf resources
+2. To create Leaf resources
 
 Assuming current directory to be this directory.
 
@@ -100,17 +74,14 @@ It's necessary to destroy in following order
 1. Destory Leaf resources
 
 ```bash
+cd leaf
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-2. Destory Edge resources
+2. Destory Topology, Edge and RR resources
 
 ```bash
+cd edge
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-3. Destory Topology and Route Reflector resources
-
-```bash
-terraform destroy -var-file=../input_vars.tfvars
-```
