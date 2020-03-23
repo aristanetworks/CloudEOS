@@ -4,10 +4,10 @@ topology = "AWS_CLOS"
 
 ## Get service_token from Arista Contact and replace empty string below
 cvaas = {
-  domain : "apiserver.cv-staging.corp.arista.io",
+  domain : "apiserver.cv-play.corp.arista.io",
   username : "admin",
-  server : "www.cv-staging.corp.arista.io",
-  service_token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjgsImRzbiI6ImFkbWluIiwiZHN0IjoidXNlciIsImVtYWlsIjoieGd1b0BhcmlzdGEuY29tIiwic2lkIjoiOWY2MjA4ZDI4YWMxY2U5YjRiZjI3ZjgzYTMzNjljNjZhZDFlZjRiMDVhMzViMjEzNjUwMzJmMzZiNGNmZDMzNi1RaVNfeU1XRkVZVEtBTHVmMW9aY0o2YTJNS3lwQjFXR0pLdmJIRTFQIn0.9t_h7lhs7CpACwKYLBiSKbdHPid7oXe9SNe3Ai5g9hhRtZNlN0cR2lHCv6fvjhk1LPBcYQfRgP5ya0v8NyUM-g"   #mandatory
+  server : "www.cv-play.corp.arista.io",
+  service_token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjExMywiZHNuIjoiYWRtaW4iLCJkc3QiOiJ1c2VyIiwiZW1haWwiOiJmYW55YW5nQGFyaXN0YS5jb20iLCJzaWQiOiIyYzBlNjM3OWVkNmZmZjI2ZjcxNDk5ZWQxZDgwMzIwODBiM2Q1N2M0ODI1NDY4NjhhM2Y0NjgyODg0M2NlYTEwLUs1eTRDMTFHang3UlNGTTFtcEdqMFE0Q2EydjktTVZUbWlhUThWS1oifQ.lcAkM52EmJjYQslKKHYGBPZrz5BBk37EBDuvZkcTp8brXpdjpY5ogxUfDPeyhEeqN0eMA8qg8HuGVOcpb93YCg"   #mandatory
 }
 
 ## Enter keypairs that will be used to login to AWS instances
