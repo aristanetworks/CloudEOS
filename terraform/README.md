@@ -8,8 +8,9 @@ This folder has Terraform scripts to launch and configure CloudEOS in various pu
 
 1) Public cloud account credentials eg AWS Access key and secret
 2) Terraform installed on your laptop/server
-3) Security webtoken for CloudVision, Arista Terraform provider plugins - Please contact Arista to get them
-4) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide"
+3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision, Security webtoken for CloudVision, Arista Terraform provider plugins 
+4) Subscribe to Arista CloudEOS PAYG offer in the cloud marketplace
+5) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide"
 
 ## Installing Terraform
 

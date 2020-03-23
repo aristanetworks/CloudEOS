@@ -1,0 +1,3 @@
+Arista CloudEOS™ Multi Cloud solution enables a highly secure and reliable networking experience with consistent segmentation, telemetry, provisioning and troubleshooting for the entire enterprise. It can be deployed across the enterprise edge, WAN, campus, data center, and multiple public and private clouds. For more information, please visit [Arista CloudEOS webpage](https://www.arista.com/en/solutions/hybrid-cloud) and [CloudEOS product brief](https://www.arista.com/assets/data/pdf/Whitepapers/Arista_CloudEOS_Product_Brief.pdf). Please contact sales@arista.com for any questions.
+
+"terraform" folder has Terraform scripts to launch and configure CloudEOS in various public clouds.
