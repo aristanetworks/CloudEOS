@@ -42,6 +42,10 @@ output "vpc_info" {
   value = [[aws_vpc.vpc.id], local.igw_id, local.sg_id, local.peer_id, [aws_vpc.vpc.cidr_block], [local.arista_vpc_id], [local.peervpcidr], local.sg_default_id]
 }
 
+output "peer_vpc_account_info" {
+  value = [var.cross_account_peering, var.peer_access_key, var.peer_secret_key, var.peer_session_token]
+}
+
 output "topology_name" {
   value = var.topology_name
 }

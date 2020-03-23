@@ -13,7 +13,7 @@ resource "arista_veos_status" "veos" {
   tags                         = var.tags //tags should have the Name.
   availability_zone            = aws_instance.veosVm.availability_zone
   primary_network_interface_id = aws_instance.veosVm.primary_network_interface_id
-  public_ip                    = length( aws_eip.eip.*.public_ip ) > 0 ? aws_eip.eip.*.public_ip[0] : ""
+  public_ip                    = length(aws_eip.eip.*.public_ip) > 0 ? aws_eip.eip.*.public_ip[0] : ""
   intf_name                    = var.intf_names
   intf_id                      = aws_network_interface.allIntfs.*.id
   intf_private_ip              = aws_network_interface.allIntfs.*.private_ip

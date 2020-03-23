@@ -5,6 +5,14 @@ provider "aws" {
   region = var.region
 }
 
+provider "aws" {
+  alias      = "peer"
+  region     = var.region
+  access_key = var.peer_vpc_account_info[1]
+  secret_key = var.peer_vpc_account_info[2]
+  token      = var.peer_vpc_account_info[3]
+}
+
 locals {
   private_intfs           = length(aws_network_interface.allIntfs.*.id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
   route_table_id          = length(aws_route_table.route_table_public.*.id) > 0 ? aws_route_table.route_table_public[0].id : var.public_route_table_id
@@ -149,8 +157,17 @@ resource "aws_network_interface_attachment" "secondary_intf" {
 }
 
 //Only supporting hub-spoke for now. With full-mesh we would need a different way of figuring out the count.
+resource "aws_route" "peering_route_cross" {
+  provider = aws.peer
+  count    = var.role == "CloudLeaf" && var.primary && var.peer_vpc_account_info[0] == true ? var.topology_name != "" ? 1 : var.peerroutetableid1 != [] ? 1 : 0 : 0
+  //route_table_id = var.topology_name != "" ? tolist(arista_veos_config.veos[0].peerroutetableid1)[count.index] : var.peerroutetableid1[count.index]
+  route_table_id            = tolist(arista_veos_config.veos[0].peerroutetableid1)[0]
+  destination_cidr_block    = local.local_vpc_cidr
+  vpc_peering_connection_id = local.peering_id
+}
+
 resource "aws_route" "peering_route" {
-  count = var.role == "CloudLeaf" && var.primary ? var.topology_name != "" ? 1 : var.peerroutetableid1 != [] ? 1 : 0 : 0
+  count = var.role == "CloudLeaf" && var.primary && var.peer_vpc_account_info[0] == false ? var.topology_name != "" ? 1 : var.peerroutetableid1 != [] ? 1 : 0 : 0
   //route_table_id = var.topology_name != "" ? tolist(arista_veos_config.veos[0].peerroutetableid1)[count.index] : var.peerroutetableid1[count.index]
   route_table_id            = tolist(arista_veos_config.veos[0].peerroutetableid1)[0]
   destination_cidr_block    = local.local_vpc_cidr
