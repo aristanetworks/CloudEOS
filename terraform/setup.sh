@@ -45,7 +45,7 @@ cd ../../
 
 if [ -n "$URL" ]; then 
    echo Download and extract provider-arista binaries from $URL
-   wget $URL -O - | tar -xz
+   curl $URL | tar -xz
 else
     if [ -z ${TARFILE+x} ]; then
         TARFILE="./terraform-arista-plugin_latest.tar.gz"
