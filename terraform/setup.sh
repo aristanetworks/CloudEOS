@@ -28,24 +28,28 @@ echo Get terraform provider binaries
 cd test/setup
 terraform init
 
-if [ ! ls .terraform/plugins/darwin_amd64/terraform-provider-aws* 1> /dev/null 2>&1 ] && [ ! ls .terraform/plugins/linux_amd64/terraform-provider-aws* 1> /dev/null 2>&1 ]; then
+if ! ls .terraform/plugins/darwin_amd64/terraform-provider-aws* 1> /dev/null 2>&1 && ! ls .terraform/plugins/linux_amd64/terraform-provider-aws* 1> /dev/null 2>&1; then
    echo Failed to get aws plugin! Please rerun the setup script.
    rm -r .terraform/
-   exit
+   exit 1
 fi
 
-if [ ! ls .terraform/plugins/darwin_amd64/terraform-provider-template* 1> /dev/null 2>&1 ] && [ ! ls .terraform/plugins/linux_amd64/terraform-provider-template* 1> /dev/null 2>&1 ]; then
+if ! ls .terraform/plugins/darwin_amd64/terraform-provider-template* 1> /dev/null 2>&1 && ! ls .terraform/plugins/linux_amd64/terraform-provider-template* 1> /dev/null 2>&1; then
    echo Failed to get template plugin! Please rerun the setup script.
    rm -r .terraform/
-   exit
+   exit 1
 fi
 
 mv .terraform/ ../../.terraform
 cd ../../
 
-if [ -n "$URL" ]; then 
+if [ -n "$URL" ]; then
    echo Download and extract provider-arista binaries from $URL
-   curl $URL | tar -xz
+   if command -v curl > /dev/null 2>&1; then
+        curl $URL | tar -xz
+   else
+        wget $URL -O - | tar -xz
+   fi
 else
     if [ -z ${TARFILE+x} ]; then
         TARFILE="./terraform-arista-plugin_latest.tar.gz"
@@ -60,10 +64,10 @@ else
     tar -xf $TARFILE
 fi
 
-if [ ! ls .terraform/plugins/darwin_amd64/terraform-provider-arista* 1> /dev/null 2>&1 ] || [ ! ls .terraform/linux_amd64/terraform-provider-arista* 1> /dev/null 2>&1 ]; then
+if ! ls .terraform/plugins/darwin_amd64/terraform-provider-arista* 1> /dev/null 2>&1 || ! ls .terraform/plugins/linux_amd64/terraform-provider-arista* 1> /dev/null 2>&1; then
    echo Failed to get arista plugin! Please rerun the setup script
    rm -r .terraform/
-   exit
+   exit 1
 fi
 
 echo Setup Successful!
