@@ -10,7 +10,7 @@ This folder has Terraform scripts to launch and configure CloudEOS in various pu
 2) Terraform installed on your laptop/server
 3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision, Security webtoken for CloudVision, Arista Terraform provider plugins 
 4) Subscribe to Arista CloudEOS PAYG offer in the cloud marketplace
-5) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide"
+5) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide" (Please contact your Arista rep or sales@arista.com to get the guide)
 
 ## Installing Terraform
 
@@ -62,10 +62,9 @@ It's necessary to create resources in the following order.
 ## For MAC OS
 1. To create Topology and Route Reflector
 
-*Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 or createing edge reources*
+*Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 (create edge resources)*
 
-Assuming current directory to be this directory. Execute to below commands to
-create topology and route reflector.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf". Execute to below commands to create topology and route reflector.
 
 ```bash
 cd topology
@@ -75,7 +74,7 @@ terraform apply -var-file=../input_vars.tfvars
 ```
 
 2. To create Edge resources
-Assuming current directory to be this directory.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
 
 ```bash
 cd edge
@@ -85,7 +84,7 @@ terraform apply -var-file=../input_vars.tfvars
 ```
 
 3. To create Leaf resources
-Assuming current directory to be this directory.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
 
 ```bash
 cd leaf
@@ -99,7 +98,7 @@ terraform apply -var-file=../input_vars.tfvars
 ## For Linux 
 1. To create Topology and Route Reflector
 
-Assuming current directory to be this directory. Execute to below commands to create topology and route reflector.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf". Execute to below commands to create topology and route reflector.
 
 *Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 or createing edge reources*
 
@@ -112,7 +111,7 @@ terraform apply -var-file=../input_vars.tfvars
 ```
 
 2. To create Edge resources
-Assuming current directory to be this directory.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf".
 
 ```bash
 cd edge
@@ -123,7 +122,7 @@ terraform apply -var-file=../input_vars.tfvars
 
 3. To create Leaf resources
 
-Assuming current directory to be this directory.
+Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf".
 
 ```bash
 cd leaf
@@ -134,29 +133,32 @@ terraform apply -var-file=../input_vars.tfvars
 
 ## To destroy resources
 
-It's necessary to destroy in following order
+It's necessary to destroy in following order. Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
 
-1. Destory Leaf resources
+1. Destroy Leaf resources
 
 ```bash
+cd topology
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-2. Destory Edge resources
+2. Destroy Edge resources
 
 ```bash
+cd edge
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-3. Destory Topology and Route Reflector resources
+3. Destroy Topology and Route Reflector resources
 
 ```bash
+cd leaf
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
 # LINUX host for testing : Setting username and password 
 
-The Linux host comes with iperf3 installed. To login to host you can use various steps listed below:
+The Linux host comes with iperf3 installed. The Linux host isn't accessible from Internet so you will have to login to edge router, then to leaf and then finally to the host. To login to host you can use various steps listed below:
 
 ## Using pem file
 Copy the pem file to the cloudeos then ssh to device using pem file.
