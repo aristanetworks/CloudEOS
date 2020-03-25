@@ -38,6 +38,12 @@ module "EdgeSubnet" {
   topology_name = module.EdgeVpc.topology_name
   region        = module.EdgeVpc.region
 }
+output EdgePublicIPs {
+  value = { "Edge1" : module.CloudEOSEdge1.publicIp, "Edge2" : module.CloudEOSEdge2.publicIp }
+}
+output edgePrivateIps {
+  value = { "Edge1" : module.CloudEOSEdge1.intf_private_ips, "Edge2" : module.CloudEOSEdge2.intf_private_ips }
+}
 
 module "CloudEOSEdge1" {
   source        = "../../../module/arista/aws/cloudEOS"

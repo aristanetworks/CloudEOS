@@ -7,7 +7,24 @@ provider "arista" {
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
-
+output "leafAndHostIPs" {
+  value = {
+    "Leaf1EOS1" : module.Leaf1CloudEOS1.intf_private_ips,
+    "Leaf1EOS2" : module.Leaf1CloudEOS2.intf_private_ips,
+    "Leaf2EOS1" : module.Leaf2CloudEOS1.intf_private_ips,
+    "Leaf2EOS2" : module.Leaf2CloudEOS2.intf_private_ips,
+    "Leaf2EOS1" : module.Leaf2CloudEOS1.intf_private_ips,
+    "Leaf2EOS2" : module.Leaf2CloudEOS2.intf_private_ips,
+    "Leaf3EOS1" : module.Leaf3CloudEOS1.intf_private_ips,
+    "Leaf3EOS2" : module.Leaf3CloudEOS2.intf_private_ips,
+    "Leaf4EOS1" : module.Leaf4CloudEOS1.intf_private_ips,
+    "Leaf4EOS2" : module.Leaf4CloudEOS2.intf_private_ips,
+    "Leaf1Host1" : module.Leaf1host1.intf_private_ips,
+    "Leaf2Host1" : module.Leaf2host1.intf_private_ips,
+    "Leaf3Host1" : module.Leaf3host1.intf_private_ips,
+    "Leaf4Host1" : module.Leaf4host1.intf_private_ips,
+  }
+}
 //================= Leaf1 CloudEOS1===============================
 module "Leaf1Vpc" {
   source        = "../../../module/arista/aws/vpc"

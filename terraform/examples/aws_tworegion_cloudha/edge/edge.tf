@@ -5,6 +5,13 @@ provider "arista" {
   service_account_web_token = var.cvaas["service_token"]
 }
 
+output EdgePublicIPs {
+  value = { "Region2Edge1" : module.Region2CloudEOSEdge1.publicIp, "Region3Edge1" : module.Region3CloudEOSEdge1.publicIp }
+}
+output edgePrivateIps {
+  value = { "Region2Edge1" : module.Region2CloudEOSEdge1.intf_private_ips, "Region3Edge1" : module.Region3CloudEOSEdge1.intf_private_ips }
+}
+
 module "Region2EdgeVpc" {
   source        = "../../../module/arista/aws/vpc"
   topology_name = var.topology

@@ -5,6 +5,27 @@ provider "arista" {
   service_account_web_token = var.cvaas["service_token"]
 }
 
+output "leafAndHostIPs" {
+  value = {
+    "Reg2Leaf1EOS1" : module.Region2Leaf1CloudEOS1.intf_private_ips,
+    "Reg2Leaf1EOS2" : module.Region2Leaf1CloudEOS2.intf_private_ips,
+    "Reg2Leaf2EOS1" : module.Region2Leaf2CloudEOS1.intf_private_ips,
+    "Reg2Leaf2EOS2" : module.Region2Leaf2CloudEOS2.intf_private_ips,
+    "Reg3Leaf1EOS1" : module.Region3Leaf1CloudEOS1.intf_private_ips,
+    "Reg3Leaf1EOS2" : module.Region3Leaf1CloudEOS2.intf_private_ips,
+    "Reg3Leaf2EOS1" : module.Region3Leaf2CloudEOS1.intf_private_ips,
+    "Reg3Leaf2EOS2" : module.Region3Leaf2CloudEOS2.intf_private_ips,
+    "Reg2Leaf1EOS1" : module.Region2Leaf1host1.intf_private_ips,
+    "Reg2Leaf1EOS2" : module.Region2Leaf1host2.intf_private_ips,
+    "Reg2Leaf2Host1" : module.Region2Leaf2host1.intf_private_ips,
+    "Reg2Leaf2Host2" : module.Region2Leaf2host2.intf_private_ips,
+    "Reg3Leaf1Host1" : module.Region3Leaf1host1.intf_private_ips,
+    "Reg3Leaf1Host2" : module.Region3Leaf1host2.intf_private_ips,
+    "Reg3Leaf2Host1" : module.Region3Leaf2host1.intf_private_ips,
+    "Reg3Leaf2Host2" : module.Region3Leaf2host2.intf_private_ips,
+  }
+}
+
 //Region2 Leafs
 module "Region2Leaf1Vpc" {
   source        = "../../../module/arista/aws/vpc"

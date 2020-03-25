@@ -7,22 +7,22 @@ cvaas = {
   domain : "apiserver.arista.io",
   username : "nobody",
   server : "www.arista.io",
-  service_token = ""   #mandatory
+  service_token = "" #mandatory
 }
 
 ## Enter keypairs that will be used to login to AWS instances
 ## If you don't have keypairs create them on AWS console for the following regions
 keypair_name = {
-  us-west-1 : "your-west-1-keypair",  #mandatory
-  us-east-1 : "your-east-1-keypair",  #mandatory
-  us-east-2 : "your-east-2-keypair",  #mandatory
+  us-west-1 : "your-west-1-keypair", #mandatory
+  us-east-1 : "your-east-1-keypair", #mandatory
+  us-east-2 : "your-east-2-keypair", #mandatory
 }
 
 ## AWS IAM profile name that allows CloudEOS router to modify AWS routing tables
 ## to setup Cloud HA. Check out "CloudEOS MultiCloud Deployment Guide" or
 ## https://www.arista.com/en/cg-veos-router/veos-router-cloud-configuration
 ## on how to setup the IAM role
-aws_iam_instance_profile = "role_with_route_table_permissions"  #mandatory
+aws_iam_instance_profile = "role_with_route_table_permissions" #mandatory
 
 ## Cutomization of the parameters below are *optional*
 
