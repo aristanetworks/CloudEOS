@@ -16,12 +16,6 @@ keypair_name = {
   us-east-1 : "your-east-1-keypair", #mandatory
 }
 
-## AWS IAM profile name that allows CloudEOS router to modify AWS routing tables
-## to setup Cloud HA. Check out "CloudEOS MultiCloud Deployment Guide" or
-## https://www.arista.com/en/cg-veos-router/veos-router-cloud-configuration
-## on how to setup the IAM role
-aws_iam_instance_profile = "role_with_route_table_permissions" #mandatory
-
 ## Cutomization of the parameters below are *optional*
 
 ## CloudEOS network requires three subnets for control plane
