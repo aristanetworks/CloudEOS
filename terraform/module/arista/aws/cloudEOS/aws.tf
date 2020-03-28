@@ -36,6 +36,7 @@ resource "aws_eip" "eip" {
   count             = local.public_intf_num
   vpc               = true
   network_interface = aws_network_interface.allIntfs.*.id[index(var.intf_names, matchkeys(keys(var.interface_types), values(var.interface_types), ["public"])[count.index])]
+  depends_on = [aws_instance.veosVm]
 }
 
 resource "aws_network_interface" "allIntfs" {

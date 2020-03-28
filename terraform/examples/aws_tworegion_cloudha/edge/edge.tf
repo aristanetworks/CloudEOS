@@ -6,7 +6,7 @@ provider "arista" {
 }
 
 output EdgePublicIPs {
-  value = { "Region2Edge1" : module.Region2CloudEOSEdge1.publicIp, "Region3Edge1" : module.Region3CloudEOSEdge1.publicIp }
+  value = { "Region2Edge1" : module.Region2CloudEOSEdge1.eip_public, "Region3Edge1" : module.Region3CloudEOSEdge1.eip_public }
 }
 output edgePrivateIps {
   value = { "Region2Edge1" : module.Region2CloudEOSEdge1.intf_private_ips, "Region3Edge1" : module.Region3CloudEOSEdge1.intf_private_ips }

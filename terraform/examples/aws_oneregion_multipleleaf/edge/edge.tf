@@ -39,7 +39,7 @@ module "EdgeSubnet" {
   region        = module.EdgeVpc.region
 }
 output EdgePublicIPs {
-  value = { "Edge1" : module.CloudEOSEdge1.publicIp, "Edge2" : module.CloudEOSEdge2.publicIp }
+  value = { "Edge1" : module.CloudEOSEdge1.eip_public, "Edge2" : module.CloudEOSEdge2.eip_public }
 }
 output edgePrivateIps {
   value = { "Edge1" : module.CloudEOSEdge1.intf_private_ips, "Edge2" : module.CloudEOSEdge2.intf_private_ips }

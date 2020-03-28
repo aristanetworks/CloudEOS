@@ -140,5 +140,5 @@ variable "iam_instance_profile" {
 variable "peer_vpc_account_info" {
   description = "Peer VPCs account Info"
   //0: cross_account_peering, 1: aws_access_key, 2:aws_secret_key, 3:aws_session_token
-  default = ["", "", "", "", ""]
+  default = [false, "", "", "", ""]
 }
