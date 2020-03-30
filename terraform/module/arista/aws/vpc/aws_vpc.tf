@@ -11,6 +11,9 @@ provider "aws" {
   secret_key = var.peer_secret_key
   token      = var.peer_session_token
 }
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr_block[0]
   tags                 = var.tags
