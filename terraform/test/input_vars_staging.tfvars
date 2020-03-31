@@ -45,10 +45,26 @@ aws_regions = {
 
 ## Currently private AMIs. Contact Arista for access
 eos_amis = {
-  us-west-1 : "ami-09559c40de4f4aae2",
-  us-west-2 : "ami-0416b685220dc59e4",
-  us-east-1 : "ami-05c30997c3e1a9c27",
-  us-east-2 : "ami-05f1d5470ed6d86f2"
+  us-east-2 : "ami-0cfe8f89fa642a0ee",
+  us-east-1 : "ami-0e7a2bc35081ad6b6",
+  us-west-1 : "ami-049d033db1c1830c9",
+  us-west-2 : "ami-0f127a20bd7bf04ad",
+  ap-east-1 : "ami-017d724c052f7686a",
+  ap-south-1 : "ami-05a760d906c21d570",
+  ap-northeast-2 : "ami-0c6e65d050c183ec8",
+  ap-southeast-1 : "ami-0a1c2c36bc79a2c30",
+  ap-southeast-2 : "ami-06ad876529d4d3c32",
+  ap-northeast-1 : "ami-0f0330501486d9357",
+  ca-central-1 : "ami-0db44bc61ee02faee",
+  eu-central-1 : "ami-0bdb781f58945929d",
+  eu-west-1 : "ami-092858c965961d499",
+  eu-west-2 : "ami-0f0c3008ce4e86348",
+  eu-west-3 : "ami-0a65269a8e1927397",
+  eu-north-1 : "ami-08a926964c8bdfe3a",
+  me-south-1 : "ami-008ef35a062974dde",
+  sa-east-1 : "ami-0164e87197dce5114",
+  us-gov-east-1 : "ami-20ae4251",
+  us-gov-west-1 : "ami-98a590f9",
 }
 
 availability_zone = {
@@ -63,4 +79,3 @@ host_amis = {
   us-east-1 : "ami-0b161e951484253ab",
   us-east-2 : "ami-083064f66d3878ff7"
 }
-
