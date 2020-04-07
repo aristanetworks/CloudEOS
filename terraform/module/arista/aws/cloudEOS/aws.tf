@@ -155,6 +155,7 @@ resource "aws_network_interface_attachment" "secondary_intf" {
   instance_id          = aws_instance.veosVm.id
   network_interface_id = aws_network_interface.allIntfs.*.id[count.index + 1]
   device_index         = count.index + 1
+  depends_on = [aws_instance.veosVm]
 }
 
 //Only supporting hub-spoke for now. With full-mesh we would need a different way of figuring out the count.
