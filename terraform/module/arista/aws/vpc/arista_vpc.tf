@@ -15,4 +15,5 @@ resource "arista_vpc" "vpc" {
   wan_name          = var.wan_name
   region            = var.region
   tf_id             = arista_vpc_config.vpc[0].tf_id
+  account           = data.aws_caller_identity.current.account_id
 }
