@@ -11,6 +11,7 @@ resource "arista_vpc" "vpc" {
   role              = var.role
   topology_name     = var.topology_name
   tags              = var.tags
+  cnps              = lookup(var.tags, "Cnps", "")
   clos_name         = var.clos_name
   wan_name          = var.wan_name
   region            = var.region
