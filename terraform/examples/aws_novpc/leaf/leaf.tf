@@ -19,6 +19,7 @@ module "LeafVpc" {
   tags          = var.vpc_info["leaf1_vpc"]["tags"]
   vpc_cidr      = var.vpc_info["leaf1_vpc"]["vpc_cidr"]
   vpc_id        = var.vpc_info["leaf1_vpc"]["vpc_id"]
+  sg_default_id = var.vpc_info["leaf1_vpc"]["sg_default_id"]
 }
 
 module "LeafSubnet" {

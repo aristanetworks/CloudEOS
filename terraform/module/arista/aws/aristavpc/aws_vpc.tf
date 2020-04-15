@@ -2,6 +2,8 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_caller_identity" "current" {}
+
 //The number of vpc_peering links is equal to the number of peers returned by CloudDeploy
 //Count cannot be an output varaiable: https://github.com/hashicorp/terraform/issues/18923
 resource "aws_vpc_peering_connection" "vpc_peer" {

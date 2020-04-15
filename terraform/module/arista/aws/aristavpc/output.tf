@@ -7,7 +7,7 @@ locals {
 }
 
 output "vpc_info" {
-  value = [[var.vpc_id], local.igw_id, local.sg_id, local.peer_id, [var.vpc_cidr], [local.arista_vpc_id], [local.peervpcidr]]
+  value = [[var.vpc_id], local.igw_id, local.sg_id, local.peer_id, [var.vpc_cidr], [local.arista_vpc_id], [local.peervpcidr], [var.sg_default_id]]
 }
 
 output "vpc_id" {

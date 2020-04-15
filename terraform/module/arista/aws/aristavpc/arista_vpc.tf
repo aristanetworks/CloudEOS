@@ -6,10 +6,12 @@ resource "arista_vpc" "vpc" {
   cidr_block        = var.vpc_cidr
   igw               = var.igw_id
   role              = var.role
+  cnps              = lookup(var.tags, "Cnps", "")
   topology_name     = var.topology_name
   tags              = var.tags
   clos_name         = var.clos_name
   wan_name          = var.wan_name
   region            = var.region
   tf_id             = arista_vpc_config.vpc[0].tf_id
+  account           = data.aws_caller_identity.current.account_id
 }

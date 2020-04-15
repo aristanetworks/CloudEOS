@@ -65,3 +65,7 @@ variable "vpc_cidr" {
 variable "vpc_id" {
   default = ""
 }
+
+variable "sg_default_id" {
+  default = ""
+}

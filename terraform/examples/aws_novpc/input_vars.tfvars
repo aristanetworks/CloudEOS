@@ -107,6 +107,7 @@ vpc_info = {
       Name = "adhipQHLeaf1"
       Cnps = "dev"
     }
+    sg_default_id = "sg-0933b8999b9d730ca"
   }
 }
 
