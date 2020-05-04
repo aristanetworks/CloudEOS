@@ -5,7 +5,6 @@ topology = "AWS_MULTILEAF"
 ## Get service_token from Arista Contact and replace empty string below
 cvaas = {
   domain : "apiserver.arista.io",
-  username : "nobody",
   server : "www.arista.io",
   service_token = "" #mandatory
 }
