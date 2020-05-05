@@ -6,7 +6,7 @@ topology = "AWS_NOVPC"
 cvaas = {
   domain : "apiserver.arista.io",
   server : "www.arista.io",
-  service_token = "" #mandatory
+  service_token : "" #mandatory
 }
 
 ## Enter keypairs that will be used to login to AWS instances
