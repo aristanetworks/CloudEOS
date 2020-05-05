@@ -5,10 +5,8 @@ topology = "AZ-MultiLeaf"
 ## Get service_token from Arista Contact and replace empty string below
 cvaas = {
   domain : "apiserver.cv-staging.corp.arista.io",
-  username : "admin",
   server : "www.cv-staging.corp.arista.io",
-  //arista-systest-poc
-  service_token : "" //mandatory
+  service_token : "" #mandatory
 }
 
 ## Enter keypairs that will be used to login to AWS instances
@@ -16,10 +14,10 @@ cvaas = {
 
 ## Cutomization of the parameters below are *optional*
 
-## CloudEdgeDev network requires three subnets for control plane
-vtep_ip_cidr          = "100.0.0.0/16" // CIDR block for VTEP IPs
-terminattr_ip_cidr    = "101.1.0.0/16" // Loopback IP range for CloudVision connectivity
-dps_controlplane_cidr = "100.2.0.0/16" // CIDR block for VXLAN/Dps Control Plane IPs
+## CloudEdge network requires three subnets for control plane.
+vtep_ip_cidr          = "172.16.0.0/24" // CIDR block for VTEP IPs
+terminattr_ip_cidr    = "172.16.1.0/24" // Loopback IP range for CloudVision connectivity
+dps_controlplane_cidr = "172.16.2.0/24" // CIDR block for VXLAN/Dps Control Plane IPs
 
 ## CloudVision container names - they need to be created on www.arista.io/cv
 ## before deployment. Steps to create containers on CloudVision are in

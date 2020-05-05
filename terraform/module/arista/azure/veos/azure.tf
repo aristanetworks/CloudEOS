@@ -85,8 +85,8 @@ resource "azurerm_virtual_machine" "veosVm" {
 
   os_profile {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
-    admin_username = "arastra"
-    admin_password = "arastra1234!"
+    admin_username = var.admin_username
+    admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
 

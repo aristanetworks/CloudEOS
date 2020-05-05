@@ -5,7 +5,6 @@ provider "azurerm" {
 
 provider "arista" {
   cvaas_domain              = var.cvaas["domain"]
-  cvaas_username            = var.cvaas["username"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
@@ -35,17 +34,17 @@ resource "arista_wan" "wan" {
 
 module "edge1" {
   source        = "../../../module/arista/azure/rg"
-  rg_name       = "${var.topology}edge1"
-  role          = "CloudEdge"
-  rg_location   = var.azure_regions["region1"]
-  vnet_name     = "${var.topology}vnet"
   address_space = "12.0.0.0/16"
   nsg_name      = "edge1AllowSSHIKE"
+  role          = "CloudEdge"
+  rg_name       = "${var.topology}edge1"
+  rg_location   = var.azure_regions["region1"]
+  vnet_name     = "${var.topology}-edge1vnet"
   topology_name = arista_topology.topology.topology_name
   clos_name     = arista_clos.clos.name
   wan_name      = arista_wan.wan.name
   tags = {
-    Name = "${var.topology}vnet"
+    Name = "${var.topology}edge1"
     Cnps = "Dev"
   }
   availability_set = true
