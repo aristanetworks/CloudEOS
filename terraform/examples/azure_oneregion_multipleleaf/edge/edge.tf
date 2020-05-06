@@ -88,7 +88,7 @@ module "azureedge1veos1" {
   admin_password         = var.password
   admin_username         = var.username
 }
-
+/*
 module "azureRR1" {
   source = "../../../module/arista/azure/veos"
   role   = "CloudEdge"
@@ -114,3 +114,4 @@ module "azureRR1" {
   admin_password         = var.password
   admin_username         = var.username
 }
+*/
