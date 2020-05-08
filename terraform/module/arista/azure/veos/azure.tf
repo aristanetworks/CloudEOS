@@ -1,6 +1,57 @@
 locals {
-  rg_name     = var.vpc_info != [] ? var.vpc_info[2] : var.rg_name
-  rg_location = var.vpc_info != [] ? var.vpc_info[3] : var.rg_location
+  rg_name         = var.vpc_info != [] ? var.vpc_info[2] : var.rg_name
+  rg_location     = var.vpc_info != [] ? var.vpc_info[3] : var.rg_location
+  ilb_intfnames   = var.cloud_ha != "" && var.role == "CloudLeaf" ? [for key, value in var.interface_types : key if value == "private"] : []
+  frontend_ilb_ip = var.primary == true && var.cloud_ha != "" ? azurerm_lb.leafha_ilb[0].private_ip_address : var.cloud_ha != "" && var.frontend_ilb_ip != "" ? var.frontend_ilb_ip : ""
+}
+
+resource "azurerm_lb" "leafha_ilb" {
+  count               = var.primary == true && var.cloud_ha != "" && var.role == "CloudLeaf" && length(local.ilb_intfnames) > 0 ? 1 : 0
+  name                = "Leaf_HA_ILB"
+  location            = local.rg_location
+  resource_group_name = local.rg_name
+  sku                 = "Standard"
+  frontend_ip_configuration {
+    name      = "Leaf_HA_ILB_IP"
+    subnet_id = var.subnetids[local.ilb_intfnames[0]]
+  }
+}
+
+resource "azurerm_lb_rule" "rule" {
+  count                          = length(azurerm_lb.leafha_ilb.*.id) > 0 ? 1 : 0
+  resource_group_name            = local.rg_name
+  loadbalancer_id                = azurerm_lb.leafha_ilb[0].id
+  name                           = "ILBRule1"
+  protocol                       = "All"
+  frontend_port                  = 0
+  backend_port                   = 0
+  frontend_ip_configuration_name = "Leaf_HA_ILB_IP"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.pool[0].id
+  probe_id                       = azurerm_lb_probe.probe[0].id
+  load_distribution              = "SourceIP"
+}
+
+resource "azurerm_lb_probe" "probe" {
+  count               = length(azurerm_lb.leafha_ilb.*.id) > 0 ? 1 : 0
+  resource_group_name = local.rg_name
+  loadbalancer_id     = azurerm_lb.leafha_ilb[0].id
+  name                = "ssh-probe"
+  port                = 22
+  protocol            = "Tcp"
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "intfpoolassociation" {
+  count                   = var.cloud_ha != "" && var.role == "CloudLeaf" ? 1 : 0
+  network_interface_id    = azurerm_network_interface.allIntfs[1].id
+  ip_configuration_name   = local.ilb_intfnames[0]
+  backend_address_pool_id = length(azurerm_lb_backend_address_pool.pool.*.id) > 0 ? azurerm_lb_backend_address_pool.pool[0].id : var.backend_pool
+}
+
+resource "azurerm_lb_backend_address_pool" "pool" {
+  count               = var.primary == true && var.cloud_ha != "" && var.role == "CloudLeaf" ? 1 : 0
+  resource_group_name = local.rg_name
+  loadbalancer_id     = azurerm_lb.leafha_ilb[0].id
+  name                = "CloudEOSPool"
 }
 
 resource "azurerm_public_ip" "publicip" {
@@ -177,7 +228,6 @@ resource "azurerm_virtual_machine" "veosVm1" {
   tags = var.tags
 }
 
-
 resource "azurerm_storage_account" "storage" {
   name                     = var.storage_name
   location                 = local.rg_location
@@ -198,14 +248,13 @@ resource "azurerm_route_table" "privateRoutetable" {
     address_prefix         = "0.0.0.0/0"
     name                   = var.route_name
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = azurerm_network_interface.allIntfs[index(var.intf_names, matchkeys(keys(var.interface_types), values(var.interface_types), ["private"])[count.index])].private_ip_address
+    next_hop_in_ip_address = var.cloud_ha != "" ? local.frontend_ilb_ip : length(azurerm_network_interface.allIntfs) > 0 ? azurerm_network_interface.allIntfs[index(var.intf_names, matchkeys(keys(var.interface_types), values(var.interface_types), ["private"])[count.index])].private_ip_address : ""
   }
 
   tags = {
     environment = "internal"
   }
 }
-
 
 resource "azurerm_subnet_route_table_association" "privateRtSubnetMap" {
   count          = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["private"]))

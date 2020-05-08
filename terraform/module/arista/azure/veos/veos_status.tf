@@ -1,6 +1,6 @@
 locals {
-  instanceId                  = var.availability_zone != [] ? azurerm_virtual_machine.veosVm1.*.id[0] : azurerm_virtual_machine.veosVm.*.id[0]
-  primary_network_interfaceId = var.availability_zone != [] ? azurerm_virtual_machine.veosVm1.*.primary_network_interface_id[0] : azurerm_virtual_machine.veosVm.*.primary_network_interface_id[0]
+  instanceId                  = var.availability_zone != [] && length(azurerm_virtual_machine.veosVm1.*.id) > 0 ? azurerm_virtual_machine.veosVm1.*.id[0] : length(azurerm_virtual_machine.veosVm.*.id) > 0 ? azurerm_virtual_machine.veosVm.*.id[0] : ""
+  primary_network_interfaceId = var.availability_zone != [] && length(azurerm_virtual_machine.veosVm1.*.primary_network_interface_id) > 0 ? azurerm_virtual_machine.veosVm1.*.primary_network_interface_id[0] : length(azurerm_virtual_machine.veosVm.*.primary_network_interface_id) > 0 ? azurerm_virtual_machine.veosVm.*.primary_network_interface_id[0] : ""
 }
 
 resource "arista_veos_status" "veos" {

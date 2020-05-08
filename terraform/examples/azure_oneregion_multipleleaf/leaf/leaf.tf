@@ -63,6 +63,7 @@ module "azureLeaf1veos1" {
   cloud_ha               = "leaf1"
   admin_password         = var.password
   admin_username         = var.username
+  primary                = true
 }
 
 module "azureLeaf1veos2" {
@@ -87,9 +88,11 @@ module "azureLeaf1veos2" {
   filename               = var.cloudeos_info["leaf1veos2"]["filename"]
   cloudeos_image_version = var.cloudeos_info["leaf1veos2"]["cloudeos_image_version"]
   cloudeos_image_sku     = var.cloudeos_info["leaf1veos2"]["cloudeos_image_sku"]
-  cloud_ha               = "leaf1"
   admin_password         = var.password
   admin_username         = var.username
+  cloud_ha               = "leaf1"
+  backend_pool           = module.azureLeaf1veos1.backend_pool_id
+  frontend_ilb_ip        = module.azureLeaf1veos1.ilb_ip
 }
 
 module "azureLeaf1host1" {

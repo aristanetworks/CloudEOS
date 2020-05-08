@@ -147,3 +147,13 @@ variable "existing_userdata" {
 
 variable "admin_username" {}
 variable "admin_password" {}
+variable "ilb_intf" {
+  default = ""
+}
+variable "backend_pool" {
+  default = ""
+}
+
+variable "frontend_ilb_ip" {
+  default = ""
+}
