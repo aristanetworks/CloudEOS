@@ -44,6 +44,25 @@ resource "azurerm_network_security_group" "allowSSHIKE" {
   }
 }
 
+resource "azurerm_network_security_group" "allowALL" {
+  depends_on = [azurerm_resource_group.rg]
+  name                = "${var.nsg_name}-leaf"
+  location            = var.rg_location
+  resource_group_name = var.rg_name
+
+  security_rule {
+    name                       = "allow_all"
+    priority                   = 130
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
 resource "azurerm_resource_group" "rg" {
   name       = var.rg_name
   location   = var.rg_location

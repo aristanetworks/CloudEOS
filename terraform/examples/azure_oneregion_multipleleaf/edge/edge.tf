@@ -1,6 +1,6 @@
 provider "azurerm" {
   skip_provider_registration = true
-  version                    = 1.33
+  features {}
 }
 
 provider "arista" {
@@ -65,7 +65,6 @@ module "azureedge1veos1" {
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
-  nsg_id        = module.edge1.nsg_id
 
   subnetids = {
     "edge1veos1Intf0" = module.edge1Subnet.vnet_subnets[0]
@@ -97,7 +96,6 @@ module "azureRR1" {
   }
   vpc_info               = module.edge1.vpc_info
   topology_name          = module.edge1.topology_name
-  nsg_id                 = module.edge1.nsg_id
   publicip_name          = var.cloudeos_info["rr1"]["publicip_name"]
   intf_names             = var.cloudeos_info["rr1"]["intf_names"]
   interface_types        = var.cloudeos_info["rr1"]["interface_types"]

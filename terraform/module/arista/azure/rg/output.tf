@@ -28,9 +28,6 @@ output "vnet_address_space" {
   value       = azurerm_virtual_network.vnet.address_space
 }
 
-output "nsg_id" {
-  value = azurerm_network_security_group.allowSSHIKE.id
-}
 output "topology_name" {
   value = var.topology_name
 }
@@ -44,5 +41,6 @@ locals {
 output "vpc_info" {
   value = [azurerm_virtual_network.vnet.id, azurerm_virtual_network.vnet.name,
     azurerm_resource_group.rg.name, azurerm_resource_group.rg.location,
-  local.vpc_id]
+    local.vpc_id, azurerm_network_security_group.allowSSHIKE.id,
+    azurerm_network_security_group.allowALL.id ]
 }

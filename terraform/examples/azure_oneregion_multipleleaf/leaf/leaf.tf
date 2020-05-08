@@ -1,6 +1,6 @@
 provider "azurerm" {
   skip_provider_registration = true
-  version                    = 1.33
+  features {}
 }
 
 provider "arista" {
@@ -43,8 +43,6 @@ module "azureLeaf1veos1" {
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  nsg_id        = module.azureLeaf1.nsg_id
-
   subnetids = {
     "leaf1veos1Intf0" = module.azureLeaf1Subnet.vnet_subnets[0]
     "leaf1veos1Intf1" = module.azureLeaf1Subnet.vnet_subnets[1]
@@ -71,8 +69,6 @@ module "azureLeaf1veos2" {
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  nsg_id        = module.azureLeaf1.nsg_id
-
   subnetids = {
     "leaf1veos2Intf0" = module.azureLeaf1Subnet.vnet_subnets[2]
     "leaf1veos2Intf1" = module.azureLeaf1Subnet.vnet_subnets[3]
@@ -156,7 +152,6 @@ module "azureLeaf2veos1" {
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
-  nsg_id        = module.azureLeaf2.nsg_id
   subnetids = {
     "leaf2veos1Intf0" = module.azureLeaf2Subnet.vnet_subnets[0]
     "leaf2veos1Intf1" = module.azureLeaf2Subnet.vnet_subnets[1]

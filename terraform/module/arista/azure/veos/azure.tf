@@ -68,7 +68,6 @@ resource "azurerm_network_interface" "allIntfs" {
   name                          = var.intf_names[count.index]
   location                      = local.rg_location
   resource_group_name           = local.rg_name
-  network_security_group_id     = lookup(var.interface_types, var.intf_names[count.index], "") != "private" ? var.nsg_id : null
   enable_accelerated_networking = true
   enable_ip_forwarding          = true
 
@@ -80,6 +79,12 @@ resource "azurerm_network_interface" "allIntfs" {
     public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
   }
 
+}
+
+resource "azurerm_network_interface_security_group_association" "nsg" {
+  count                     = var.vpc_info != [] ? length(var.intf_names) : 0
+  network_interface_id      = azurerm_network_interface.allIntfs[count.index].id
+  network_security_group_id = var.role == "CloudEdge" ? var.vpc_info[5] : var.vpc_info[6]
 }
 
 data "template_file" "user_data_precreated" {
