@@ -82,7 +82,7 @@ resource "azurerm_network_interface" "allIntfs" {
 }
 
 resource "azurerm_network_interface_security_group_association" "nsg" {
-  count                     = var.vpc_info != [] ? length(var.intf_names) : 0
+  count                     = length(var.vpc_info) != 0 ? length(var.intf_names) : 0
   network_interface_id      = azurerm_network_interface.allIntfs[count.index].id
   network_security_group_id = var.role == "CloudEdge" ? var.vpc_info[5] : var.vpc_info[6]
 }
