@@ -83,7 +83,9 @@ module "Leaf1CloudEOS1" {
     "Name" = "${var.topology}-Leaf1CloudEOS1"
     "Cnps" = "dev"
   }
+  cloud_ha             = "leaf1"
   primary              = true
+  iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -103,18 +105,22 @@ module "Leaf1CloudEOS2" {
     "${var.topology}-Leaf1CloudEOS2Intf1" = "private"
   }
   subnetids = {
-    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[2]
-    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[3]
+    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[0]
+    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[1]
   }
-  private_ips       = { "0" : ["101.2.2.101"], "1" : ["101.2.3.101"] }
-  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone2"]
+  private_ips       = { "0" : ["101.2.0.201"], "1" : ["101.2.1.201"] }
+  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone1"]
   region            = module.Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Leaf1CloudEOS2"
     "Cnps" = "dev"
   }
-  internal_route_table_id    = module.Leaf1CloudEOS1.route_table_internal
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  cloud_ha                   = "leaf1"
+  iam_instance_profile       = "awslogs2"
+  internal_route_table_id    = module.Leaf1CloudEOS1.route_table_internal
+  primary_internal_subnetids = [module.Leaf1Subnet.vpc_subnets[0]]
+  intra_az_ha                = true
 }
 
 module "Leaf1host1" {
@@ -128,7 +134,6 @@ module "Leaf1host1" {
   tags = {
     "Name" = "${var.topology}-Leaf1Devhost"
   }
-
 }
 
 // Leaf2
@@ -191,6 +196,8 @@ module "Leaf2CloudEOS1" {
     "Cnps" = "prod"
   }
   primary              = true
+  cloud_ha             = "leaf2"
+  iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
 }
 
@@ -222,6 +229,9 @@ module "Leaf2CloudEOS2" {
   }
   internal_route_table_id    = module.Leaf2CloudEOS1.route_table_internal
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  cloud_ha                   = "leaf2"
+  iam_instance_profile       = "awslogs2"
+  primary_internal_subnetids = [module.Leaf2Subnet.vpc_subnets[0]]
 }
 
 module "Leaf2host1" {

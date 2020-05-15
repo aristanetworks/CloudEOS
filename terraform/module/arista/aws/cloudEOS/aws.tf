@@ -36,7 +36,7 @@ resource "aws_eip" "eip" {
   count             = local.public_intf_num
   vpc               = true
   network_interface = aws_network_interface.allIntfs.*.id[index(var.intf_names, matchkeys(keys(var.interface_types), values(var.interface_types), ["public"])[count.index])]
-  depends_on = [aws_instance.veosVm]
+  depends_on        = [aws_instance.veosVm]
 }
 
 resource "aws_network_interface" "allIntfs" {
@@ -87,7 +87,7 @@ resource "aws_route" "internal_default_route" {
 //Every Private Interface has its own route table. We associate different routes to every route table
 //based on the next hop Private ENI.
 resource "aws_route_table_association" "route_map_private" {
-  count          = local.private_intf_num
+  count          = var.intra_az_ha == false ? local.private_intf_num : 0
   route_table_id = aws_route_table.route_table_private.*.id[count.index]
   subnet_id      = local.private_subnets[count.index]
 }
@@ -97,7 +97,7 @@ resource "aws_route_table_association" "route_map_private" {
 //route table to the subnet.
 //RR shouldn't have an internal Interface
 resource "aws_route_table_association" "route_map_internal" {
-  count          = local.internal_intf_num
+  count          = var.intra_az_ha == false ? local.internal_intf_num : 0
   route_table_id = local.internal_route_table_id
   subnet_id      = local.internal_subnets[count.index]
 }
@@ -155,7 +155,7 @@ resource "aws_network_interface_attachment" "secondary_intf" {
   instance_id          = aws_instance.veosVm.id
   network_interface_id = aws_network_interface.allIntfs.*.id[count.index + 1]
   device_index         = count.index + 1
-  depends_on = [aws_instance.veosVm]
+  depends_on           = [aws_instance.veosVm]
 }
 
 //Only supporting hub-spoke for now. With full-mesh we would need a different way of figuring out the count.

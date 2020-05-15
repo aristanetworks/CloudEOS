@@ -142,3 +142,8 @@ variable "peer_vpc_account_info" {
   //0: cross_account_peering, 1: aws_access_key, 2:aws_secret_key, 3:aws_session_token
   default = [false, "", "", "", ""]
 }
+
+variable "intra_az_ha" {
+  description = "Support for CloudHA when both Routers are using the same Private subnet"
+  default     = false
+}
