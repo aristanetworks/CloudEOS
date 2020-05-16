@@ -4,6 +4,6 @@ provider "aws" {
 }
 provider "azurerm" {
   skip_provider_registration = true
-  version                    = 1.33
+  features {}
 }
 data "template_file" "user_data_precreated" {}
