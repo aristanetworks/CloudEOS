@@ -1,3 +1,8 @@
+locals {
+  publicNSGID  = length(azurerm_network_security_group.publicNSG.*.id) > 0 ? azurerm_network_security_group.publicNSG[0].id : ""
+  privateNSGID = length(azurerm_network_security_group.privateNSG.*.id) > 0 ? azurerm_network_security_group.privateNSG[0].id : ""
+}
+
 resource "arista_vpc" "vpc" {
   count             = var.topology_name != "" ? 1 : 0
   cloud_provider    = "azure"
@@ -5,7 +10,7 @@ resource "arista_vpc" "vpc" {
   vpc_id            = azurerm_virtual_network.vnet.id
   vnet_name         = var.vnet_name
   region            = azurerm_virtual_network.vnet.location
-  security_group_id = azurerm_network_security_group.allowSSHIKE.id
+  security_group_id = var.role == "CloudEdge" ? local.publicNSGId : local.privateNSGID
   cidr_block        = azurerm_virtual_network.vnet.address_space[0]
   role              = var.role
   topology_name     = var.topology_name

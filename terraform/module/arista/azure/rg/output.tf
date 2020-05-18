@@ -36,11 +36,13 @@ output "availability_set_id" {
   value = length(azurerm_availability_set.availSet.*.id) > 0 ? azurerm_availability_set.availSet[0].id : ""
 }
 locals {
-  vpc_id = length(arista_vpc.vpc.*.id) > 0 ? arista_vpc.vpc[0].id : ""
+  vpc_id       = length(arista_vpc.vpc.*.id) > 0 ? arista_vpc.vpc[0].id : ""
+  publicNSGId  = length(azurerm_network_security_group.publicNSG.*.id) > 0 ? azurerm_network_security_group.publicNSG[0].id : ""
+  privateNSGId = length(azurerm_network_security_group.privateNSG.*.id) > 0 ? azurerm_network_security_group.privateNSG[0].id : ""
+
 }
 output "vpc_info" {
   value = [azurerm_virtual_network.vnet.id, azurerm_virtual_network.vnet.name,
     azurerm_resource_group.rg.name, azurerm_resource_group.rg.location,
-    local.vpc_id, azurerm_network_security_group.allowSSHIKE.id,
-    azurerm_network_security_group.allowALL.id ]
+  local.vpc_id, local.publicNSGId, local.privateNSGId]
 }

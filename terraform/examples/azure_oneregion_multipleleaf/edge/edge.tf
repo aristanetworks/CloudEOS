@@ -35,11 +35,11 @@ resource "arista_wan" "wan" {
 module "edge1" {
   source        = "../../../module/arista/azure/rg"
   address_space = "12.0.0.0/16"
-  nsg_name      = "edge1AllowSSHIKE"
+  nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"
   rg_location   = var.azure_regions["region1"]
-  vnet_name     = "${var.topology}-edge1vnet"
+  vnet_name     = "${var.topology}Edge1vnet"
   topology_name = arista_topology.topology.topology_name
   clos_name     = arista_clos.clos.name
   wan_name      = arista_wan.wan.name
@@ -65,6 +65,8 @@ module "azureedge1veos1" {
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
+  tags          = { "Name" : "${var.topology}Edge1veos1" }
+  storage_name  = lower("${var.topology}edge1veos1store")
 
   subnetids = {
     "edge1veos1Intf0" = module.edge1Subnet.vnet_subnets[0]
@@ -75,9 +77,7 @@ module "azureedge1veos1" {
   interface_types = var.cloudeos_info["edge1veos1"]["interface_types"]
 
   availablity_set_id     = module.edge1.availability_set_id
-  tags                   = var.cloudeos_info["edge1veos1"]["tags"]
   disk_name              = var.cloudeos_info["edge1veos1"]["disk_name"]
-  storage_name           = var.cloudeos_info["edge1veos1"]["storage_name"]
   private_ips            = var.cloudeos_info["edge1veos1"]["private_ips"]
   route_name             = var.cloudeos_info["edge1veos1"]["route_name"]
   routetable_name        = var.cloudeos_info["edge1veos1"]["routetable_name"]
@@ -87,6 +87,33 @@ module "azureedge1veos1" {
   admin_password         = var.password
   admin_username         = var.username
 }
+
+module "azureedge1veos2" {
+  source        = "../../../module/arista/azure/veos"
+  vpc_info      = module.edge1.vpc_info
+  topology_name = module.edge1.topology_name
+  role          = "CloudEdge"
+  tags          = { "Name" : "${var.topology}Edge1veos2" }
+  storage_name  = lower("${var.topology}edge1veos2store")
+  subnetids = {
+    "edge1veos2Intf0" = module.edge1Subnet.vnet_subnets[2]
+    "edge1veos2Intf1" = module.edge1Subnet.vnet_subnets[3]
+  }
+  availablity_set_id     = module.edge1.availability_set_id
+  publicip_name   = var.cloudeos_info["edge1veos2"]["publicip_name"]
+  intf_names      = var.cloudeos_info["edge1veos2"]["intf_names"]
+  interface_types = var.cloudeos_info["edge1veos2"]["interface_types"]
+  disk_name              = var.cloudeos_info["edge1veos2"]["disk_name"]
+  private_ips            = var.cloudeos_info["edge1veos2"]["private_ips"]
+  route_name             = var.cloudeos_info["edge1veos2"]["route_name"]
+  routetable_name        = var.cloudeos_info["edge1veos2"]["routetable_name"]
+  filename               = var.cloudeos_info["edge1veos2"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["edge1veos2"]["cloudeos_image_version"]
+  cloudeos_image_sku     = var.cloudeos_info["edge1veos2"]["cloudeos_image_sku"]
+  admin_password         = var.password
+  admin_username         = var.username
+}
+
 /*
 module "azureRR1" {
   source = "../../../module/arista/azure/veos"

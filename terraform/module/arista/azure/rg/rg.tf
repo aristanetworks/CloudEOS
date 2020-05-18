@@ -1,6 +1,7 @@
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_network_security_group" "allowSSHIKE" {
+resource "azurerm_network_security_group" "publicNSG" {
+  count               = var.role == "CloudEdge" ? 1 : 0
   depends_on          = [azurerm_resource_group.rg]
   name                = var.nsg_name
   location            = var.rg_location
@@ -44,8 +45,9 @@ resource "azurerm_network_security_group" "allowSSHIKE" {
   }
 }
 
-resource "azurerm_network_security_group" "allowALL" {
-  depends_on = [azurerm_resource_group.rg]
+resource "azurerm_network_security_group" "privateNSG" {
+  count               = var.role != "CloudEdge" ? 1 : 0
+  depends_on          = [azurerm_resource_group.rg]
   name                = "${var.nsg_name}-leaf"
   location            = var.rg_location
   resource_group_name = var.rg_name

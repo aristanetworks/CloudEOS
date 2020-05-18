@@ -18,7 +18,7 @@ resource "azurerm_lb" "leafha_ilb" {
 }
 
 resource "azurerm_lb_rule" "rule" {
-  count                          = length(azurerm_lb.leafha_ilb.*.id) > 0 ? 1 : 0
+  count                          = var.primary == true && var.cloud_ha != "" && var.role == "CloudLeaf" ? 1 : 0
   resource_group_name            = local.rg_name
   loadbalancer_id                = azurerm_lb.leafha_ilb[0].id
   name                           = "ILBRule1"
@@ -32,7 +32,7 @@ resource "azurerm_lb_rule" "rule" {
 }
 
 resource "azurerm_lb_probe" "probe" {
-  count               = length(azurerm_lb.leafha_ilb.*.id) > 0 ? 1 : 0
+  count               = var.primary == true && var.cloud_ha != "" && var.role == "CloudLeaf" ? 1 : 0
   resource_group_name = local.rg_name
   loadbalancer_id     = azurerm_lb.leafha_ilb[0].id
   name                = "ssh-probe"
