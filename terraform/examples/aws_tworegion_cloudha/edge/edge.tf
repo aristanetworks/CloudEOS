@@ -1,4 +1,4 @@
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
@@ -12,7 +12,7 @@ output edgePrivateIps {
 }
 
 module "Region2EdgeVpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   wan_name      = "${var.topology}-wan"
@@ -26,7 +26,7 @@ module "Region2EdgeVpc" {
 }
 
 module "Region2EdgeSubnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "100.2.0.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
     "100.2.1.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
@@ -45,7 +45,7 @@ module "Region2EdgeSubnet" {
 }
 
 module "Region2CloudEOSEdge1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region2EdgeVpc.region]
@@ -70,7 +70,7 @@ module "Region2CloudEOSEdge1" {
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
 module "Region3EdgeVpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   wan_name      = "${var.topology}-wan"
@@ -84,7 +84,7 @@ module "Region3EdgeVpc" {
 }
 
 module "Region3EdgeSubnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "100.3.0.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
     "100.3.1.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
@@ -103,7 +103,7 @@ module "Region3EdgeSubnet" {
 }
 
 module "Region3CloudEOSEdge1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region3EdgeVpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region3EdgeVpc.region]
@@ -130,7 +130,7 @@ module "Region3CloudEOSEdge1" {
 
 /*
 module "Region2CloudEOSEdge2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
   cloudeos_ami = var.eos_amis[module.Region2EdgeVpc.region]
@@ -156,7 +156,7 @@ module "Region2CloudEOSEdge2" {
   internal_route_table_id = module.Region2CloudEOSEdge1.route_table_internal
 }
 module "CloudEOSRR1" {
-  source = "../../../module/arista/aws/cloudEOS"
+  source = "../../../module/cloudeos/aws/router"
   role = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
   cloudeos_ami = var.eos_amis[module.Region2EdgeVpc.region]

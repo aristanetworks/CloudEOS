@@ -3,7 +3,7 @@ provider "azurerm" {
   features {}
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
@@ -13,7 +13,7 @@ variable "username" {}
 variable "password" {}
 
 module "azureLeaf1" {
-  source        = "../../../module/arista/azure/rg"
+  source        = "../../../module/cloudeos/azure/rg"
   rg_name       = "${var.topology}Leaf1"
   role          = "CloudLeaf"
   rg_location   = "westus2"
@@ -29,7 +29,7 @@ module "azureLeaf1" {
 }
 
 module "azureLeaf1Subnet" {
-  source          = "../../../module/arista/azure/subnet"
+  source          = "../../../module/cloudeos/azure/subnet"
   subnet_prefixes = var.subnet_info["leaf1subnet"]["subnet_prefixes"]
   subnet_names    = var.subnet_info["leaf1subnet"]["subnet_names"]
   vnet_name       = module.azureLeaf1.vnet_name
@@ -39,7 +39,7 @@ module "azureLeaf1Subnet" {
 }
 
 module "azureLeaf1veos1" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
@@ -68,7 +68,7 @@ module "azureLeaf1veos1" {
 }
 
 module "azureLeaf1veos2" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
@@ -98,7 +98,7 @@ module "azureLeaf1veos2" {
 }
 
 module "azureLeaf1host1" {
-  source      = "../../../module/arista/azure/host"
+  source      = "../../../module/cloudeos/azure/host"
   rg_name     = module.azureLeaf1.rg_name
   rg_location = "westus2"
   intf_name   = "host1Intf0"
@@ -113,7 +113,7 @@ module "azureLeaf1host1" {
 }
 
 module "azureLeaf1host2" {
-  source      = "../../../module/arista/azure/host"
+  source      = "../../../module/cloudeos/azure/host"
   rg_name     = module.azureLeaf1.rg_name
   rg_location = "westus2"
   intf_name   = "azurehost2Intf1"
@@ -128,7 +128,7 @@ module "azureLeaf1host2" {
 }
 
 module "azureLeaf2" {
-  source        = "../../../module/arista/azure/rg"
+  source        = "../../../module/cloudeos/azure/rg"
   rg_name       = "${var.topology}Leaf2"
   role          = "CloudLeaf"
   rg_location   = "westus2"
@@ -144,7 +144,7 @@ module "azureLeaf2" {
 }
 
 module "azureLeaf2Subnet" {
-  source          = "../../../module/arista/azure/subnet"
+  source          = "../../../module/cloudeos/azure/subnet"
   subnet_prefixes = var.subnet_info["leaf2subnet"]["subnet_prefixes"]
   subnet_names    = var.subnet_info["leaf2subnet"]["subnet_names"]
   vnet_name       = module.azureLeaf2.vnet_name
@@ -154,7 +154,7 @@ module "azureLeaf2Subnet" {
 }
 
 module "azureLeaf2veos1" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
@@ -183,7 +183,7 @@ module "azureLeaf2veos1" {
 }
 
 module "azureLeaf2host1" {
-  source      = "../../../module/arista/azure/host"
+  source      = "../../../module/cloudeos/azure/host"
   rg_name     = module.azureLeaf1.rg_name
   rg_location = "westus2"
   intf_name   = "host2Intf0"
@@ -198,7 +198,7 @@ module "azureLeaf2host1" {
 }
 
 module "azureLeaf2veos2" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
@@ -228,7 +228,7 @@ module "azureLeaf2veos2" {
 }
 
 module "azureLeaf2host2" {
-  source      = "../../../module/arista/azure/host"
+  source      = "../../../module/cloudeos/azure/host"
   rg_name     = module.azureLeaf1.rg_name
   rg_location = "westus2"
   intf_name   = "leaf2host2Intf0"

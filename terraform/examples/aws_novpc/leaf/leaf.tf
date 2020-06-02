@@ -2,14 +2,14 @@ provider "aws" {
   region = var.aws_regions["region1"]
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
 
 module "LeafVpc" {
-  source        = "../../../module/arista/aws/aristavpc"
+  source        = "../../../module/cloudeos/aws/aristavpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   wan_name      = "${var.topology}-wan"
@@ -22,7 +22,7 @@ module "LeafVpc" {
 }
 
 module "LeafSubnet" {
-  source            = "../../../module/arista/aws/aristasubnet"
+  source            = "../../../module/cloudeos/aws/aristasubnet"
   vpc_id            = module.LeafVpc.vpc_id[0]
   topology_name     = module.LeafVpc.topology_name
   region            = module.LeafVpc.region
@@ -32,7 +32,7 @@ module "LeafSubnet" {
   availability_zone = var.subnet_info["leaf1_subnet"]["availability_zone"]
 }
 module "CloudEOSLeaf1" {
-  source          = "../../../module/arista/aws/cloudEOS"
+  source          = "../../../module/cloudeos/aws/router"
   role            = "CloudLeaf"
   topology_name   = module.LeafVpc.topology_name
   cloudeos_ami    = var.eos_amis[module.LeafVpc.region]
@@ -52,7 +52,7 @@ module "CloudEOSLeaf1" {
   filename          = "../../../userdata/eos_ipsec_config.tpl"
 }
 module "CloudEOSLeaf2" {
-  source          = "../../../module/arista/aws/cloudEOS"
+  source          = "../../../module/cloudeos/aws/router"
   role            = "CloudLeaf"
   topology_name   = module.LeafVpc.topology_name
   cloudeos_ami    = var.eos_amis[module.LeafVpc.region]

@@ -1,4 +1,4 @@
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
@@ -27,7 +27,7 @@ output "leafAndHostIPs" {
 
 //Region2 Leafs
 module "Region2Leaf1Vpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   role          = "CloudLeaf"
@@ -40,7 +40,7 @@ module "Region2Leaf1Vpc" {
 }
 
 module "Region2Leaf1Subnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "101.2.0.0/24" = var.availability_zone[module.Region2Leaf1Vpc.region]["zone1"]
     "101.2.1.0/24" = var.availability_zone[module.Region2Leaf1Vpc.region]["zone1"]
@@ -59,7 +59,7 @@ module "Region2Leaf1Subnet" {
 }
 
 module "Region2Leaf1CloudEOS1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region2Leaf1Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region2Leaf1Vpc.region]
@@ -92,7 +92,7 @@ module "Region2Leaf1CloudEOS1" {
 
 module "Region2Leaf1host1" {
   region        = var.aws_regions["region2"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region2Leaf1Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf1Vpc.region]
@@ -104,7 +104,7 @@ module "Region2Leaf1host1" {
 }
 
 module "Region2Leaf1CloudEOS2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region2Leaf1Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region2Leaf1Vpc.region]
@@ -138,7 +138,7 @@ module "Region2Leaf1CloudEOS2" {
 
 module "Region2Leaf1host2" {
   region        = var.aws_regions["region2"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region2Leaf1Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf1Vpc.region]
@@ -150,7 +150,7 @@ module "Region2Leaf1host2" {
 }
 
 module "Region2Leaf2Vpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   role          = "CloudLeaf"
@@ -163,7 +163,7 @@ module "Region2Leaf2Vpc" {
 }
 
 module "Region2Leaf2Subnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "102.2.0.0/24" = var.availability_zone[module.Region2Leaf2Vpc.region]["zone1"]
     "102.2.1.0/24" = var.availability_zone[module.Region2Leaf2Vpc.region]["zone1"]
@@ -182,7 +182,7 @@ module "Region2Leaf2Subnet" {
 }
 
 module "Region2Leaf2CloudEOS1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region2Leaf2Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region2Leaf2Vpc.region]
@@ -215,7 +215,7 @@ module "Region2Leaf2CloudEOS1" {
 
 module "Region2Leaf2host1" {
   region        = var.aws_regions["region2"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region2Leaf2Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf2Vpc.region]
@@ -227,7 +227,7 @@ module "Region2Leaf2host1" {
 }
 
 module "Region2Leaf2CloudEOS2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region2Leaf2Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region2Leaf2Vpc.region]
@@ -261,7 +261,7 @@ module "Region2Leaf2CloudEOS2" {
 
 module "Region2Leaf2host2" {
   region        = var.aws_regions["region2"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region2Leaf2Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf2Vpc.region]
@@ -275,7 +275,7 @@ module "Region2Leaf2host2" {
 //Region3 Leafs
 
 module "Region3Leaf1Vpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   role          = "CloudLeaf"
@@ -288,7 +288,7 @@ module "Region3Leaf1Vpc" {
 }
 
 module "Region3Leaf1Subnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "110.2.0.0/24" = var.availability_zone[module.Region3Leaf1Vpc.region]["zone1"]
     "110.2.1.0/24" = var.availability_zone[module.Region3Leaf1Vpc.region]["zone1"]
@@ -307,7 +307,7 @@ module "Region3Leaf1Subnet" {
 }
 
 module "Region3Leaf1CloudEOS1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region3Leaf1Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region3Leaf1Vpc.region]
@@ -340,7 +340,7 @@ module "Region3Leaf1CloudEOS1" {
 
 module "Region3Leaf1host1" {
   region        = var.aws_regions["region3"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region3Leaf1Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf1Vpc.region]
@@ -352,7 +352,7 @@ module "Region3Leaf1host1" {
 }
 
 module "Region3Leaf1CloudEOS2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region3Leaf1Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region3Leaf1Vpc.region]
@@ -386,7 +386,7 @@ module "Region3Leaf1CloudEOS2" {
 
 module "Region3Leaf1host2" {
   region        = var.aws_regions["region3"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region3Leaf1Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf1Vpc.region]
@@ -398,7 +398,7 @@ module "Region3Leaf1host2" {
 }
 
 module "Region3Leaf2Vpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   role          = "CloudLeaf"
@@ -411,7 +411,7 @@ module "Region3Leaf2Vpc" {
 }
 
 module "Region3Leaf2Subnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "111.2.0.0/24" = var.availability_zone[module.Region3Leaf2Vpc.region]["zone1"]
     "111.2.1.0/24" = var.availability_zone[module.Region3Leaf2Vpc.region]["zone1"]
@@ -430,7 +430,7 @@ module "Region3Leaf2Subnet" {
 }
 
 module "Region3Leaf2CloudEOS1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region3Leaf2Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region3Leaf2Vpc.region]
@@ -463,7 +463,7 @@ module "Region3Leaf2CloudEOS1" {
 
 module "Region3Leaf2host1" {
   region        = var.aws_regions["region3"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region3Leaf2Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf2Vpc.region]
@@ -475,7 +475,7 @@ module "Region3Leaf2host1" {
 }
 
 module "Region3Leaf2CloudEOS2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Region3Leaf2Vpc.topology_name
   cloudeos_ami  = var.eos_amis[module.Region3Leaf2Vpc.region]
@@ -509,7 +509,7 @@ module "Region3Leaf2CloudEOS2" {
 
 module "Region3Leaf2host2" {
   region        = var.aws_regions["region3"]
-  source        = "../../../module/arista/aws/host"
+  source        = "../../../module/cloudeos/aws/host"
   ami           = var.host_amis[module.Region3Leaf2Vpc.region]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf2Vpc.region]

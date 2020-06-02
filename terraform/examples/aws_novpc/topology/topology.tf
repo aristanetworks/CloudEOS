@@ -2,36 +2,36 @@ provider "aws" {
   region = var.aws_regions["region1"]
 }
 
-provider "arista" {
+provider cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
 
-resource "arista_topology" "topology" {
+resource "cloudeos_topology" "topology" {
   topology_name         = var.topology
   bgp_asn               = "65200-65300"             // Range of BGP ASN’s used for topology
   vtep_ip_cidr          = var.vtep_ip_cidr          // CIDR block for VTEP IPs on veos
   terminattr_ip_cidr    = var.terminattr_ip_cidr    // Loopback IP range on veos
   dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on veos
 }
-resource "arista_clos" "clos" {
+resource "cloudeos_clos" "clos" {
   name              = "${var.topology}-clos"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.clos_cv_container
 }
 
-resource "arista_wan" "wan" {
+resource "cloudeos_wan" "wan" {
   name              = "${var.topology}-wan"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.wan_cv_container
 }
 
 module "RRVpc" {
-  source        = "../../../module/arista/aws/aristavpc"
-  topology_name = arista_topology.topology.topology_name
-  clos_name     = arista_clos.clos.name
-  wan_name      = arista_wan.wan.name
+  source        = "../../../module/cloudeos/aws/aristavpc"
+  topology_name = cloudeos_topology.topology.topology_name
+  clos_name     = cloudeos_clos.clos.name
+  wan_name      = cloudeos_wan.wan.name
   role          = var.vpc_info["rr_vpc"]["role"]
   tags          = var.vpc_info["rr_vpc"]["tags"]
   region        = var.aws_regions["region1"]
@@ -42,7 +42,7 @@ module "RRVpc" {
 }
 
 module "RRSubnet" {
-  source            = "../../../module/arista/aws/aristasubnet"
+  source            = "../../../module/cloudeos/aws/aristasubnet"
   vpc_id            = module.RRVpc.vpc_id[0]
   topology_name     = module.RRVpc.topology_name
   region            = var.aws_regions["region1"]
@@ -53,7 +53,7 @@ module "RRSubnet" {
 }
 
 module "CloudEOSRR1" {
-  source          = "../../../module/arista/aws/cloudEOS"
+  source          = "../../../module/cloudeos/aws/router"
   topology_name   = module.RRVpc.topology_name
   cloudeos_ami    = var.eos_amis[module.RRVpc.region]
   keypair_name    = var.keypair_name[module.RRVpc.region]
@@ -74,7 +74,7 @@ module "CloudEOSRR1" {
 }
 
 module "CloudEOSRR2" {
-  source          = "../../../module/arista/aws/cloudEOS"
+  source          = "../../../module/cloudeos/aws/router"
   topology_name   = module.RRVpc.topology_name
   cloudeos_ami    = var.eos_amis[module.RRVpc.region]
   keypair_name    = var.keypair_name[module.RRVpc.region]

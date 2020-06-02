@@ -2,14 +2,14 @@ provider "aws" {
   region = var.aws_regions["region1"]
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
 
 module "EdgeVpc" {
-  source        = "../../../module/arista/aws/aristavpc"
+  source        = "../../../module/cloudeos/aws/aristavpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   wan_name      = "${var.topology}-wan"
@@ -23,7 +23,7 @@ module "EdgeVpc" {
 }
 
 module "EdgeSubnet" {
-  source            = "../../../module/arista/aws/aristasubnet"
+  source            = "../../../module/cloudeos/aws/aristasubnet"
   vpc_id            = module.EdgeVpc.vpc_id[0]
   topology_name     = module.EdgeVpc.topology_name
   region            = module.EdgeVpc.region
@@ -34,7 +34,7 @@ module "EdgeSubnet" {
 }
 
 module "CloudEOSEdge1" {
-  source            = "../../../module/arista/aws/cloudEOS"
+  source            = "../../../module/cloudeos/aws/router"
   role              = var.router_info["edge2"]["role"]
   availability_zone = var.availability_zone[module.EdgeVpc.region]["zone1"]
   intf_names        = var.router_info["edge1"]["intf_names"]
@@ -55,7 +55,7 @@ module "CloudEOSEdge1" {
 }
 
 module "CloudEOSEdge2" {
-  source          = "../../../module/arista/aws/cloudEOS"
+  source          = "../../../module/cloudeos/aws/router"
   role            = var.router_info["edge2"]["role"]
   intf_names      = var.router_info["edge2"]["intf_names"]
   interface_types = var.router_info["edge2"]["interface_types"]

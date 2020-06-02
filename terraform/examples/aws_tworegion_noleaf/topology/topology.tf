@@ -2,7 +2,7 @@
 // Use of this source code is governed by the Apache License 2.0
 // that can be found in the LICENSE file.
 module "globals" {
-  source            = "../../../module/arista/common"
+  source            = "../../../module/cloudeos/common"
   topology          = var.topology
   keypair_name      = var.keypair_name
   cvaas             = var.cvaas
@@ -17,13 +17,13 @@ provider "aws" {
   region = module.globals.aws_regions["region1"]
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = module.globals.cvaas["domain"]
   cvaas_server              = module.globals.cvaas["server"]
   service_account_web_token = module.globals.cvaas["service_token"]
 }
 
-resource "arista_topology" "topology" {
+resource "cloudeos_topology" "topology" {
   topology_name         = module.globals.topology
   bgp_asn               = "65200-65300"             // Range of BGP ASN’s used for topology
   vtep_ip_cidr          = var.vtep_ip_cidr          // CIDR block for VTEP IPs on veos
@@ -31,23 +31,23 @@ resource "arista_topology" "topology" {
   dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on veos
 }
 
-resource "arista_clos" "clos" {
+resource "cloudeos_clos" "clos" {
   name              = "${module.globals.topology}-clos"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.clos_cv_container
 }
 
-resource "arista_wan" "wan" {
+resource "cloudeos_wan" "wan" {
   name              = "${module.globals.topology}-wan"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.wan_cv_container
 }
 
 module "RRVpc" {
-  source        = "../../../module/arista/aws/vpc"
-  topology_name = arista_topology.topology.topology_name
-  clos_name     = arista_clos.clos.name
-  wan_name      = arista_wan.wan.name
+  source        = "../../../module/cloudeos/aws/vpc"
+  topology_name = cloudeos_topology.topology.topology_name
+  clos_name     = cloudeos_clos.clos.name
+  wan_name      = cloudeos_wan.wan.name
   role          = "CloudEdge"
   igw_name      = "${module.globals.topology}-RRVpcIgw"
   cidr_block    = ["10.0.0.0/16"]
@@ -59,7 +59,7 @@ module "RRVpc" {
 }
 
 module "RRSubnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "10.0.0.0/24" = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
   }
@@ -72,7 +72,7 @@ module "RRSubnet" {
 }
 
 module "CloudEOSRR1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.RRVpc.topology_name
   cloudeos_ami  = module.globals.eos_amis[module.RRVpc.region]

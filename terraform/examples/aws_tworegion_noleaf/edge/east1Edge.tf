@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 //=================East1 Edge CloudEOS1===============================
 module "East1EdgeVpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = module.globals.topology
   clos_name     = "${module.globals.topology}-clos"
   wan_name      = "${module.globals.topology}-wan"
@@ -17,7 +17,7 @@ module "East1EdgeVpc" {
 }
 
 module "East1EdgeSubnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "200.2.0.0/24" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
     "200.2.1.0/24" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
@@ -36,7 +36,7 @@ module "East1EdgeSubnet" {
 }
 
 module "East1CloudEOSEdge1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.East1EdgeVpc.topology_name
   cloudeos_ami  = module.globals.eos_amis[module.East1EdgeVpc.region]

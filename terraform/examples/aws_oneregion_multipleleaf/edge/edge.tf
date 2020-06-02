@@ -1,13 +1,13 @@
 // Copyright (c) 2020 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
 // that can be found in the LICENSE file.
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
 }
 module "EdgeVpc" {
-  source        = "../../../module/arista/aws/vpc"
+  source        = "../../../module/cloudeos/aws/vpc"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   wan_name      = "${var.topology}-wan"
@@ -20,7 +20,7 @@ module "EdgeVpc" {
   region = var.aws_regions["region2"]
 }
 module "EdgeSubnet" {
-  source = "../../../module/arista/aws/subnet"
+  source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
     "100.2.0.0/24" = var.availability_zone[module.EdgeVpc.region]["zone1"]
     "100.2.1.0/24" = var.availability_zone[module.EdgeVpc.region]["zone1"]
@@ -45,7 +45,7 @@ output edgePrivateIps {
 }
 
 module "CloudEOSEdge1" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.EdgeVpc.topology_name
   cloudeos_ami  = var.eos_amis[module.EdgeVpc.region]
@@ -71,7 +71,7 @@ module "CloudEOSEdge1" {
 }
 
 module "CloudEOSEdge2" {
-  source        = "../../../module/arista/aws/cloudEOS"
+  source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.EdgeVpc.topology_name
   cloudeos_ami  = var.eos_amis[module.EdgeVpc.region]

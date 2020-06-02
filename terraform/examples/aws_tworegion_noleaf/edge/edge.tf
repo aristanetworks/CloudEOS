@@ -2,7 +2,7 @@
 // Use of this source code is governed by the Apache License 2.0
 // that can be found in the LICENSE file.
 module "globals" {
-  source            = "../../../module/arista/common"
+  source            = "../../../module/cloudeos/common"
   topology          = var.topology
   keypair_name      = var.keypair_name
   cvaas             = var.cvaas
@@ -13,7 +13,7 @@ module "globals" {
   host_amis         = var.host_amis
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = module.globals.cvaas["domain"]
   cvaas_server              = module.globals.cvaas["server"]
   service_account_web_token = module.globals.cvaas["service_token"]
@@ -21,7 +21,7 @@ provider "arista" {
 
 //=================Region1 Edge CloudEOS1===============================
 # module "Region1EdgeVpc" {
-#   source        = "../../../module/arista/aws/vpc"
+#   source        = "../../../module/cloudeos/aws/vpc"
 #   topology_name  = "${module.globals.topology}"
 #   clos_name      = "${module.globals.topology}-clos"
 #   wan_name      = "${module.globals.topology}-wan"
@@ -35,7 +35,7 @@ provider "arista" {
 # }
 
 # module "Region1EdgeSubnet" {
-#   source = "../../../module/arista/aws/subnet"
+#   source = "../../../module/cloudeos/aws/subnet"
 #   subnet_zones = {
 #     "100.0.0.0/24" = lookup( "${module.globals.availability_zone[module.Region1EdgeVpc.region]}", "zone1", "" )
 #     "100.0.1.0/24" = lookup( "${module.globals.availability_zone[module.Region1EdgeVpc.region]}", "zone1", "" )
@@ -54,7 +54,7 @@ provider "arista" {
 # }
 
 # module "Region1CloudEOSEdge1" {
-#   source        = "../../../module/arista/aws/cloudEOS"
+#   source        = "../../../module/cloudeos/aws/router"
 #   role          = "CloudEdge"
 #   topology_name = module.Region1EdgeVpc.topology_name
 #   cloudeos_ami = module.globals.eos_amis[module.Region1EdgeVpc.region]
@@ -81,7 +81,7 @@ provider "arista" {
 
 //=================Region2 Edge CloudEOS1===============================
 # module "Region2EdgeVpc" {
-#   source        = "../../../module/arista/aws/vpc"
+#   source        = "../../../module/cloudeos/aws/vpc"
 #   topology_name  = "${module.globals.topology}"
 #   clos_name      = "${module.globals.topology}-clos"
 #   wan_name      = "${module.globals.topology}-wan"
@@ -95,7 +95,7 @@ provider "arista" {
 # }
 
 # module "Region2EdgeSubnet" {
-#   source = "../../../module/arista/aws/subnet"
+#   source = "../../../module/cloudeos/aws/subnet"
 #   subnet_zones = {
 #     "100.2.0.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone1", "" )
 #     "100.2.1.0/24" = lookup( "${module.globals.availability_zone[module.Region2EdgeVpc.region]}", "zone1", "" )
@@ -114,7 +114,7 @@ provider "arista" {
 # }
 
 # module "Region2CloudEOSEdge1" {
-#   source        = "../../../module/arista/aws/cloudEOS"
+#   source        = "../../../module/cloudeos/aws/router"
 #   role          = "CloudEdge"
 #   topology_name = module.Region2EdgeVpc.topology_name
 #   cloudeos_ami = module.globals.eos_amis[module.Region2EdgeVpc.region]
@@ -141,7 +141,7 @@ provider "arista" {
 
 //=================Edge2=============================== NOTE NEEDS fixing - don't use
 # module "uday2eftEdge2Vpc" {
-#   source        = "../../../module/arista/aws/vpc"
+#   source        = "../../../module/cloudeos/aws/vpc"
 #   topology_name  = "topo-uday2"
 #   clos_name      = "clos-uday2"
 #   wan_name      = "wan-uday2"
@@ -156,7 +156,7 @@ provider "arista" {
 # }
 
 # module "uday2eftEdge2Subnet" {
-#   source = "../../../module/arista/aws/subnet"
+#   source = "../../../module/cloudeos/aws/subnet"
 #   subnet_zones = {
 #     "101.0.0.0/24" = "us-west-1b"
 #     "101.0.1.0/24" = "us-west-1b"
@@ -170,7 +170,7 @@ provider "arista" {
 # }
 
 # module "uday2eftEdge2veos1" {
-#   source        = "../../../module/arista/aws/cloudEOS"
+#   source        = "../../../module/cloudeos/aws/router"
 #   role          = "CloudEdge"
 #   topology_name = module.uday2eftEdge2Vpc.topology_name
 #   //cloudeos_ami  = "ami-07ec605ab3f7b279d"

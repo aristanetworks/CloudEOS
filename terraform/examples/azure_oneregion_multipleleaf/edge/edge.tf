@@ -3,7 +3,7 @@ provider "azurerm" {
   features {}
 }
 
-provider "arista" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]
@@ -12,7 +12,7 @@ provider "arista" {
 variable "username" {}
 variable "password" {}
 
-resource "arista_topology" "topology" {
+resource "cloudeos_topology" "topology" {
   topology_name         = var.topology
   bgp_asn               = "100-200"                 // Range of BGP ASN’s used for topology
   vtep_ip_cidr          = var.vtep_ip_cidr          // CIDR block for VTEP IPs on veos
@@ -20,29 +20,29 @@ resource "arista_topology" "topology" {
   dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on veos
 }
 
-resource "arista_clos" "clos" {
+resource "cloudeos_clos" "clos" {
   name              = "${var.topology}-clos"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.clos_cv_container
 }
 
-resource "arista_wan" "wan" {
+resource "cloudeos_wan" "wan" {
   name              = "${var.topology}-wan"
-  topology_name     = arista_topology.topology.topology_name
+  topology_name     = cloudeos_topology.topology.topology_name
   cv_container_name = var.wan_cv_container
 }
 
 module "edge1" {
-  source        = "../../../module/arista/azure/rg"
+  source        = "../../../module/cloudeos/azure/rg"
   address_space = "12.0.0.0/16"
   nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"
   rg_location   = var.azure_regions["region1"]
   vnet_name     = "${var.topology}Edge1vnet"
-  topology_name = arista_topology.topology.topology_name
-  clos_name     = arista_clos.clos.name
-  wan_name      = arista_wan.wan.name
+  topology_name = cloudeos_topology.topology.topology_name
+  clos_name     = cloudeos_clos.clos.name
+  wan_name      = cloudeos_wan.wan.name
   tags = {
     Name = "${var.topology}edge1"
   }
@@ -50,7 +50,7 @@ module "edge1" {
 }
 
 module "edge1Subnet" {
-  source          = "../../../module/arista/azure/subnet"
+  source          = "../../../module/cloudeos/azure/subnet"
   subnet_prefixes = var.subnet_info["edge1subnet"]["subnet_prefixes"]
   subnet_names    = var.subnet_info["edge1subnet"]["subnet_names"]
   vnet_name       = module.edge1.vnet_name
@@ -60,7 +60,7 @@ module "edge1Subnet" {
 }
 
 module "azureedge1veos1" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
@@ -88,7 +88,7 @@ module "azureedge1veos1" {
 }
 
 module "azureedge1veos2" {
-  source        = "../../../module/arista/azure/veos"
+  source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
@@ -116,7 +116,7 @@ module "azureedge1veos2" {
 
 /*
 module "azureRR1" {
-  source = "../../../module/arista/azure/veos"
+  source = "../../../module/cloudeos/azure/router"
   role   = "CloudEdge"
   subnetids = {
     "RR1Intf0" = module.edge1Subnet.vnet_subnets[2]
