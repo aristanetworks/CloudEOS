@@ -18,7 +18,7 @@ output "allIntfIds" {
 }
 
 output "intfname_to_id" {
-  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(var.intf_names) > 0 ? zipmap(var.intf_names, aws_network_interface.allIntfs.*.id) : {}
+  value = length(aws_network_interface.allIntfs.*.id) > 0 && length(var.intf_names) > 0 && length(var.intf_names) == length(aws_network_interface.allIntfs.*.id) ? zipmap(var.intf_names, aws_network_interface.allIntfs.*.id) : {}
 }
 
 output "intf_private_ips" {

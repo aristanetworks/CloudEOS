@@ -14,12 +14,16 @@ provider "aws" {
 }
 
 locals {
-  private_intfs           = length(aws_network_interface.allIntfs.*.id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
+  matchkeys_intfid_check  = length(aws_network_interface.allIntfs.*.id) == length(values(var.interface_types)) ? true : false
+  matchkeys_subnet_check  = length(aws_network_interface.allIntfs.*.subnet_id) == length(values(var.interface_types)) ? true : false
+  intfid_length_check     = length(aws_network_interface.allIntfs.*.id) > 0 ? true : false
+  subnetid_length_check   = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? true : false
+  private_intfs           = local.matchkeys_intfid_check && local.intfid_length_check ? matchkeys(aws_network_interface.allIntfs.*.id, values(var.interface_types), ["private"]) : []
   route_table_id          = length(aws_route_table.route_table_public.*.id) > 0 ? aws_route_table.route_table_public[0].id : var.public_route_table_id
   internal_route_table_id = length(aws_route_table.route_table_internal.*.id) > 0 ? aws_route_table.route_table_internal[0].id : var.internal_route_table_id
-  private_subnets         = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"]) : []
-  public_subnets          = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public"]) : []
-  internal_subnets        = length(aws_network_interface.allIntfs.*.subnet_id) > 0 ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"]) : []
+  private_subnets         = local.intfid_length_check && local.matchkeys_subnet_check ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["private"]) : []
+  public_subnets          = local.intfid_length_check && local.matchkeys_subnet_check ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["public"]) : []
+  internal_subnets        = local.intfid_length_check && local.matchkeys_subnet_check ? matchkeys(aws_network_interface.allIntfs.*.subnet_id, values(var.interface_types), ["internal"]) : []
   local_vpc_cidr          = var.vpc_info != [] ? var.vpc_info[4][0] : ""
   vpc_id                  = var.vpc_info != [] ? length(var.vpc_info[0]) > 0 ? var.vpc_info[0][0] : var.vpc_id : var.vpc_id
   sg_id                   = var.vpc_info != [] ? length(var.vpc_info[2]) > 0 ? var.vpc_info[2] : [var.sg_id] : [var.sg_id]

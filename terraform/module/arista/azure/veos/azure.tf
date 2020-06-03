@@ -76,7 +76,7 @@ resource "azurerm_network_interface" "allIntfs" {
     subnet_id                     = lookup(var.subnetids, var.intf_names[count.index], null)
     private_ip_address_allocation = lookup(var.private_ips, tostring(count.index), []) != [] ? "Static" : "Dynamic"
     private_ip_address            = lookup(var.private_ips, tostring(count.index), []) != [] ? lookup(var.private_ips, tostring(count.index), "")[0] : null
-    public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
+    public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" && length(azurerm_public_ip.publicip.*.id) > 0 ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
   }
 
 }
@@ -105,8 +105,8 @@ resource "azurerm_virtual_machine" "veosVm" {
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
   location                      = local.rg_location
   resource_group_name           = local.rg_name
-  primary_network_interface_id  = azurerm_network_interface.allIntfs[0].id
-  network_interface_ids         = azurerm_network_interface.allIntfs.*.id
+  primary_network_interface_id  = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs[0].id : ""
+  network_interface_ids         = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs.*.id : []
   vm_size                       = "Standard_D4s_v3"
   delete_os_disk_on_termination = true
 

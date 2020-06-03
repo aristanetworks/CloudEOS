@@ -35,6 +35,7 @@ output "topology_name" {
 output "availability_set_id" {
   value = length(azurerm_availability_set.availSet.*.id) > 0 ? azurerm_availability_set.availSet[0].id : ""
 }
+
 locals {
   vpc_id       = length(arista_vpc.vpc.*.id) > 0 ? arista_vpc.vpc[0].id : ""
   publicNSGId  = length(azurerm_network_security_group.publicNSG.*.id) > 0 ? azurerm_network_security_group.publicNSG[0].id : ""
