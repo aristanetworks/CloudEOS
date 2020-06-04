@@ -132,7 +132,7 @@ module "Leaf1host1" {
   subnet_id     = module.Leaf1Subnet.vpc_subnets[1]
   private_ips   = ["101.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf1Devhost"
+    "Name" = "${var.topology}-Leaf1devhost"
   }
 }
 
@@ -243,7 +243,7 @@ module "Leaf2host1" {
   subnet_id     = module.Leaf2Subnet.vpc_subnets[1]
   private_ips   = ["102.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf2Prodhost1"
+    "Name" = "${var.topology}-Leaf2prodhost1"
   }
 
 }
@@ -350,7 +350,7 @@ module "Leaf3host1" {
   subnet_id     = module.Leaf3Subnet.vpc_subnets[1]
   private_ips   = ["103.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf3DevHost"
+    "Name" = "${var.topology}-Leaf3devHost"
   }
 
 }
@@ -456,7 +456,7 @@ module "Leaf4host1" {
   subnet_id     = module.Leaf4Subnet.vpc_subnets[1]
   private_ips   = ["104.2.1.102"]
   tags = {
-    "Name" = "${var.topology}-Leaf4ProdHost"
+    "Name" = "${var.topology}-Leaf4prodHost"
   }
 }
 

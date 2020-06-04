@@ -30,7 +30,6 @@ provider "arista" {
 #   cidr_block    = ["100.0.0.0/16"]
 #   tags = {
 #     Name = "${module.globals.topology}-Region1EdgeVpc"
-#     Cnps = "Dev"
 #   }
 #   region = "${module.globals.aws_regions["region1"]}"
 # }
@@ -75,7 +74,6 @@ provider "arista" {
 #   region            = module.Region1EdgeVpc.region
 #   tags = {
 #     "Name" = "${module.globals.topology}-Region1CloudEOSEdge1"
-#     "Cnps" = "Dev"
 #   }
 #   primary  = true
 #   filename = "../../../userdata/eos_ipsec_config.tpl"
@@ -92,7 +90,6 @@ provider "arista" {
 #   cidr_block    = ["100.2.0.0/16"]
 #   tags = {
 #     Name = "${module.globals.topology}-Region2EdgeVpc"
-#     Cnps = "Dev"
 #   }
 #   region = "${module.globals.aws_regions["region2"]}"
 # }
@@ -137,7 +134,6 @@ provider "arista" {
 #   region            = module.Region2EdgeVpc.region
 #   tags = {
 #     "Name" = "${module.globals.topology}-Region2CloudEOSEdge1"
-#     "Cnps" = "Dev"
 #   }
 #   primary  = true
 #   filename = "../../../userdata/eos_ipsec_config.tpl"
@@ -154,7 +150,7 @@ provider "arista" {
 #   cidr_block    = ["101.0.0.0/16"]
 #   tags = {
 #     Name = "uday2eftEdge2Vpc"
-#     Cnps = "Dev"
+#     
 #   }
 #   region = "us-west-1"
 # }
@@ -196,7 +192,6 @@ provider "arista" {
 #   region            = "us-west-1"
 #   tags = {
 #     "Name" = "uday2edge2veos1"
-#     "Cnps" = "Dev"
 #   }
 #   primary  = true
 #   filename = "../../../userdata/eos_ipsec_config.tpl"

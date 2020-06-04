@@ -107,7 +107,7 @@ resource "azurerm_virtual_machine" "veosVm" {
   resource_group_name           = local.rg_name
   primary_network_interface_id  = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs[0].id : ""
   network_interface_ids         = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs.*.id : []
-  vm_size                       = "Standard_D4s_v3"
+  vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
   //Demo Only
@@ -117,20 +117,14 @@ resource "azurerm_virtual_machine" "veosVm" {
     id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
   }
 
-
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "cloudeos-router-payg"
-  //  sku       = "cloudeos-4_23_0fx"
-  //  version   = "4.23.0"
-  //}
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "veos-router"
-  //  sku       = var.cloudeos_image_sku
-  //  version   = var.cloudeos_image_version
-  //}
-
+/*
+  storage_image_reference {
+    publisher = "arista-networks"
+    offer     = var.cloudeos_image_offer
+    sku       = var.cloudeos_image_name
+    version   = var.cloudeos_image_version
+  }
+*/
   storage_os_disk {
     name              = var.disk_name
     caching           = "ReadWrite"
@@ -145,18 +139,13 @@ resource "azurerm_virtual_machine" "veosVm" {
     admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
-
-  //plan {
-  //  name      = "cloudeos-4_23_0fx"
-  //  publisher = "arista-networks"
-  //  product   = "cloudeos-router-payg"
-  //}
-  //plan {
-  // name      = var.cloudeos_image_sku
-  //  publisher = "arista-networks"
-  //  product   = "veos-router"
-  //}
-
+/*
+  plan {
+    name      = var.cloudeos_image_name
+    publisher = "arista-networks"
+    product   = var.cloudeos_image_offer
+  }
+*/
   os_profile_linux_config {
     disable_password_authentication = false
   }
@@ -174,7 +163,7 @@ resource "azurerm_virtual_machine" "veosVm1" {
   resource_group_name           = local.rg_name
   primary_network_interface_id  = azurerm_network_interface.allIntfs[0].id
   network_interface_ids         = azurerm_network_interface.allIntfs.*.id
-  vm_size                       = "Standard_D4s_v3"
+  vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
   //Demo Only
@@ -182,21 +171,14 @@ resource "azurerm_virtual_machine" "veosVm1" {
     //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelmar25-demo-RG/providers/Microsoft.Compute/images/veos-image"
     id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
   }
-
-
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "cloudeos-router-payg"
-  //  sku       = "cloudeos-4_23_0fx"
-  //  version   = "4.23.0"
-  //}
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "veos-router"
-  //  sku       = "eos-4_22_1fx"
-  // version   = "4.22.10"
-  //}
-
+/*
+  storage_image_reference {
+    publisher = "arista-networks"
+    offer     = var.cloudeos_image_offer
+    sku       = var.cloudeos_image_name
+    version   = var.cloudeos_image_version
+  }
+*/
   storage_os_disk {
     name              = var.disk_name
     caching           = "ReadWrite"
@@ -211,17 +193,6 @@ resource "azurerm_virtual_machine" "veosVm1" {
     admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
-
-  //plan {
-  //  name      = "cloudeos-4_23_0fx"
-  //  publisher = "arista-networks"
-  //  product   = "cloudeos-router-payg"
-  //}
-  //plan {
-  //  name      = "eos-4_22_1fx"
-  //  publisher = "arista-networks"
-  // product   = "veos-router"
-  //}
 
   os_profile_linux_config {
     disable_password_authentication = false

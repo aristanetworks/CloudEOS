@@ -18,6 +18,6 @@ resource "arista_vpc" "vpc" {
   clos_name         = var.clos_name
   wan_name          = var.wan_name
   tf_id             = arista_vpc_config.vpc[0].tf_id
-  cnps              = var.tags["Cnps"]
+  cnps              = lookup(var.tags, "Cnps", "")
   account           = data.azurerm_client_config.current.subscription_id
 }

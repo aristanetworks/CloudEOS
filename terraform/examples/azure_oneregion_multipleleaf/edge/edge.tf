@@ -45,7 +45,6 @@ module "edge1" {
   wan_name      = arista_wan.wan.name
   tags = {
     Name = "${var.topology}edge1"
-    Cnps = "Dev"
   }
   availability_set = true
 }
@@ -67,7 +66,6 @@ module "azureedge1veos1" {
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1veos1" }
   storage_name  = lower("${var.topology}edge1veos1store")
-
   subnetids = {
     "edge1veos1Intf0" = module.edge1Subnet.vnet_subnets[0]
     "edge1veos1Intf1" = module.edge1Subnet.vnet_subnets[1]
@@ -83,7 +81,8 @@ module "azureedge1veos1" {
   routetable_name        = var.cloudeos_info["edge1veos1"]["routetable_name"]
   filename               = var.cloudeos_info["edge1veos1"]["filename"]
   cloudeos_image_version = var.cloudeos_info["edge1veos1"]["cloudeos_image_version"]
-  cloudeos_image_sku     = var.cloudeos_info["edge1veos1"]["cloudeos_image_sku"]
+  cloudeos_image_name    = var.cloudeos_info["edge1veos1"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["edge1veos1"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
 }
@@ -109,7 +108,8 @@ module "azureedge1veos2" {
   routetable_name        = var.cloudeos_info["edge1veos2"]["routetable_name"]
   filename               = var.cloudeos_info["edge1veos2"]["filename"]
   cloudeos_image_version = var.cloudeos_info["edge1veos2"]["cloudeos_image_version"]
-  cloudeos_image_sku     = var.cloudeos_info["edge1veos2"]["cloudeos_image_sku"]
+  cloudeos_image_name    = var.cloudeos_info["edge1veos2"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["edge1veos2"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
 }

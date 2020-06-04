@@ -1,6 +1,6 @@
 ## PLEASE CUSTOMIZE file for your deployment
 ## Search "mandatory" for parameters that need to be customized before deployment
-topology = "Az-MultiLeaf" #mandatory
+topology = "Azure" #mandatory
 
 ## Get service_token from Arista Contact and replace empty string below
 cvaas = {
@@ -8,9 +8,6 @@ cvaas = {
   server : "www.arista.io",
   service_token : "" #mandatory
 }
-
-## Enter keypairs that will be used to login to AWS instances
-## If you don't have keypairs create them on AWS console for the following regions
 
 ## Cutomization of the parameters below are *optional*
 
@@ -21,15 +18,13 @@ dps_controlplane_cidr = "172.16.2.0/24" // CIDR block for VXLAN/Dps Control Plan
 
 ## CloudVision container names - they need to be created on www.arista.io/cv
 ## before deployment. Steps to create containers on CloudVision are in
-## "CloudEdgeDev MultiCloud Deployment Guide"
+## "CloudEdgedev MultiCloud Deployment Guide"
 clos_cv_container = "CloudLeaf"
 wan_cv_container  = "CloudEdge"
 
 azure_regions = {
   region1 : "westus2",
 }
-
-## Currently private AMIs. Contact Arista for access
 
 subnet_info = {
   edge1subnet : {
@@ -59,8 +54,9 @@ cloudeos_info = {
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
   }
   edge1veos2 : {
     publicip_name = "edge1veos2Pip"
@@ -74,8 +70,10 @@ cloudeos_info = {
     route_name             = "azedge1veos2Rt"
     routetable_name        = "azedge1veos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
+
   }
   rr1 = {
     publicip_name = "RR1Pip"
@@ -86,23 +84,25 @@ cloudeos_info = {
     tags                   = { "Name" : "azedgeRR1", "autoshutdown" : "no", "autostop" : "no" }
     disk_name              = "adRR1disk"
     storage_name           = "rr1storage"
-    private_ips            = { "0" : ["12.0.2.101"] }
+    private_ips            = { "0" : ["12.0.4.101"] }
     route_name             = "adedge1Rt"
     routetable_name        = "adedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
   }
   leaf1veos1 = {
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
     intf_names             = ["leaf1veos1Intf0", "leaf1veos1Intf1"]
     interface_types = {
       "leaf1veos1Intf0" = "internal"
       "leaf1veos1Intf1" = "private"
     }
     private_ips       = { "0" : ["16.0.0.101"], "1" : ["16.0.1.101"] }
-    tags              = { "Name" : "azleaf1veos1", "Cnps" : "Dev" }
+    tags              = { "Name" : "azleaf1veos1", "Cnps" : "dev" }
     disk_name         = "leaf1veos1disk"
     storage_name      = "azleaf1veos1storage"
     route_name        = "leaf1Rt1"
@@ -113,15 +113,16 @@ cloudeos_info = {
 
   }
   leaf1veos2 = {
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
     intf_names             = ["leaf1veos2Intf0", "leaf1veos2Intf1"]
     interface_types = {
       "leaf1veos2Intf0" = "internal"
       "leaf1veos2Intf1" = "private"
     }
     private_ips       = { "0" : ["16.0.2.101"], "1" : ["16.0.3.101"] }
-    tags              = { "Name" : "azleaf1veos2", "Cnps" : "Dev" }
+    tags              = { "Name" : "azleaf1veos2", "Cnps" : "dev" }
     disk_name         = "leaf1veos2disk"
     route_name        = "leaf1veos2Rt1"
     routetable_name   = "leaf1veos2RtTable1"
@@ -142,8 +143,9 @@ cloudeos_info = {
     route_name             = "leaf2Rt1"
     routetable_name        = "leaf2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
   leaf2veos2 = {
@@ -158,8 +160,9 @@ cloudeos_info = {
     route_name             = "leaf2veos2Rt1"
     routetable_name        = "leaf2veos2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.22.10"
-    cloudeos_image_sku     = "eos-4_22_1fx"
+    cloudeos_image_version = "4.24.01"
+    cloudeos_image_name     = "cloudeos-4_24_0-payg"
+    cloudeos_image_offer     = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
 }

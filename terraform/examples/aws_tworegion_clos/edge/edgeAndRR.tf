@@ -26,6 +26,7 @@ resource "arista_wan" "wan" {
   cv_container_name = var.wan_cv_container
 }
 
+
 //=================Region2 Edge CloudEOS1===============================
 module "Region2EdgeVpc" {
   source        = "../../../module/arista/aws/vpc"
@@ -115,7 +116,7 @@ module "CloudEOSRR1" {
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
 }
-/*
+
 module "Region2CloudEOSEdge2" {
   source        = "../../../module/arista/aws/cloudEOS"
   role          = "CloudEdge"
@@ -133,7 +134,7 @@ module "Region2CloudEOSEdge2" {
     "${var.topology}-Region2Edge2Intf1" = module.Region2EdgeSubnet.vpc_subnets[3]
   }
   private_ips       = { "0" : ["100.2.2.101"], "1" : ["100.2.3.101"] }
-  availability_zone = lookup( var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
+  availability_zone = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
   region            = module.Region2EdgeVpc.region
   tags = {
     "Name" = "${var.topology}-Region2CloudEOSEdge2"
@@ -142,7 +143,7 @@ module "Region2CloudEOSEdge2" {
   public_route_table_id = module.Region2CloudEOSEdge1.route_table_public
   internal_route_table_id = module.Region2CloudEOSEdge1.route_table_internal
 }
-*/
+
 
 //Region3
 module "Region3EdgeVpc" {

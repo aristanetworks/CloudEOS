@@ -200,7 +200,7 @@ router_info = {
     }
     tags = {
       "Name" = "adhipQHTest-CloudEosLeaf1"
-      "Cnps" = "Dev"
+      "Cnps" = "dev"
     }
   }
   leaf12 = {
@@ -215,7 +215,7 @@ router_info = {
     }
     tags = {
       "Name" = "adhipQHTest-CloudEosLeaf2"
-      "Cnps" = "Dev"
+      "Cnps" = "dev"
     }
   }
 }

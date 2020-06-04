@@ -10,7 +10,7 @@ module "Region3Leaf1Vpc" {
   cidr_block    = ["110.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region3Leaf1Vpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region3"]
 }
@@ -54,7 +54,7 @@ module "Region3Leaf1CloudEOS1" {
   region            = module.Region3Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf1CloudEOS1"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
@@ -82,7 +82,7 @@ module "Region3Leaf2Vpc" {
   cidr_block    = ["111.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region3Leaf2Vpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region3"]
 }
@@ -126,7 +126,7 @@ module "Region3Leaf2CloudEOS1" {
   region            = module.Region3Leaf2Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf2CloudEOS1"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"

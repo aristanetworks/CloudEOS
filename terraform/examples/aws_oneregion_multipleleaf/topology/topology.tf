@@ -37,7 +37,7 @@ module "RRVpc" {
   cidr_block    = ["10.0.0.0/16"]
   tags = {
     Name = "${var.topology}-RRVpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region1"]
 }

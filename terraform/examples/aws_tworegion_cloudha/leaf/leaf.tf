@@ -34,7 +34,7 @@ module "Region2Leaf1Vpc" {
   cidr_block    = ["101.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region2Leaf1Vpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region2"]
 }
@@ -82,7 +82,7 @@ module "Region2Leaf1CloudEOS1" {
   region            = module.Region2Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Region2Leaf1CloudEOS1"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha             = "leaf2"
   primary              = true
@@ -127,7 +127,7 @@ module "Region2Leaf1CloudEOS2" {
   region            = module.Region2Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Region2Leaf1CloudEOS2"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha                   = "leaf2"
   internal_route_table_id    = module.Region2Leaf1CloudEOS1.route_table_internal
@@ -157,7 +157,7 @@ module "Region2Leaf2Vpc" {
   cidr_block    = ["102.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region2Leaf2Vpc"
-    Cnps = "Prod"
+    Cnps = "prod"
   }
   region = var.aws_regions["region2"]
 }
@@ -205,7 +205,7 @@ module "Region2Leaf2CloudEOS1" {
   region            = module.Region2Leaf2Vpc.region
   tags = {
     "Name" = "${var.topology}-Region2Leaf2CloudEOS1"
-    "Cnps" = "Prod"
+    "Cnps" = "prod"
   }
   cloud_ha             = "leaf2"
   iam_instance_profile = var.aws_iam_instance_profile
@@ -250,7 +250,7 @@ module "Region2Leaf2CloudEOS2" {
   region            = module.Region2Leaf2Vpc.region
   tags = {
     "Name" = "${var.topology}-Region2Leaf2CloudEOS2"
-    "Cnps" = "Prod"
+    "Cnps" = "prod"
   }
   cloud_ha                   = "leaf2"
   internal_route_table_id    = module.Region2Leaf2CloudEOS1.route_table_internal
@@ -282,7 +282,7 @@ module "Region3Leaf1Vpc" {
   cidr_block    = ["110.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region3Leaf1Vpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region3"]
 }
@@ -330,7 +330,7 @@ module "Region3Leaf1CloudEOS1" {
   region            = module.Region3Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf1CloudEOS1"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha             = "leaf3"
   primary              = true
@@ -375,7 +375,7 @@ module "Region3Leaf1CloudEOS2" {
   region            = module.Region3Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf1CloudEOS2"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha                   = "leaf3"
   internal_route_table_id    = module.Region3Leaf1CloudEOS1.route_table_internal
@@ -405,7 +405,7 @@ module "Region3Leaf2Vpc" {
   cidr_block    = ["111.2.0.0/16"]
   tags = {
     Name = "${var.topology}-Region3Leaf2Vpc"
-    Cnps = "Dev"
+    Cnps = "dev"
   }
   region = var.aws_regions["region3"]
 }
@@ -453,7 +453,7 @@ module "Region3Leaf2CloudEOS1" {
   region            = module.Region3Leaf2Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf2CloudEOS1"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha             = "leaf4"
   iam_instance_profile = var.aws_iam_instance_profile
@@ -498,7 +498,7 @@ module "Region3Leaf2CloudEOS2" {
   region            = module.Region3Leaf2Vpc.region
   tags = {
     "Name" = "${var.topology}-Region3Leaf2CloudEOS2"
-    "Cnps" = "Dev"
+    "Cnps" = "dev"
   }
   cloud_ha                   = "leaf4"
   internal_route_table_id    = module.Region3Leaf2CloudEOS1.route_table_internal

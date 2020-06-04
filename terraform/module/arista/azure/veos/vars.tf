@@ -137,9 +137,14 @@ variable "cloudeos_image_version" {
   description = "CloudEOS Image version"
 }
 
-variable "cloudeos_image_sku" {
+variable "cloudeos_image_name" {
   description = "CloudEOS Image sku"
 }
+
+variable "cloudeos_image_offer" {
+  description = "CloudEOS Image sku"
+}
+
 
 variable "existing_userdata" {
   default = false
@@ -156,4 +161,8 @@ variable "backend_pool" {
 
 variable "frontend_ilb_ip" {
   default = ""
+}
+
+variable "vm_size" {
+  default = "Standard_D2_v2"
 }
