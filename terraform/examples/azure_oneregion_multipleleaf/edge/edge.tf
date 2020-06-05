@@ -99,9 +99,9 @@ module "azureedge1veos2" {
     "edge1veos2Intf1" = module.edge1Subnet.vnet_subnets[3]
   }
   availablity_set_id     = module.edge1.availability_set_id
-  publicip_name   = var.cloudeos_info["edge1veos2"]["publicip_name"]
-  intf_names      = var.cloudeos_info["edge1veos2"]["intf_names"]
-  interface_types = var.cloudeos_info["edge1veos2"]["interface_types"]
+  publicip_name          = var.cloudeos_info["edge1veos2"]["publicip_name"]
+  intf_names             = var.cloudeos_info["edge1veos2"]["intf_names"]
+  interface_types        = var.cloudeos_info["edge1veos2"]["interface_types"]
   disk_name              = var.cloudeos_info["edge1veos2"]["disk_name"]
   private_ips            = var.cloudeos_info["edge1veos2"]["private_ips"]
   route_name             = var.cloudeos_info["edge1veos2"]["route_name"]

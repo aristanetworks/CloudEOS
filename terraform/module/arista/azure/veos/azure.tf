@@ -2,7 +2,7 @@ locals {
   rg_name         = var.vpc_info != [] ? var.vpc_info[2] : var.rg_name
   rg_location     = var.vpc_info != [] ? var.vpc_info[3] : var.rg_location
   ilb_intfnames   = var.cloud_ha != "" && var.role == "CloudLeaf" ? [for key, value in var.interface_types : key if value == "private"] : []
-  frontend_ilb_ip = var.primary == true && var.cloud_ha != "" ? azurerm_lb.leafha_ilb[0].private_ip_address : var.cloud_ha != "" && var.frontend_ilb_ip != "" ? var.frontend_ilb_ip : ""
+  frontend_ilb_ip = var.primary == true && var.cloud_ha != "" && length(azurerm_lb.leafha_ilb.*.id) > 0 ? azurerm_lb.leafha_ilb[0].private_ip_address : var.cloud_ha != "" && var.frontend_ilb_ip != "" ? var.frontend_ilb_ip : ""
 }
 
 resource "azurerm_lb" "leafha_ilb" {
@@ -110,21 +110,13 @@ resource "azurerm_virtual_machine" "veosVm" {
   vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
-  //Demo Only
-  storage_image_reference {
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/geFxDps-demo4-RG/providers/Microsoft.Compute/images/veos-image"
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/geFxDpsLeaf-demo5-RG/providers/Microsoft.Compute/images/veos-image"
-    id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
-  }
-
-/*
   storage_image_reference {
     publisher = "arista-networks"
     offer     = var.cloudeos_image_offer
     sku       = var.cloudeos_image_name
     version   = var.cloudeos_image_version
   }
-*/
+
   storage_os_disk {
     name              = var.disk_name
     caching           = "ReadWrite"
@@ -139,13 +131,13 @@ resource "azurerm_virtual_machine" "veosVm" {
     admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
-/*
+
   plan {
     name      = var.cloudeos_image_name
     publisher = "arista-networks"
     product   = var.cloudeos_image_offer
   }
-*/
+
   os_profile_linux_config {
     disable_password_authentication = false
   }
@@ -161,24 +153,18 @@ resource "azurerm_virtual_machine" "veosVm1" {
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
   location                      = local.rg_location
   resource_group_name           = local.rg_name
-  primary_network_interface_id  = azurerm_network_interface.allIntfs[0].id
+  primary_network_interface_id  = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs[0].id : ""
   network_interface_ids         = azurerm_network_interface.allIntfs.*.id
   vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
-  //Demo Only
-  storage_image_reference {
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelmar25-demo-RG/providers/Microsoft.Compute/images/veos-image"
-    id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
-  }
-/*
   storage_image_reference {
     publisher = "arista-networks"
     offer     = var.cloudeos_image_offer
     sku       = var.cloudeos_image_name
     version   = var.cloudeos_image_version
   }
-*/
+
   storage_os_disk {
     name              = var.disk_name
     caching           = "ReadWrite"
@@ -192,6 +178,11 @@ resource "azurerm_virtual_machine" "veosVm1" {
     admin_username = var.admin_username
     admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
+  }
+  plan {
+    name      = var.cloudeos_image_name
+    publisher = "arista-networks"
+    product   = var.cloudeos_image_offer
   }
 
   os_profile_linux_config {

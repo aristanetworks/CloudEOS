@@ -9,8 +9,6 @@ cvaas = {
   service_token : "" #mandatory
 }
 
-## Cutomization of the parameters below are *optional*
-
 ## CloudEdge network requires three subnets for control plane.
 vtep_ip_cidr          = "172.16.0.0/24" // CIDR block for VTEP IPs
 terminattr_ip_cidr    = "172.16.1.0/24" // Loopback IP range for CloudVision connectivity
@@ -55,8 +53,8 @@ cloudeos_info = {
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
   }
   edge1veos2 : {
     publicip_name = "edge1veos2Pip"
@@ -71,8 +69,8 @@ cloudeos_info = {
     routetable_name        = "azedge1veos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
 
   }
   rr1 = {
@@ -89,13 +87,13 @@ cloudeos_info = {
     routetable_name        = "adedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
   }
   leaf1veos1 = {
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
     intf_names             = ["leaf1veos1Intf0", "leaf1veos1Intf1"]
     interface_types = {
       "leaf1veos1Intf0" = "internal"
@@ -114,8 +112,8 @@ cloudeos_info = {
   }
   leaf1veos2 = {
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
     intf_names             = ["leaf1veos2Intf0", "leaf1veos2Intf1"]
     interface_types = {
       "leaf1veos2Intf0" = "internal"
@@ -144,8 +142,8 @@ cloudeos_info = {
     routetable_name        = "leaf2RtTable1"
     cloud_ha               = "leaf2"
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
   leaf2veos2 = {
@@ -161,8 +159,8 @@ cloudeos_info = {
     routetable_name        = "leaf2veos2RtTable1"
     cloud_ha               = "leaf2"
     cloudeos_image_version = "4.24.01"
-    cloudeos_image_name     = "cloudeos-4_24_0-payg"
-    cloudeos_image_offer     = "cloudeos-router-payg"
+    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_offer   = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
 }
