@@ -69,3 +69,28 @@ variable "vpc_id" {
 variable "sg_default_id" {
   default = ""
 }
+
+variable "peer_access_key" {
+  description = "Access Key for the Peer VPC"
+  default     = ""
+}
+
+variable "peer_secret_key" {
+  description = "Secret Key for the Peer VPC"
+  default     = ""
+}
+
+variable "peer_session_token" {
+  description = "Session token for the Peer VPC"
+  default     = ""
+}
+
+variable "cross_account_peering" {
+  description = "Enable Cross account peering"
+  default     = false
+}
+
+variable "peer_owner_id" {
+  description = "Peer VPC Owners Account ID"
+  default     = ""
+}

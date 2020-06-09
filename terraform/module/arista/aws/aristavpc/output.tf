@@ -10,6 +10,10 @@ output "vpc_info" {
   value = [[var.vpc_id], local.igw_id, local.sg_id, local.peer_id, [var.vpc_cidr], [local.arista_vpc_id], [local.peervpcidr], [var.sg_default_id]]
 }
 
+output "peer_vpc_account_info" {
+  value = [var.cross_account_peering, var.peer_access_key, var.peer_secret_key, var.peer_session_token]
+}
+
 output "vpc_id" {
   value = [var.vpc_id]
 }
