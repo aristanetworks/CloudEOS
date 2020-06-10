@@ -9,9 +9,9 @@ usage="$(basename "$0") [-h] [-d URL] [-f path] Install terraform plugins
 where:
     -h  show this help text
     -d  URL to download Arista Terraform plugins
-    -f  Filesystem path to Arista Terraform plugins (default is ./terraform-arista-plugin_latest.tar.gz)"
+    -f  Filesystem path to Arista Terraform plugins (default is ./terraform-cloudeos-plugin_latest.tar.gz)"
 
-## specify a URL or path to terraform-arista-plugin_latest.tar.gz
+## specify a URL or path to terraform-cloudeos-plugin_latest.tar.gz
 while getopts hd:f: option
 do
 case "${option}"
@@ -44,7 +44,7 @@ mv .terraform/ ../../.terraform
 cd ../../
 
 if [ -n "$URL" ]; then
-   echo Download and extract provider-arista binaries from $URL
+   echo Download and extract provider-cloudeos binaries from $URL
    if command -v curl > /dev/null 2>&1; then
         curl $URL | tar -xz
    else
@@ -52,7 +52,7 @@ if [ -n "$URL" ]; then
    fi
 else
     if [ -z ${TARFILE+x} ]; then
-        TARFILE="./terraform-arista-plugin_latest.tar.gz"
+        TARFILE="./terraform-cloudeos-plugin_latest.tar.gz"
     fi
     if [ ! -e $TARFILE ]; then
         echo
@@ -60,11 +60,11 @@ else
         rm -r .terraform/
         exit 1
     fi
-    echo Extract provider-arista binaries from $TARFILE
+    echo Extract provider-cloudeos binaries from $TARFILE
     tar -xf $TARFILE
 fi
 
-if ! ls .terraform/plugins/darwin_amd64/terraform-provider-arista* 1> /dev/null 2>&1 || ! ls .terraform/plugins/linux_amd64/terraform-provider-arista* 1> /dev/null 2>&1; then
+if ! ls .terraform/plugins/darwin_amd64/terraform-provider-cloudeos* 1> /dev/null 2>&1 || ! ls .terraform/plugins/linux_amd64/terraform-provider-cloudeos* 1> /dev/null 2>&1; then
    echo Failed to get arista plugin! Please rerun the setup script
    rm -r .terraform/
    exit 1
