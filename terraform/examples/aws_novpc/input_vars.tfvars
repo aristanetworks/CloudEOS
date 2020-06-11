@@ -83,7 +83,7 @@ vpc_info = {
     vpc_cidr = "100.0.0.0/16"
     vpc_id   = "vpc-0cab572639b8d6c8f"
     tags = {
-      Name = "adhipQHTest"
+      Name = "aristaQHTest"
     }
     sg_id  = "sg-0f81411dc64e29167"
     igw_id = "igw-0ddd34235cf694aa6"
@@ -93,7 +93,7 @@ vpc_info = {
     vpc_cidr = "10.0.0.0/16"
     vpc_id   = "vpc-061b7b0cc3726df18"
     tags = {
-      Name = "adhipQHRR"
+      Name = "aristaQHRR"
     }
     sg_id  = "sg-07cbf735703c27fae"
     igw_id = "igw-06c9b69101f76eccc"
@@ -103,7 +103,7 @@ vpc_info = {
     vpc_cidr = "101.0.0.0/16"
     vpc_id   = "vpc-0f99749769af4455a"
     tags = {
-      Name = "adhipQHLeaf1"
+      Name = "aristaQHLeaf1"
       Cnps = "dev"
     }
     sg_default_id = "sg-0933b8999b9d730ca"
@@ -112,19 +112,19 @@ vpc_info = {
 
 subnet_info = {
   edge_subnet = {
-    subnet_names      = ["adhipQHTestEdgeSubnet1", "adhipQHTestEdgeSubnet2", "adhipQHEdgeSubnet3", "adhipQHEdgeSubnet4"],
+    subnet_names      = ["aristaQHTestEdgeSubnet1", "aristaQHTestEdgeSubnet2", "aristaQHEdgeSubnet3", "aristaQHEdgeSubnet4"],
     subnet_id         = ["subnet-0071a6b1fcd21858e", "subnet-0fdf79012d81c354a", "subnet-0520b752154bb9d85", "subnet-0f263f745b5ab9597"],
     subnet_cidr       = ["100.0.1.0/24", "100.0.2.0/24", "100.0.3.0/24", "100.0.4.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b", "us-west-1c", "us-west-1c"]
   }
   rr_subnet = {
-    subnet_names      = ["adhipQHRRSubnet1", "adhipQHRRSubnet2"]
+    subnet_names      = ["aristaQHRRSubnet1", "aristaQHRRSubnet2"]
     subnet_id         = ["subnet-0050f59bd747a1c19", "subnet-01b590529519cff85"]
     subnet_cidr       = ["10.0.0.0/24", "10.0.1.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b"]
   }
   leaf1_subnet = {
-    subnet_names      = ["adhipQHLeafSubnet1", "adhipQHLeafSubnet2", "adhipQHLeafSubnet3", "adhipQHLeafSubnet4"]
+    subnet_names      = ["aristaQHLeafSubnet1", "aristaQHLeafSubnet2", "aristaQHLeafSubnet3", "aristaQHLeafSubnet4"]
     subnet_id         = ["subnet-0cb41b2c3950c3896", "subnet-0a71763d419aacfa8", "subnet-01872e66c237a662d", "subnet-042b5ac0c6349affe"]
     subnet_cidr       = ["101.0.0.0/24", "101.0.1.0/24", "101.0.2.0/24", "101.0.3.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b", "us-west-1b", "us-west-1b"]
@@ -134,87 +134,87 @@ subnet_info = {
 router_info = {
   rr1 = {
     role       = "CloudEdge"
-    intf_names = ["adhipQHTest-RRIntf0"]
+    intf_names = ["aristaQHTest-RRIntf0"]
     interface_types = {
-      "adhipQHTest-RRIntf0" = "public"
+      "aristaQHTest-RRIntf0" = "public"
     }
     private_ips = {
       "0" : ["10.0.0.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosRR1"
+      "Name" = "aristaQHTest-CloudEosRR1"
     }
   }
   rr2 = {
     role       = "CloudEdge"
-    intf_names = ["adhipQHTest-RR2Intf0"]
+    intf_names = ["aristaQHTest-RR2Intf0"]
     interface_types = {
-      "adhipQHTest-RR2Intf0" = "public"
+      "aristaQHTest-RR2Intf0" = "public"
     }
     private_ips = {
       "0" : ["10.0.1.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosRR2"
+      "Name" = "aristaQHTest-CloudEosRR2"
     }
   }
   edge1 = {
     role       = "CloudEdge"
-    intf_names = ["adhipQHTest-EdgeIntf0", "adhipQHTest-EdgeIntf1"]
+    intf_names = ["aristaQHTest-EdgeIntf0", "aristaQHTest-EdgeIntf1"]
     interface_types = {
-      "adhipQHTest-EdgeIntf0" = "public"
-      "adhipQHTest-EdgeIntf1" = "internal"
+      "aristaQHTest-EdgeIntf0" = "public"
+      "aristaQHTest-EdgeIntf1" = "internal"
     }
     private_ips = {
       "0" : ["100.0.1.101"]
       "1" : ["100.0.2.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosEdge1"
+      "Name" = "aristaQHTest-CloudEosEdge1"
     }
   }
   edge2 = {
     role       = "CloudEdge"
-    intf_names = ["adhipQHTest-Edge2Intf0", "adhipQHTest-Edge2Intf1"]
+    intf_names = ["aristaQHTest-Edge2Intf0", "aristaQHTest-Edge2Intf1"]
     interface_types = {
-      "adhipQHTest-Edge2Intf0" = "public"
-      "adhipQHTest-Edge2Intf1" = "internal"
+      "aristaQHTest-Edge2Intf0" = "public"
+      "aristaQHTest-Edge2Intf1" = "internal"
     }
     private_ips = {
       "0" : ["100.0.3.101"]
       "1" : ["100.0.4.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosEdge2"
+      "Name" = "aristaQHTest-CloudEosEdge2"
     }
   }
   leaf11 = {
-    intf_names = ["adhipQHTest-Leaf1Intf0", "adhipQHTest-Leaf1Intf1"]
+    intf_names = ["aristaQHTest-Leaf1Intf0", "aristaQHTest-Leaf1Intf1"]
     interface_types = {
-      "adhipQHTest-Leaf1Intf0" = "internal"
-      "adhipQHTest-Leaf1Intf1" = "private"
+      "aristaQHTest-Leaf1Intf0" = "internal"
+      "aristaQHTest-Leaf1Intf1" = "private"
     }
     private_ips = {
       "0" : ["101.0.0.101"]
       "1" : ["101.0.1.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosLeaf1"
+      "Name" = "aristaQHTest-CloudEosLeaf1"
       "Cnps" = "dev"
     }
   }
   leaf12 = {
-    intf_names = ["adhipQHTest-Leaf2Intf0", "adhipQHTest-Leaf2Intf1"]
+    intf_names = ["aristaQHTest-Leaf2Intf0", "aristaQHTest-Leaf2Intf1"]
     interface_types = {
-      "adhipQHTest-Leaf2Intf0" = "internal"
-      "adhipQHTest-Leaf2Intf1" = "private"
+      "aristaQHTest-Leaf2Intf0" = "internal"
+      "aristaQHTest-Leaf2Intf1" = "private"
     }
     private_ips = {
       "0" : ["101.0.2.101"]
       "1" : ["101.0.3.101"]
     }
     tags = {
-      "Name" = "adhipQHTest-CloudEosLeaf2"
+      "Name" = "aristaQHTest-CloudEosLeaf2"
       "Cnps" = "dev"
     }
   }

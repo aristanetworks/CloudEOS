@@ -15,9 +15,9 @@ variable "password" {}
 resource "cloudeos_topology" "topology" {
   topology_name         = var.topology
   bgp_asn               = "100-200"                 // Range of BGP ASN’s used for topology
-  vtep_ip_cidr          = var.vtep_ip_cidr          // CIDR block for VTEP IPs on veos
-  terminattr_ip_cidr    = var.terminattr_ip_cidr    // Loopback IP range on veos
-  dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on veos
+  vtep_ip_cidr          = var.vtep_ip_cidr          // CIDR block for VTEP IPs on cloudeos
+  terminattr_ip_cidr    = var.terminattr_ip_cidr    // Loopback IP range on cloudeos
+  dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on cloudeos
 }
 
 resource "cloudeos_clos" "clos" {
@@ -59,57 +59,57 @@ module "edge1Subnet" {
   topology_name   = module.edge1.topology_name
 }
 
-module "azureedge1veos1" {
+module "azureedge1cloudeos1" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
-  tags          = { "Name" : "${var.topology}Edge1veos1" }
-  storage_name  = lower("${var.topology}edge1veos1store")
+  tags          = { "Name" : "${var.topology}Edge1cloudeos1" }
+  storage_name  = lower("${var.topology}edge1cloudeos1store")
   subnetids = {
-    "edge1veos1Intf0" = module.edge1Subnet.vnet_subnets[0]
-    "edge1veos1Intf1" = module.edge1Subnet.vnet_subnets[1]
+    "edge1cloudeos1Intf0" = module.edge1Subnet.vnet_subnets[0]
+    "edge1cloudeos1Intf1" = module.edge1Subnet.vnet_subnets[1]
   }
-  publicip_name   = var.cloudeos_info["edge1veos1"]["publicip_name"]
-  intf_names      = var.cloudeos_info["edge1veos1"]["intf_names"]
-  interface_types = var.cloudeos_info["edge1veos1"]["interface_types"]
+  publicip_name   = var.cloudeos_info["edge1cloudeos1"]["publicip_name"]
+  intf_names      = var.cloudeos_info["edge1cloudeos1"]["intf_names"]
+  interface_types = var.cloudeos_info["edge1cloudeos1"]["interface_types"]
 
   availablity_set_id     = module.edge1.availability_set_id
-  disk_name              = var.cloudeos_info["edge1veos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1veos1"]["private_ips"]
-  route_name             = var.cloudeos_info["edge1veos1"]["route_name"]
-  routetable_name        = var.cloudeos_info["edge1veos1"]["routetable_name"]
-  filename               = var.cloudeos_info["edge1veos1"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["edge1veos1"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["edge1veos1"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["edge1veos1"]["cloudeos_image_offer"]
+  disk_name              = var.cloudeos_info["edge1cloudeos1"]["disk_name"]
+  private_ips            = var.cloudeos_info["edge1cloudeos1"]["private_ips"]
+  route_name             = var.cloudeos_info["edge1cloudeos1"]["route_name"]
+  routetable_name        = var.cloudeos_info["edge1cloudeos1"]["routetable_name"]
+  filename               = var.cloudeos_info["edge1cloudeos1"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
 }
 
-module "azureedge1veos2" {
+module "azureedge1cloudeos2" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.edge1.vpc_info
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
-  tags          = { "Name" : "${var.topology}Edge1veos2" }
-  storage_name  = lower("${var.topology}edge1veos2store")
+  tags          = { "Name" : "${var.topology}Edge1cloudeos2" }
+  storage_name  = lower("${var.topology}edge1cloudeos2store")
   subnetids = {
-    "edge1veos2Intf0" = module.edge1Subnet.vnet_subnets[2]
-    "edge1veos2Intf1" = module.edge1Subnet.vnet_subnets[3]
+    "edge1cloudeos2Intf0" = module.edge1Subnet.vnet_subnets[2]
+    "edge1cloudeos2Intf1" = module.edge1Subnet.vnet_subnets[3]
   }
   availablity_set_id     = module.edge1.availability_set_id
-  publicip_name          = var.cloudeos_info["edge1veos2"]["publicip_name"]
-  intf_names             = var.cloudeos_info["edge1veos2"]["intf_names"]
-  interface_types        = var.cloudeos_info["edge1veos2"]["interface_types"]
-  disk_name              = var.cloudeos_info["edge1veos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1veos2"]["private_ips"]
-  route_name             = var.cloudeos_info["edge1veos2"]["route_name"]
-  routetable_name        = var.cloudeos_info["edge1veos2"]["routetable_name"]
-  filename               = var.cloudeos_info["edge1veos2"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["edge1veos2"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["edge1veos2"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["edge1veos2"]["cloudeos_image_offer"]
+  publicip_name          = var.cloudeos_info["edge1cloudeos2"]["publicip_name"]
+  intf_names             = var.cloudeos_info["edge1cloudeos2"]["intf_names"]
+  interface_types        = var.cloudeos_info["edge1cloudeos2"]["interface_types"]
+  disk_name              = var.cloudeos_info["edge1cloudeos2"]["disk_name"]
+  private_ips            = var.cloudeos_info["edge1cloudeos2"]["private_ips"]
+  route_name             = var.cloudeos_info["edge1cloudeos2"]["route_name"]
+  routetable_name        = var.cloudeos_info["edge1cloudeos2"]["routetable_name"]
+  filename               = var.cloudeos_info["edge1cloudeos2"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
 }

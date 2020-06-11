@@ -40,14 +40,14 @@ subnet_info = {
 }
 
 cloudeos_info = {
-  edge1veos1 : {
-    publicip_name = "edge1veos1Pip"
-    intf_names    = ["edge1veos1Intf0", "edge1veos1Intf1"]
+  edge1cloudeos1 : {
+    publicip_name = "edge1cloudeos1Pip"
+    intf_names    = ["edge1cloudeos1Intf0", "edge1cloudeos1Intf1"]
     interface_types = {
-      "edge1veos1Intf0" = "public"
-      "edge1veos1Intf1" = "internal"
+      "edge1cloudeos1Intf0" = "public"
+      "edge1cloudeos1Intf1" = "internal"
     }
-    disk_name              = "edge1veos1disk"
+    disk_name              = "edge1cloudeos1disk"
     private_ips            = { "0" : ["12.0.0.101"], "1" : ["12.0.1.101"] }
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
@@ -56,17 +56,17 @@ cloudeos_info = {
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
   }
-  edge1veos2 : {
-    publicip_name = "edge1veos2Pip"
-    intf_names    = ["edge1veos2Intf0", "edge1veos2Intf1"]
+  edge1cloudeos2 : {
+    publicip_name = "edge1cloudeos2Pip"
+    intf_names    = ["edge1cloudeos2Intf0", "edge1cloudeos2Intf1"]
     interface_types = {
-      "edge1veos2Intf0" = "public"
-      "edge1veos2Intf1" = "internal"
+      "edge1cloudeos2Intf0" = "public"
+      "edge1cloudeos2Intf1" = "internal"
     }
-    disk_name              = "edge1veos2disk"
+    disk_name              = "edge1cloudeos2disk"
     private_ips            = { "0" : ["12.0.2.101"], "1" : ["12.0.3.101"] }
-    route_name             = "azedge1veos2Rt"
-    routetable_name        = "azedge1veos2RtTable"
+    route_name             = "azedge1cloudeos2Rt"
+    routetable_name        = "azedge1cloudeos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
     cloudeos_image_version = "4.24.01"
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
@@ -90,19 +90,19 @@ cloudeos_info = {
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
   }
-  leaf1veos1 = {
+  leaf1cloudeos1 = {
     cloudeos_image_version = "4.24.01"
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
-    intf_names             = ["leaf1veos1Intf0", "leaf1veos1Intf1"]
+    intf_names             = ["leaf1cloudeos1Intf0", "leaf1cloudeos1Intf1"]
     interface_types = {
-      "leaf1veos1Intf0" = "internal"
-      "leaf1veos1Intf1" = "private"
+      "leaf1cloudeos1Intf0" = "internal"
+      "leaf1cloudeos1Intf1" = "private"
     }
     private_ips       = { "0" : ["16.0.0.101"], "1" : ["16.0.1.101"] }
-    tags              = { "Name" : "azleaf1veos1", "Cnps" : "dev" }
-    disk_name         = "leaf1veos1disk"
-    storage_name      = "azleaf1veos1storage"
+    tags              = { "Name" : "azleaf1cloudeos1", "Cnps" : "dev" }
+    disk_name         = "leaf1cloudeos1disk"
+    storage_name      = "azleaf1cloudeos1storage"
     route_name        = "leaf1Rt1"
     routetable_name   = "leaf1RtTable1"
     cloud_ha          = "leaf1"
@@ -110,34 +110,34 @@ cloudeos_info = {
     availability_zone = [2]
 
   }
-  leaf1veos2 = {
+  leaf1cloudeos2 = {
     cloudeos_image_version = "4.24.01"
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
-    intf_names             = ["leaf1veos2Intf0", "leaf1veos2Intf1"]
+    intf_names             = ["leaf1cloudeos2Intf0", "leaf1cloudeos2Intf1"]
     interface_types = {
-      "leaf1veos2Intf0" = "internal"
-      "leaf1veos2Intf1" = "private"
+      "leaf1cloudeos2Intf0" = "internal"
+      "leaf1cloudeos2Intf1" = "private"
     }
     private_ips       = { "0" : ["16.0.2.101"], "1" : ["16.0.3.101"] }
-    tags              = { "Name" : "azleaf1veos2", "Cnps" : "dev" }
-    disk_name         = "leaf1veos2disk"
-    route_name        = "leaf1veos2Rt1"
-    routetable_name   = "leaf1veos2RtTable1"
+    tags              = { "Name" : "azleaf1cloudeos2", "Cnps" : "dev" }
+    disk_name         = "leaf1cloudeos2disk"
+    route_name        = "leaf1cloudeos2Rt1"
+    routetable_name   = "leaf1cloudeos2RtTable1"
     cloud_ha          = "leaf1"
     filename          = "../../../userdata/eos_ipsec_config.tpl"
     availability_zone = [3]
   }
-  leaf2veos1 = {
-    intf_names = ["leaf2veos1Intf0", "leaf2veos1Intf1"]
+  leaf2cloudeos1 = {
+    intf_names = ["leaf2cloudeos1Intf0", "leaf2cloudeos1Intf1"]
     interface_types = {
-      "leaf2veos1Intf0" = "internal"
-      "leaf2veos1Intf1" = "private"
+      "leaf2cloudeos1Intf0" = "internal"
+      "leaf2cloudeos1Intf1" = "private"
     }
     availability_zone      = [2]
     private_ips            = { "0" : ["17.0.0.101"], "1" : ["17.0.1.101"] }
-    disk_name              = "leaf2veos1disk"
-    storage_name           = "leaf2veos1storage"
+    disk_name              = "leaf2cloudeos1disk"
+    storage_name           = "leaf2cloudeos1storage"
     route_name             = "leaf2Rt1"
     routetable_name        = "leaf2RtTable1"
     cloud_ha               = "leaf2"
@@ -146,17 +146,17 @@ cloudeos_info = {
     cloudeos_image_offer   = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
-  leaf2veos2 = {
-    intf_names = ["leaf2veos2Intf0", "leaf2veos2Intf1"]
+  leaf2cloudeos2 = {
+    intf_names = ["leaf2cloudeos2Intf0", "leaf2cloudeos2Intf1"]
     interface_types = {
-      "leaf2veos2Intf0" = "internal"
-      "leaf2veos2Intf1" = "private"
+      "leaf2cloudeos2Intf0" = "internal"
+      "leaf2cloudeos2Intf1" = "private"
     }
     availability_zone      = [3]
     private_ips            = { "0" : ["17.0.2.101"], "1" : ["17.0.3.101"] }
-    disk_name              = "leaf2veos2disk"
-    route_name             = "leaf2veos2Rt1"
-    routetable_name        = "leaf2veos2RtTable1"
+    disk_name              = "leaf2cloudeos2disk"
+    route_name             = "leaf2cloudeos2Rt1"
+    routetable_name        = "leaf2cloudeos2RtTable1"
     cloud_ha               = "leaf2"
     cloudeos_image_version = "4.24.01"
     cloudeos_image_name    = "cloudeos-4_24_0-payg-free"

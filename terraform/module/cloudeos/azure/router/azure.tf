@@ -2,7 +2,7 @@ locals {
   rg_name         = var.vpc_info != [] ? var.vpc_info[2] : var.rg_name
   rg_location     = var.vpc_info != [] ? var.vpc_info[3] : var.rg_location
   ilb_intfnames   = var.cloud_ha != "" && var.role == "CloudLeaf" ? [for key, value in var.interface_types : key if value == "private"] : []
-  frontend_ilb_ip = var.primary == true && var.cloud_ha != "" ? azurerm_lb.leafha_ilb[0].private_ip_address : var.cloud_ha != "" && var.frontend_ilb_ip != "" ? var.frontend_ilb_ip : ""
+  frontend_ilb_ip = var.primary == true && var.cloud_ha != "" && length(azurerm_lb.leafha_ilb.*.id) > 0 ? azurerm_lb.leafha_ilb[0].private_ip_address : var.cloud_ha != "" && var.frontend_ilb_ip != "" ? var.frontend_ilb_ip : ""
 }
 
 resource "azurerm_lb" "leafha_ilb" {
@@ -76,7 +76,7 @@ resource "azurerm_network_interface" "allIntfs" {
     subnet_id                     = lookup(var.subnetids, var.intf_names[count.index], null)
     private_ip_address_allocation = lookup(var.private_ips, tostring(count.index), []) != [] ? "Static" : "Dynamic"
     private_ip_address            = lookup(var.private_ips, tostring(count.index), []) != [] ? lookup(var.private_ips, tostring(count.index), "")[0] : null
-    public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
+    public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" && length(azurerm_public_ip.publicip.*.id) > 0 ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
   }
 
 }
@@ -100,36 +100,22 @@ data "template_file" "user_data_specific" {
   }
 }
 
-resource "azurerm_virtual_machine" "cloueosVm" {
+resource "azurerm_virtual_machine" "cloudeosVm" {
   count                         = var.availability_zone == [] ? 1 : 0
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
   location                      = local.rg_location
   resource_group_name           = local.rg_name
-  primary_network_interface_id  = azurerm_network_interface.allIntfs[0].id
-  network_interface_ids         = azurerm_network_interface.allIntfs.*.id
-  vm_size                       = "Standard_D4s_v3"
+  primary_network_interface_id  = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs[0].id : ""
+  network_interface_ids         = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs.*.id : []
+  vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
-  //Demo Only
   storage_image_reference {
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/geFxDps-demo4-RG/providers/Microsoft.Compute/images/veos-image"
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/geFxDpsLeaf-demo5-RG/providers/Microsoft.Compute/images/veos-image"
-    id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
+    publisher = "arista-networks"
+    offer     = var.cloudeos_image_offer
+    sku       = var.cloudeos_image_name
+    version   = var.cloudeos_image_version
   }
-
-
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "cloudeos-router-payg"
-  //  sku       = "cloudeos-4_23_0fx"
-  //  version   = "4.23.0"
-  //}
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "veos-router"
-  //  sku       = var.cloudeos_image_sku
-  //  version   = var.cloudeos_image_version
-  //}
 
   storage_os_disk {
     name              = var.disk_name
@@ -146,16 +132,11 @@ resource "azurerm_virtual_machine" "cloueosVm" {
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
 
-  //plan {
-  //  name      = "cloudeos-4_23_0fx"
-  //  publisher = "arista-networks"
-  //  product   = "cloudeos-router-payg"
-  //}
-  //plan {
-  // name      = var.cloudeos_image_sku
-  //  publisher = "arista-networks"
-  //  product   = "veos-router"
-  //}
+  plan {
+    name      = var.cloudeos_image_name
+    publisher = "arista-networks"
+    product   = var.cloudeos_image_offer
+  }
 
   os_profile_linux_config {
     disable_password_authentication = false
@@ -172,30 +153,17 @@ resource "azurerm_virtual_machine" "cloudeosVm1" {
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
   location                      = local.rg_location
   resource_group_name           = local.rg_name
-  primary_network_interface_id  = azurerm_network_interface.allIntfs[0].id
+  primary_network_interface_id  = length(azurerm_network_interface.allIntfs.*.id) > 0 ? azurerm_network_interface.allIntfs[0].id : ""
   network_interface_ids         = azurerm_network_interface.allIntfs.*.id
-  vm_size                       = "Standard_D4s_v3"
+  vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
 
-  //Demo Only
   storage_image_reference {
-    //id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelmar25-demo-RG/providers/Microsoft.Compute/images/veos-image"
-    id = "/subscriptions/ba0583bb-4130-4d7b-bfe4-0c7597857323/resourceGroups/jakRelAzureMarch30-demo1-RG/providers/Microsoft.Compute/images/veos-image"
+    publisher = "arista-networks"
+    offer     = var.cloudeos_image_offer
+    sku       = var.cloudeos_image_name
+    version   = var.cloudeos_image_version
   }
-
-
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "cloudeos-router-payg"
-  //  sku       = "cloudeos-4_23_0fx"
-  //  version   = "4.23.0"
-  //}
-  //storage_image_reference {
-  //  publisher = "arista-networks"
-  //  offer     = "veos-router"
-  //  sku       = "eos-4_22_1fx"
-  // version   = "4.22.10"
-  //}
 
   storage_os_disk {
     name              = var.disk_name
@@ -211,17 +179,11 @@ resource "azurerm_virtual_machine" "cloudeosVm1" {
     admin_password = var.admin_password
     custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
   }
-
-  //plan {
-  //  name      = "cloudeos-4_23_0fx"
-  //  publisher = "arista-networks"
-  //  product   = "cloudeos-router-payg"
-  //}
-  //plan {
-  //  name      = "eos-4_22_1fx"
-  //  publisher = "arista-networks"
-  // product   = "veos-router"
-  //}
+  plan {
+    name      = var.cloudeos_image_name
+    publisher = "arista-networks"
+    product   = var.cloudeos_image_offer
+  }
 
   os_profile_linux_config {
     disable_password_authentication = false

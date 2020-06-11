@@ -38,63 +38,63 @@ module "azureLeaf1Subnet" {
   topology_name   = module.azureLeaf1.topology_name
 }
 
-module "azureLeaf1veos1" {
+module "azureLeaf1cloudeos1" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf1veos1store")
+  storage_name  = lower("${var.topology}leaf1cloudeos1store")
 
   subnetids = {
-    "leaf1veos1Intf0" = module.azureLeaf1Subnet.vnet_subnets[0]
-    "leaf1veos1Intf1" = module.azureLeaf1Subnet.vnet_subnets[1]
+    "leaf1cloudeos1Intf0" = module.azureLeaf1Subnet.vnet_subnets[0]
+    "leaf1cloudeos1Intf1" = module.azureLeaf1Subnet.vnet_subnets[1]
   }
-  intf_names             = var.cloudeos_info["leaf1veos1"]["intf_names"]
-  interface_types        = var.cloudeos_info["leaf1veos1"]["interface_types"]
-  tags                   = { "Name" : "${var.topology}leaf1veos1", "Cnps" : "dev" }
-  disk_name              = var.cloudeos_info["leaf1veos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf1veos1"]["private_ips"]
-  availability_zone      = var.cloudeos_info["leaf1veos1"]["availability_zone"]
-  route_name             = var.cloudeos_info["leaf1veos1"]["route_name"]
-  routetable_name        = var.cloudeos_info["leaf1veos1"]["routetable_name"]
-  filename               = var.cloudeos_info["leaf1veos1"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["leaf1veos1"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["leaf1veos1"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["leaf1veos1"]["cloudeos_image_offer"]
+  intf_names             = var.cloudeos_info["leaf1cloudeos1"]["intf_names"]
+  interface_types        = var.cloudeos_info["leaf1cloudeos1"]["interface_types"]
+  tags                   = { "Name" : "${var.topology}leaf1cloudeos1", "Cnps" : "dev" }
+  disk_name              = var.cloudeos_info["leaf1cloudeos1"]["disk_name"]
+  private_ips            = var.cloudeos_info["leaf1cloudeos1"]["private_ips"]
+  availability_zone      = var.cloudeos_info["leaf1cloudeos1"]["availability_zone"]
+  route_name             = var.cloudeos_info["leaf1cloudeos1"]["route_name"]
+  routetable_name        = var.cloudeos_info["leaf1cloudeos1"]["routetable_name"]
+  filename               = var.cloudeos_info["leaf1cloudeos1"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf1"
   primary                = true
 }
 
-module "azureLeaf1veos2" {
+module "azureLeaf1cloudeos2" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf1veos2store")
+  storage_name  = lower("${var.topology}leaf1cloudeos2store")
 
   subnetids = {
-    "leaf1veos2Intf0" = module.azureLeaf1Subnet.vnet_subnets[2]
-    "leaf1veos2Intf1" = module.azureLeaf1Subnet.vnet_subnets[3]
+    "leaf1cloudeos2Intf0" = module.azureLeaf1Subnet.vnet_subnets[2]
+    "leaf1cloudeos2Intf1" = module.azureLeaf1Subnet.vnet_subnets[3]
   }
-  intf_names             = var.cloudeos_info["leaf1veos2"]["intf_names"]
-  interface_types        = var.cloudeos_info["leaf1veos2"]["interface_types"]
-  tags                   = { "Name" : "${var.topology}leaf1veos2", "Cnps" : "dev" }
-  disk_name              = var.cloudeos_info["leaf1veos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf1veos2"]["private_ips"]
-  availability_zone      = var.cloudeos_info["leaf1veos2"]["availability_zone"]
-  route_name             = var.cloudeos_info["leaf1veos2"]["route_name"]
-  routetable_name        = var.cloudeos_info["leaf1veos2"]["routetable_name"]
-  filename               = var.cloudeos_info["leaf1veos2"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["leaf1veos2"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["leaf1veos2"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["leaf1veos2"]["cloudeos_image_offer"]
+  intf_names             = var.cloudeos_info["leaf1cloudeos2"]["intf_names"]
+  interface_types        = var.cloudeos_info["leaf1cloudeos2"]["interface_types"]
+  tags                   = { "Name" : "${var.topology}leaf1cloudeos2", "Cnps" : "dev" }
+  disk_name              = var.cloudeos_info["leaf1cloudeos2"]["disk_name"]
+  private_ips            = var.cloudeos_info["leaf1cloudeos2"]["private_ips"]
+  availability_zone      = var.cloudeos_info["leaf1cloudeos2"]["availability_zone"]
+  route_name             = var.cloudeos_info["leaf1cloudeos2"]["route_name"]
+  routetable_name        = var.cloudeos_info["leaf1cloudeos2"]["routetable_name"]
+  filename               = var.cloudeos_info["leaf1cloudeos2"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf1"
-  backend_pool           = module.azureLeaf1veos1.backend_pool_id
-  frontend_ilb_ip        = module.azureLeaf1veos1.ilb_ip
+  backend_pool           = module.azureLeaf1cloudeos1.backend_pool_id
+  frontend_ilb_ip        = module.azureLeaf1cloudeos1.ilb_ip
 }
 
 module "azureLeaf1host1" {
@@ -153,29 +153,29 @@ module "azureLeaf2Subnet" {
   topology_name   = module.azureLeaf2.topology_name
 }
 
-module "azureLeaf2veos1" {
+module "azureLeaf2cloudeos1" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf2veos1store")
-  tags          = { "Name" : "${var.topology}leaf2veos1", "Cnps" : "dev" }
+  storage_name  = lower("${var.topology}leaf2cloudeos1store")
+  tags          = { "Name" : "${var.topology}leaf2cloudeos1", "Cnps" : "dev" }
 
   subnetids = {
-    "leaf2veos1Intf0" = module.azureLeaf2Subnet.vnet_subnets[0]
-    "leaf2veos1Intf1" = module.azureLeaf2Subnet.vnet_subnets[1]
+    "leaf2cloudeos1Intf0" = module.azureLeaf2Subnet.vnet_subnets[0]
+    "leaf2cloudeos1Intf1" = module.azureLeaf2Subnet.vnet_subnets[1]
   }
-  intf_names             = var.cloudeos_info["leaf2veos1"]["intf_names"]
-  interface_types        = var.cloudeos_info["leaf2veos1"]["interface_types"]
-  availability_zone      = var.cloudeos_info["leaf2veos1"]["availability_zone"]
-  disk_name              = var.cloudeos_info["leaf2veos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf2veos1"]["private_ips"]
-  route_name             = var.cloudeos_info["leaf2veos1"]["route_name"]
-  routetable_name        = var.cloudeos_info["leaf2veos1"]["routetable_name"]
-  filename               = var.cloudeos_info["leaf2veos1"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["leaf2veos1"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["leaf2veos1"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["leaf2veos1"]["cloudeos_image_offer"]
+  intf_names             = var.cloudeos_info["leaf2cloudeos1"]["intf_names"]
+  interface_types        = var.cloudeos_info["leaf2cloudeos1"]["interface_types"]
+  availability_zone      = var.cloudeos_info["leaf2cloudeos1"]["availability_zone"]
+  disk_name              = var.cloudeos_info["leaf2cloudeos1"]["disk_name"]
+  private_ips            = var.cloudeos_info["leaf2cloudeos1"]["private_ips"]
+  route_name             = var.cloudeos_info["leaf2cloudeos1"]["route_name"]
+  routetable_name        = var.cloudeos_info["leaf2cloudeos1"]["routetable_name"]
+  filename               = var.cloudeos_info["leaf2cloudeos1"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf2"
@@ -197,34 +197,34 @@ module "azureLeaf2host1" {
   password = var.password
 }
 
-module "azureLeaf2veos2" {
+module "azureLeaf2cloudeos2" {
   source        = "../../../module/cloudeos/azure/router"
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf2veos2store")
-  tags          = { "Name" : "${var.topology}leaf2veos2", "Cnps" : "dev" }
+  storage_name  = lower("${var.topology}leaf2cloudeos2store")
+  tags          = { "Name" : "${var.topology}leaf2cloudeos2", "Cnps" : "dev" }
 
   subnetids = {
-    "leaf2veos2Intf0" = module.azureLeaf2Subnet.vnet_subnets[2]
-    "leaf2veos2Intf1" = module.azureLeaf2Subnet.vnet_subnets[3]
+    "leaf2cloudeos2Intf0" = module.azureLeaf2Subnet.vnet_subnets[2]
+    "leaf2cloudeos2Intf1" = module.azureLeaf2Subnet.vnet_subnets[3]
   }
-  intf_names             = var.cloudeos_info["leaf2veos2"]["intf_names"]
-  interface_types        = var.cloudeos_info["leaf2veos2"]["interface_types"]
-  availability_zone      = var.cloudeos_info["leaf2veos2"]["availability_zone"]
-  disk_name              = var.cloudeos_info["leaf2veos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf2veos2"]["private_ips"]
-  route_name             = var.cloudeos_info["leaf2veos2"]["route_name"]
-  routetable_name        = var.cloudeos_info["leaf2veos2"]["routetable_name"]
-  filename               = var.cloudeos_info["leaf2veos2"]["filename"]
-  cloudeos_image_version = var.cloudeos_info["leaf2veos2"]["cloudeos_image_version"]
-  cloudeos_image_name    = var.cloudeos_info["leaf2veos2"]["cloudeos_image_name"]
-  cloudeos_image_offer   = var.cloudeos_info["leaf2veos2"]["cloudeos_image_offer"]
+  intf_names             = var.cloudeos_info["leaf2cloudeos2"]["intf_names"]
+  interface_types        = var.cloudeos_info["leaf2cloudeos2"]["interface_types"]
+  availability_zone      = var.cloudeos_info["leaf2cloudeos2"]["availability_zone"]
+  disk_name              = var.cloudeos_info["leaf2cloudeos2"]["disk_name"]
+  private_ips            = var.cloudeos_info["leaf2cloudeos2"]["private_ips"]
+  route_name             = var.cloudeos_info["leaf2cloudeos2"]["route_name"]
+  routetable_name        = var.cloudeos_info["leaf2cloudeos2"]["routetable_name"]
+  filename               = var.cloudeos_info["leaf2cloudeos2"]["filename"]
+  cloudeos_image_version = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_version"]
+  cloudeos_image_name    = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_name"]
+  cloudeos_image_offer   = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_offer"]
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf2"
-  backend_pool           = module.azureLeaf2veos1.backend_pool_id
-  frontend_ilb_ip        = module.azureLeaf2veos1.ilb_ip
+  backend_pool           = module.azureLeaf2cloudeos1.backend_pool_id
+  frontend_ilb_ip        = module.azureLeaf2cloudeos1.ilb_ip
 }
 
 module "azureLeaf2host2" {
