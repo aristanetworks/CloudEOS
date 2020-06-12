@@ -41,6 +41,7 @@ resource "aws_default_security_group" "default" {
   }
 }
 
+//This security group allows IKE and SSH traffic from all IP addresses.
 resource "aws_security_group" "allowSSHIKE" {
   count       = var.role == "CloudEdge" ? 1 : 0
   name        = "allow_ike_ssh"
@@ -74,6 +75,29 @@ resource "aws_security_group" "allowSSHIKE" {
   }
   egress {
     protocol    = -1
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+//Feel free to modify this Security group based on your needs.
+resource "aws_security_group" "leafSG" {
+  count       = var.role == "CloudLeaf" ? 1 : 0
+  name        = "leaf_security_group"
+  description = "Security group applied to all Leaf CloudEOS instances"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    protocol    = -1
+    self        = false
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    protocol    = -1
+    self        = false
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
