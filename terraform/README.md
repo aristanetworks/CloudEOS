@@ -8,7 +8,7 @@ This folder has Terraform scripts to launch and configure CloudEOS in various pu
 
 1) Public cloud account credentials eg AWS Access key and secret
 2) Terraform installed on your laptop/server
-3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision, Security webtoken for CloudVision, Arista Terraform provider plugins 
+3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision, Security webtoken for CloudVision, CloudEOS Terraform provider plugins 
 4) Subscribe to Arista CloudEOS PAYG offer in the cloud marketplace
 5) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide" (Please contact your Arista rep or sales@arista.com to get the guide)
 
@@ -16,9 +16,9 @@ This folder has Terraform scripts to launch and configure CloudEOS in various pu
 
 Follow the steps at https://learn.hashicorp.com/terraform/getting-started/install.html 
 
-## Get AWS and Arista providers
+## Get AWS and CloudEOS providers
 
-Since the Arista Terraform provider isn't bundled with terraform yet please contact Arista to get terraform-arista-plugin_latest.tar.gz and save it CloudEOS/terraform folder.
+Since the CloudEOS Terraform provider isn't bundled with terraform yet please contact Arista to get terraform-cloudeos-plugin_latest.tar.gz and save it CloudEOS/terraform folder.
 
 '''
 cd CloudEOS/terraform
@@ -95,7 +95,7 @@ terraform apply -var-file=../input_vars.tfvars
 
 **Don't forget to terraform destroy..see steps at the end**
 
-## For Linux 
+## For Linux
 1. To create Topology and Route Reflector
 
 Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf". Execute to below commands to create topology and route reflector.
@@ -152,7 +152,7 @@ terraform destroy -var-file=../input_vars.tfvars
 3. Destroy Topology and Route Reflector resources
 
 ```bash
-cd leaf
+cd topology
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
@@ -185,7 +185,7 @@ Example
 
 ```
 module "Region2Leaf1host1" {
-                source = "../../../module/arista/aws/host"
+                source = "../../../module/cloudeos/aws/host"
                 instance_type = "c5.xlarge"                            
                 username = "foo"
                 passwd = "$1$SaltSalt$YhgRYajLPrYevs14poKBQ0"
