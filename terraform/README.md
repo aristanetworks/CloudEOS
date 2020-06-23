@@ -138,7 +138,7 @@ It's necessary to destroy in following order. Assuming current directory to be "
 1. Destroy Leaf resources
 
 ```bash
-cd topology
+cd leaf
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
