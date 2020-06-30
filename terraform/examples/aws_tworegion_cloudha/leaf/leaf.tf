@@ -88,6 +88,7 @@ module "Region2Leaf1CloudEOS1" {
   primary              = true
   iam_instance_profile = var.aws_iam_instance_profile
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Region2Leaf1host1" {
@@ -134,6 +135,7 @@ module "Region2Leaf1CloudEOS2" {
   primary_internal_subnetids = [module.Region2Leaf1Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type              = var.instance_type["leaf"]
 }
 
 module "Region2Leaf1host2" {
@@ -211,6 +213,7 @@ module "Region2Leaf2CloudEOS1" {
   iam_instance_profile = var.aws_iam_instance_profile
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Region2Leaf2host1" {
@@ -257,6 +260,7 @@ module "Region2Leaf2CloudEOS2" {
   primary_internal_subnetids = [module.Region2Leaf2Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type              = var.instance_type["leaf"]
 }
 
 module "Region2Leaf2host2" {
@@ -336,6 +340,7 @@ module "Region3Leaf1CloudEOS1" {
   primary              = true
   iam_instance_profile = var.aws_iam_instance_profile
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Region3Leaf1host1" {
@@ -382,6 +387,7 @@ module "Region3Leaf1CloudEOS2" {
   primary_internal_subnetids = [module.Region3Leaf1Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type              = var.instance_type["leaf"]
 }
 
 module "Region3Leaf1host2" {
@@ -459,6 +465,7 @@ module "Region3Leaf2CloudEOS1" {
   iam_instance_profile = var.aws_iam_instance_profile
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Region3Leaf2host1" {
@@ -505,6 +512,7 @@ module "Region3Leaf2CloudEOS2" {
   primary_internal_subnetids = [module.Region3Leaf2Subnet.vpc_subnets[0]]
   iam_instance_profile       = var.aws_iam_instance_profile
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type              = var.instance_type["leaf"]
 }
 
 module "Region3Leaf2host2" {

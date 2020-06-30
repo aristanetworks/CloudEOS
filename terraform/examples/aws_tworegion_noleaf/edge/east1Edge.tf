@@ -57,7 +57,8 @@ module "East1CloudEOSEdge1" {
   tags = {
     "Name" = "${module.globals.topology}-East1CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
 

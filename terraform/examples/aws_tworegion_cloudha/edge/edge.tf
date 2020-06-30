@@ -66,8 +66,9 @@ module "Region2CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-Region2CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
 module "Region3EdgeVpc" {
   source        = "../../../module/cloudeos/aws/vpc"
@@ -124,8 +125,9 @@ module "Region3CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-Region3CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
 
 /*
@@ -152,6 +154,7 @@ module "Region2CloudEOSEdge2" {
     "Name" = "${var.topology}-Region2CloudEOSEdge2"
   }
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
   public_route_table_id = module.Region2CloudEOSEdge1.route_table_public
   internal_route_table_id = module.Region2CloudEOSEdge1.route_table_internal
 }
@@ -181,5 +184,6 @@ module "CloudEOSRR1" {
   is_rr = true
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
 */

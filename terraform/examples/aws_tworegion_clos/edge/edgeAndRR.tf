@@ -85,10 +85,10 @@ module "Region2CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-Region2CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
-
 module "CloudEOSRR1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
@@ -112,17 +112,18 @@ module "CloudEOSRR1" {
     "Name"           = "${var.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr    = true
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  is_rr         = true
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["rr"]
 }
 
 module "Region2CloudEOSEdge2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region2EdgeVpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Region2EdgeVpc.region]
-  keypair_name = var.keypair_name[module.Region2EdgeVpc.region]
+  cloudeos_ami  = var.eos_amis[module.Region2EdgeVpc.region]
+  keypair_name  = var.keypair_name[module.Region2EdgeVpc.region]
   vpc_info      = module.Region2EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-Region2Edge2Intf0", "${var.topology}-Region2Edge2Intf1"]
   interface_types = {
@@ -139,9 +140,10 @@ module "Region2CloudEOSEdge2" {
   tags = {
     "Name" = "${var.topology}-Region2CloudEOSEdge2"
   }
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  public_route_table_id = module.Region2CloudEOSEdge1.route_table_public
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  public_route_table_id   = module.Region2CloudEOSEdge1.route_table_public
   internal_route_table_id = module.Region2CloudEOSEdge1.route_table_internal
+  instance_type           = var.instance_type["edge"]
 }
 
 
@@ -201,7 +203,7 @@ module "Region3CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-Region3CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
-

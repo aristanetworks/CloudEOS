@@ -56,8 +56,9 @@ module "Region2Leaf1CloudEOS1" {
     "Name" = "${var.topology}-Region2Leaf1CloudEOS1"
     "Cnps" = "dev"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["leaf"]
 }
 
 module "Region2Leaf1host1" {
@@ -128,8 +129,9 @@ module "Region2Leaf2CloudEOS1" {
     "Name" = "${var.topology}-Region2Leaf2CloudEOS1"
     "Cnps" = "prod"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["leaf"]
 }
 
 module "Region2Leaf2host1" {

@@ -87,6 +87,7 @@ module "Leaf1CloudEOS1" {
   primary              = true
   iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf1CloudEOS2" {
@@ -121,6 +122,7 @@ module "Leaf1CloudEOS2" {
   internal_route_table_id    = module.Leaf1CloudEOS1.route_table_internal
   primary_internal_subnetids = [module.Leaf1Subnet.vpc_subnets[0]]
   intra_az_ha                = true
+  instance_type              = var.instance_type["leaf"]
 }
 
 module "Leaf1host1" {
@@ -199,6 +201,7 @@ module "Leaf2CloudEOS1" {
   cloud_ha             = "leaf2"
   iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf2CloudEOS2" {
@@ -229,6 +232,7 @@ module "Leaf2CloudEOS2" {
   }
   internal_route_table_id    = module.Leaf2CloudEOS1.route_table_internal
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type              = var.instance_type["leaf"]
   cloud_ha                   = "leaf2"
   iam_instance_profile       = "awslogs2"
   primary_internal_subnetids = [module.Leaf2Subnet.vpc_subnets[0]]
@@ -247,7 +251,6 @@ module "Leaf2host1" {
   }
 
 }
-
 //Leaf3
 module "Leaf3Vpc" {
   source        = "../../../module/cloudeos/aws/vpc"
@@ -309,6 +312,7 @@ module "Leaf3CloudEOS1" {
   }
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf3CloudEOS2" {
@@ -339,6 +343,7 @@ module "Leaf3CloudEOS2" {
   }
   internal_route_table_id    = module.Leaf3CloudEOS1.route_table_internal
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf3host1" {
@@ -416,6 +421,7 @@ module "Leaf4CloudEOS1" {
   }
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf4CloudEOS2" {
@@ -446,6 +452,7 @@ module "Leaf4CloudEOS2" {
   }
   internal_route_table_id    = module.Leaf4CloudEOS1.route_table_internal
   filename                   = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 module "Leaf4host1" {
   region        = var.aws_regions["region2"]
@@ -478,10 +485,10 @@ module "Leaf5Vpc" {
 module "Leaf5Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "105.2.0.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1", "" )
-     "105.2.1.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1", "" )
-     "105.2.2.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2", "" )
-     "105.2.3.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2", "" )
+     "105.2.0.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
+     "105.2.1.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
+     "105.2.2.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
+     "105.2.3.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
   }
   subnet_names = {
      "105.2.0.0/24" = "${var.topology}-Leaf5Subnet0"
@@ -514,7 +521,7 @@ module "Leaf5CloudEOS1" {
       "${var.topology}-Leaf5CloudEOS1Intf1" = module.Leaf5Subnet.vpc_subnets[1]
   }
   private_ips = {"0": ["105.2.0.101"], "1": ["105.2.1.101"]}
-  availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone1", "" )
+  availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
   region            = module.Leaf5Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf5CloudEOS1"
@@ -522,6 +529,7 @@ module "Leaf5CloudEOS1" {
   }
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf5CloudEOS2" {
@@ -544,7 +552,7 @@ module "Leaf5CloudEOS2" {
       "${var.topology}-Leaf5CloudEOS2Intf1" = module.Leaf5Subnet.vpc_subnets[3]
   }
   private_ips = {"0": ["105.2.2.101"], "1": ["105.2.3.101"]}
-  availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone2", "" )
+  availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
   region            = module.Leaf5Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf5CloudEOS2"
@@ -552,6 +560,7 @@ module "Leaf5CloudEOS2" {
   }
   internal_route_table_id = module.Leaf5CloudEOS1.route_table_internal
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 //Leaf6
@@ -571,10 +580,10 @@ module "Leaf6Vpc" {
 module "Leaf6Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "106.2.0.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1", "" )
-     "106.2.1.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1", "" )
-     "106.2.2.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2", "" )
-     "106.2.3.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2", "" )
+     "106.2.0.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
+     "106.2.1.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
+     "106.2.2.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
+     "106.2.3.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
   }
   subnet_names = {
      "106.2.0.0/24" = "${var.topology}-Leaf6Subnet0"
@@ -607,7 +616,7 @@ module "Leaf6CloudEOS1" {
       "${var.topology}-Leaf6CloudEOS1Intf1" = module.Leaf6Subnet.vpc_subnets[1]
   }
   private_ips = {"0": ["106.2.0.101"], "1": ["106.2.1.101"]}
-  availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone1", "" )
+  availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
   region            = module.Leaf6Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf6CloudEOS1"
@@ -615,6 +624,7 @@ module "Leaf6CloudEOS1" {
   }
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf6CloudEOS2" {
@@ -637,7 +647,7 @@ module "Leaf6CloudEOS2" {
       "${var.topology}-Leaf6CloudEOS2Intf1" = module.Leaf6Subnet.vpc_subnets[3]
   }
   private_ips = {"0": ["106.2.2.101"], "1": ["106.2.3.101"]}
-  availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone2", "" )
+  availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
   region            = module.Leaf6Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf6CloudEOS2"
@@ -645,6 +655,7 @@ module "Leaf6CloudEOS2" {
   }
   internal_route_table_id = module.Leaf6CloudEOS1.route_table_internal
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 //Leaf7
 module "Leaf7Vpc" {
@@ -663,10 +674,10 @@ module "Leaf7Vpc" {
 module "Leaf7Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "107.2.0.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1", "" )
-     "107.2.1.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1", "" )
-     "107.2.2.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2", "" )
-     "107.2.3.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2", "" )
+     "107.2.0.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
+     "107.2.1.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
+     "107.2.2.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
+     "107.2.3.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
   }
   subnet_names = {
      "107.2.0.0/24" = "${var.topology}-Leaf7Subnet0"
@@ -699,7 +710,7 @@ module "Leaf7CloudEOS1" {
       "${var.topology}-Leaf7CloudEOS1Intf1" = module.Leaf7Subnet.vpc_subnets[1]
   }
   private_ips = {"0": ["107.2.0.101"], "1": ["107.2.1.101"]}
-  availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone1", "" )
+  availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
   region            = module.Leaf7Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf7CloudEOS1"
@@ -707,6 +718,7 @@ module "Leaf7CloudEOS1" {
   }
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf7CloudEOS2" {
@@ -729,7 +741,7 @@ module "Leaf7CloudEOS2" {
       "${var.topology}-Leaf7CloudEOS2Intf1" = module.Leaf7Subnet.vpc_subnets[3]
   }
   private_ips = {"0": ["107.2.2.101"], "1": ["107.2.3.101"]}
-  availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone2", "" )
+  availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
   region            = module.Leaf7Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf7CloudEOS2"
@@ -737,6 +749,7 @@ module "Leaf7CloudEOS2" {
   }
   internal_route_table_id = module.Leaf7CloudEOS1.route_table_internal
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 //Leaf8
 module "Leaf8Vpc" {
@@ -755,10 +768,10 @@ module "Leaf8Vpc" {
 module "Leaf8Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "108.2.0.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1", "" )
-     "108.2.1.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1", "" )
-     "108.2.2.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2", "" )
-     "108.2.3.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2", "" )
+     "108.2.0.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
+     "108.2.1.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
+     "108.2.2.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
+     "108.2.3.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
   }
   subnet_names = {
      "108.2.0.0/24" = "${var.topology}-Leaf8Subnet0"
@@ -791,7 +804,7 @@ module "Leaf8CloudEOS1" {
       "${var.topology}-Leaf8CloudEOS1Intf1" = module.Leaf8Subnet.vpc_subnets[1]
   }
   private_ips = {"0": ["108.2.0.101"], "1": ["108.2.1.101"]}
-  availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone1", "" )
+  availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
   region            = module.Leaf8Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf8CloudEOS1"
@@ -799,6 +812,7 @@ module "Leaf8CloudEOS1" {
   }
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf8CloudEOS2" {
@@ -821,7 +835,7 @@ module "Leaf8CloudEOS2" {
       "${var.topology}-Leaf8CloudEOS2Intf1" = module.Leaf8Subnet.vpc_subnets[3]
   }
   private_ips = {"0": ["108.2.2.101"], "1": ["108.2.3.101"]}
-  availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone2", "" )
+  availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
   region            = module.Leaf8Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf8CloudEOS2"
@@ -829,6 +843,7 @@ module "Leaf8CloudEOS2" {
   }
   internal_route_table_id = module.Leaf8CloudEOS1.route_table_internal
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 //Leaf9
 module "Leaf9Vpc" {
@@ -847,10 +862,10 @@ module "Leaf9Vpc" {
 module "Leaf9Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "109.2.0.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1", "" )
-     "109.2.1.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1", "" )
-     "109.2.2.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2", "" )
-     "109.2.3.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2", "" )
+     "109.2.0.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
+     "109.2.1.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
+     "109.2.2.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
+     "109.2.3.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
   }
   subnet_names = {
      "109.2.0.0/24" = "${var.topology}-Leaf9Subnet0"
@@ -883,7 +898,7 @@ module "Leaf9CloudEOS1" {
       "${var.topology}-Leaf9CloudEOS1Intf1" = module.Leaf9Subnet.vpc_subnets[1]
   }
   private_ips = {"0": ["109.2.0.101"], "1": ["109.2.1.101"]}
-  availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone1", "" )
+  availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
   region            = module.Leaf9Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf9CloudEOS1"
@@ -891,6 +906,7 @@ module "Leaf9CloudEOS1" {
   }
   primary = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 
 module "Leaf9CloudEOS2" {
@@ -913,7 +929,7 @@ module "Leaf9CloudEOS2" {
       "${var.topology}-Leaf9CloudEOS2Intf1" = module.Leaf9Subnet.vpc_subnets[3]
   }
   private_ips = {"0": ["109.2.2.101"], "1": ["109.2.3.101"]}
-  availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone2", "" )
+  availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
   region            = module.Leaf9Vpc.region
   tags = {
          "Name" = "${var.topology}-Leaf9CloudEOS2"
@@ -921,5 +937,6 @@ module "Leaf9CloudEOS2" {
   }
   internal_route_table_id = module.Leaf9CloudEOS1.route_table_internal
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["leaf"]
 }
 */

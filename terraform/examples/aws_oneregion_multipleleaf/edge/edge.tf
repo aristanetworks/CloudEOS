@@ -66,8 +66,9 @@ module "CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-CloudEOSEdge1"
   }
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["edge"]
 }
 
 module "CloudEOSEdge2" {
@@ -95,4 +96,5 @@ module "CloudEOSEdge2" {
   filename                = "../../../userdata/eos_ipsec_config.tpl"
   public_route_table_id   = module.CloudEOSEdge1.route_table_public
   internal_route_table_id = module.CloudEOSEdge1.route_table_internal
+  instance_type           = var.instance_type["edge"]
 }

@@ -1,5 +1,5 @@
 provider "aws" {
-  region     = var.aws_regions["region1"]
+  region = var.aws_regions["region1"]
 }
 
 provider "cloudeos" {
@@ -77,7 +77,8 @@ module "CloudEOSRR1" {
     "Name"           = "${var.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr    = true
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  is_rr         = true
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["rr"]
 }

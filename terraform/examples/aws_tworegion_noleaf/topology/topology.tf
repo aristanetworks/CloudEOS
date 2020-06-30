@@ -94,7 +94,8 @@ module "CloudEOSRR1" {
     "Name"           = "${module.globals.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr    = true
-  primary  = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  is_rr         = true
+  primary       = true
+  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["rr"]
 }
