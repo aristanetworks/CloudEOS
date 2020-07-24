@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_regions["region1"]
 }
 
-provider cloudeos" {
+provider "cloudeos" {
   cvaas_domain              = var.cvaas["domain"]
   cvaas_server              = var.cvaas["server"]
   service_account_web_token = var.cvaas["service_token"]

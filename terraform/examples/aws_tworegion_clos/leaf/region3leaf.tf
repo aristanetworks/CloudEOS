@@ -58,6 +58,7 @@ module "Region3Leaf1CloudEOS1" {
   }
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["leaf"]
 }
 
 module "Region3Leaf1host1" {
@@ -130,6 +131,7 @@ module "Region3Leaf2CloudEOS1" {
   }
   primary  = true
   filename = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type = var.instance_type["leaf"]
 }
 
 module "Region3Leaf2host1" {
