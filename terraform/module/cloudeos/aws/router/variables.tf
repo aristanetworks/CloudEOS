@@ -147,3 +147,8 @@ variable "intra_az_ha" {
   description = "Support for CloudHA when both Routers are using the same Private subnet"
   default     = false
 }
+
+variable "remote_vpn_gateway" {
+  default     = false
+  description = "Router is a Remote VPN Gateway for Azure/AWS VPN connections"
+}

@@ -204,3 +204,14 @@ resource "aws_vpc_endpoint" "endpoint" {
   subnet_ids          = concat(var.primary_internal_subnetids, local.internal_subnets)
   private_dns_enabled = true
 }
+
+resource "aws_customer_gateway" "routerVpnGw" {
+  count      = var.remote_vpn_gateway ? 1 : 0
+  bgp_asn    = cloudeos_router_status.router[0].router_bgp_asn
+  ip_address = cloudeos_router_status.router[0].public_ip
+  type       = "ipsec.1"
+
+  tags = {
+    Name = format("Customer GW: %v", cloudeos_router_status.router[0].public_ip)
+  }
+}

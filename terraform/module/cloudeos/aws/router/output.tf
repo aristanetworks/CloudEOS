@@ -48,3 +48,9 @@ output "rtable_subnet_assoc_private" {
 output "rtable_subnet_assoc_public" {
   value = zipmap(aws_route_table_association.route_map_public.*.subnet_id, aws_route_table_association.route_map_public.*.route_table_id)
 }
+
+output "router_info" {
+  value = [cloudeos_router_status.router[0].public_ip, cloudeos_router_status.router[0].tf_id,
+  cloudeos_router_status.router[0].router_bgp_asn,
+  length(aws_customer_gateway.routerVpnGw.*.id) > 0 ? aws_customer_gateway.routerVpnGw[0].id : ""]
+}
