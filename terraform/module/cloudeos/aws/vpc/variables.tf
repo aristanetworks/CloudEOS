@@ -81,3 +81,18 @@ variable "peer_owner_id" {
   description = "Peer VPC Owners Account ID"
   default     = ""
 }
+
+variable "topology_id" {
+  description = "TF ID of the cloudeos_topology resource"
+  default     = ""
+}
+
+variable "wan_id" {
+  description = "TF ID of the cloudeos_wan resource"
+  default     = ""
+}
+
+variable "clos_id" {
+  description = "TF ID of the cloudeos_clos resource"
+  default     = ""
+}

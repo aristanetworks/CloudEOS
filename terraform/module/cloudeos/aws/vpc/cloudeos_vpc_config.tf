@@ -11,4 +11,7 @@ resource "cloudeos_vpc_config" "vpc" {
   cnps           = lookup(var.tags, "Cnps", "")
   tags           = var.tags
   region         = var.region
+  topology_id    = var.topology_id
+  wan_id         = var.wan_id
+  clos_id        = var.clos_id
 }

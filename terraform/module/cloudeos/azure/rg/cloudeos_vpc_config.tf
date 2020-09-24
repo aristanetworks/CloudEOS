@@ -9,4 +9,7 @@ resource "cloudeos_vpc_config" "vpc" {
   tags           = var.tags
   vnet_name      = var.vnet_name
   region         = var.rg_location
+  topology_id    = var.topology_id
+  wan_id         = var.wan_id
+  clos_id        = var.clos_id
 }

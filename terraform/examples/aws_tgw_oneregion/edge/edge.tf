@@ -18,6 +18,7 @@ resource "cloudeos_topology" "topology" {
   terminattr_ip_cidr    = var.terminattr_ip_cidr    // Loopback IP range on veos
   dps_controlplane_cidr = var.dps_controlplane_cidr // CIDR block for Dps Control Plane IPs on veos
 }
+
 resource "cloudeos_clos" "clos" {
   name              = "${var.topology}-clos"
   topology_name     = cloudeos_topology.topology.topology_name
@@ -42,6 +43,9 @@ module "EdgeVpc" {
     Name = "${var.topology}-EdgeVpc"
   }
   region = var.aws_regions["region2"]
+  topology_id = cloudeos_topology.topology.tf_id
+  wan_id = cloudeos_wan.wan.tf_id
+  clos_id = cloudeos_clos.clos.tf_id
 }
 
 module "EdgeSubnet" {
