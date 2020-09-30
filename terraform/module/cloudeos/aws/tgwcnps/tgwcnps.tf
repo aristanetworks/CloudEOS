@@ -39,13 +39,13 @@ resource "cloudeos_aws_vpn" "vpn" {
   tunnel1_aws_endpoint_ip   = aws_vpn_connection.vpnConn[count.index].tunnel1_address
   tunnel1_bgp_asn           = aws_vpn_connection.vpnConn[count.index].tunnel1_bgp_asn
   tunnel1_router_overlay_ip = aws_vpn_connection.vpnConn[count.index].tunnel1_cgw_inside_address
-  tunnel1_aws_tunnel_ip     = aws_vpn_connection.vpnConn[count.index].tunnel1_vgw_inside_address
+  tunnel1_aws_overlay_ip     = aws_vpn_connection.vpnConn[count.index].tunnel1_vgw_inside_address
   tunnel1_bgp_holdtime      = aws_vpn_connection.vpnConn[count.index].tunnel1_bgp_holdtime
   tunnel1_preshared_key     = aws_vpn_connection.vpnConn[count.index].tunnel1_preshared_key
   tunnel2_aws_endpoint_ip   = aws_vpn_connection.vpnConn[count.index].tunnel2_address
   tunnel2_bgp_asn           = aws_vpn_connection.vpnConn[count.index].tunnel1_bgp_asn
   tunnel2_router_overlay_ip = aws_vpn_connection.vpnConn[count.index].tunnel2_cgw_inside_address
-  tunnel2_aws_tunnel_ip     = aws_vpn_connection.vpnConn[count.index].tunnel2_vgw_inside_address
+  tunnel2_aws_overlay_ip     = aws_vpn_connection.vpnConn[count.index].tunnel2_vgw_inside_address
   tunnel2_bgp_holdtime      = aws_vpn_connection.vpnConn[count.index].tunnel2_bgp_holdtime
   tunnel2_preshared_key     = aws_vpn_connection.vpnConn[count.index].tunnel2_preshared_key
   vpn_gateway_id            = ""

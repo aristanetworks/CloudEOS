@@ -205,8 +205,7 @@ resource "aws_vpc_endpoint" "endpoint" {
   private_dns_enabled = true
 }
 
-/* 
- * Will uncomment after TF provider is updated
+/* Uncomment after the TF provider and service are updated
 resource "aws_customer_gateway" "routerVpnGw" {
   count      = var.remote_vpn_gateway ? 1 : 0
   bgp_asn    = cloudeos_router_status.router[0].router_bgp_asn

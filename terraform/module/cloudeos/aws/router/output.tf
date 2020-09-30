@@ -50,8 +50,10 @@ output "rtable_subnet_assoc_public" {
 }
 
 output "router_info" {
-  value = [cloudeos_router_status.router[0].public_ip, cloudeos_router_status.router[0].tf_id]
-  //Uncomment after TF provider is upgraded.
-  //cloudeos_router_status.router[0].router_bgp_asn,
-  //length(aws_customer_gateway.routerVpnGw.*.id) > 0 ? aws_customer_gateway.routerVpnGw[0].id : ""]
+  value = [length(cloudeos_router_status.router.*.public_ip) > 0 ? cloudeos_router_status.router[0].public_ip : "",
+           length(cloudeos_router_status.router.*.tf_id) > 0 ? cloudeos_router_status.router[0].tf_id : ""]
+    /* Uncomment after TF provider is upgraded.
+           length(cloudeos_router_status.router.*.router_bgp_asn) > 0 ? cloudeos_router_status.router[0].router_bgp_asn : "",
+           length(aws_customer_gateway.routerVpnGw.*.id) > 0 ? aws_customer_gateway.routerVpnGw[0].id : ""]
+     */
 }
