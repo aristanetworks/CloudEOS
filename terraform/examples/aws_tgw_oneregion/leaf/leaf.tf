@@ -173,7 +173,7 @@ module "Leaf3Vpc" {
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
   role          = "CloudLeaf"
-  cidr_block    = ["101.2.0.0/16"]
+  cidr_block    = ["101.3.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf3Vpc"
     Cnps = "dev"
@@ -184,12 +184,12 @@ module "Leaf3Vpc" {
 module "Leaf3Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "101.2.0.0/24" = var.availability_zone[module.Leaf3Vpc.region]["zone1"]
-    "101.2.1.0/24" = var.availability_zone[module.Leaf3Vpc.region]["zone1"]
+    "101.3.0.0/24" = var.availability_zone[module.Leaf3Vpc.region]["zone1"]
+    "101.3.1.0/24" = var.availability_zone[module.Leaf3Vpc.region]["zone1"]
   }
   subnet_names = {
-    "101.2.0.0/24" = "${var.topology}-Leaf3Subnet0"
-    "101.2.1.0/24" = "${var.topology}-Leaf3Subnet1"
+    "101.3.0.0/24" = "${var.topology}-Leaf3Subnet0"
+    "101.3.1.0/24" = "${var.topology}-Leaf3Subnet1"
   }
   vpc_id        = module.Leaf3Vpc.vpc_id[0]
   topology_name = module.Leaf3Vpc.topology_name
@@ -215,7 +215,7 @@ module "Leaf3CloudEOS1" {
     "${var.topology}-Leaf3CloudEOS1Intf0" = module.Leaf3Subnet.vpc_subnets[0]
     "${var.topology}-Leaf3CloudEOS1Intf1" = module.Leaf3Subnet.vpc_subnets[1]
   }
-  private_ips       = { "0" : ["101.2.0.101"], "1" : ["101.2.1.101"] }
+  private_ips       = { "0" : ["101.3.0.101"], "1" : ["101.3.1.101"] }
   availability_zone = var.availability_zone[module.Leaf3Vpc.region]["zone1"]
   region            = module.Leaf3Vpc.region
   tags = {
@@ -234,7 +234,7 @@ module "Leaf3host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf3Vpc.region]
   subnet_id     = module.Leaf3Subnet.vpc_subnets[1]
-  private_ips   = ["103.2.1.102"]
+  private_ips   = ["101.3.1.102"]
   tags = {
     "Name" = "${var.topology}-Leaf3devHost"
   }
@@ -243,7 +243,7 @@ module "Leaf3host1" {
 module "TgwLeaf3host1" {
   region        = var.tgwLeafHosts["leaf3"]["region"]
   source        = "../../../module/cloudeos/aws/host"
-  ami           = var.eos_amis[var.tgwLeafHosts["leaf3"]["region"]]
+  ami           = var.host_amis[var.tgwLeafHosts["leaf3"]["region"]]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[var.tgwLeafHosts["leaf3"]["region"]]
   subnet_id     = var.tgwLeafHosts["leaf3"]["subnetids"][1]
@@ -256,7 +256,7 @@ module "TgwLeaf3host1" {
 module "TgwLeaf4host1" {
   region        = var.tgwLeafHosts["leaf4"]["region"]
   source        = "../../../module/cloudeos/aws/host"
-  ami           = var.eos_amis[var.tgwLeafHosts["leaf4"]["region"]]
+  ami           = var.host_amis[var.tgwLeafHosts["leaf4"]["region"]]
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[var.tgwLeafHosts["leaf4"]["region"]]
   subnet_id     = var.tgwLeafHosts["leaf4"]["subnetids"][1]

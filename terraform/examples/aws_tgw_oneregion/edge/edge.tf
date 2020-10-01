@@ -135,9 +135,10 @@ module "tgwDev" {
   router_info           = [module.CloudEOSEdge1.router_info, module.CloudEOSEdge2.router_info]
   cnps                  = "dev"
   cnps_route_table_info = "tgw-rtb-088aa72341af9060b"
-  bandwidth_gbps        = 2
+  bandwidth_gbps        = 1
   vpc_id                = module.EdgeVpc.vpc_id[0]
 }
+
 module "tgwProd" {
   source                = "../../../module/cloudeos/aws/tgwcnps"
   tgw_id                = "tgw-0a5856fd8cb6fbee6"
