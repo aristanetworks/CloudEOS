@@ -87,19 +87,6 @@ resource "azurerm_network_interface_security_group_association" "nsg" {
   network_security_group_id = var.role == "CloudEdge" ? var.vpc_info[5] : var.vpc_info[6]
 }
 
-data "template_file" "user_data_precreated" {
-  count    = var.existing_userdata == true ? 1 : 0
-  template = file(var.filename)
-}
-
-data "template_file" "user_data_specific" {
-  count    = var.existing_userdata == false ? 1 : 0
-  template = file(var.filename)
-  vars = {
-    bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg
-  }
-}
-
 resource "azurerm_virtual_machine" "cloudeosVm" {
   count                         = var.availability_zone == [] ? 1 : 0
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
@@ -129,7 +116,7 @@ resource "azurerm_virtual_machine" "cloudeosVm" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg}) : templatefile(var.filename)
   }
 
   plan {
@@ -177,8 +164,9 @@ resource "azurerm_virtual_machine" "cloudeosVm1" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg}) : templatefile(var.filename)
   }
+
   plan {
     name      = var.cloudeos_image_name
     publisher = "arista-networks"
@@ -229,20 +217,3 @@ resource "azurerm_subnet_route_table_association" "privateRtSubnetMap" {
   route_table_id = azurerm_route_table.privateRoutetable[count.index].id
 }
 
-/*
-resource "azurerm_route_table" "internalRoutetable" {
-  count                         = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"]))
-  name                          = "${var.routetable_name}_internal"
-  location                      = local.rg_location
-  resource_group_name           = local.rg_name
-  disable_bgp_route_propagation = false
-}
-*/
-
-/*
-resource "azurerm_subnet_route_table_association" "internalRtSubnetMap" {
-  count          = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"]))
-  subnet_id      = lookup(var.subnetids, matchkeys(keys(var.interface_types), values(var.interface_types), ["internal"])[count.index], null)
-  route_table_id = azurerm_route_table.privateRoutetable[count.index].id
-}
-*/

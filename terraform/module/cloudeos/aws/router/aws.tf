@@ -108,30 +108,6 @@ resource "aws_route_table_association" "route_map_public" {
   route_table_id = local.route_table_id
   subnet_id      = local.public_subnets[count.index]
 }
-/*
-data "template_file" "user_data" {
-  template = file(var.filename)
-  vars = {
-    ip            = length(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"])) > 0 ? aws_eip.eip[0].public_ip : ""
-    vmname        = length([for i,z in var.tags: i if i == "Name"]) > 0 ? var.tags["Name"] : ""
-    password      = "arastra1234!"
-    tunnelip      = var.tunnelip
-  }
-}
-*/
-
-data "template_file" "user_data_precreated" {
-  count    = var.existing_userdata == true ? 1 : 0
-  template = file(var.filename)
-}
-
-data "template_file" "user_data_specific" {
-  count    = var.existing_userdata == false ? 1 : 0
-  template = file(var.filename)
-  vars = {
-    bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg
-  }
-}
 
 resource "aws_instance" "cloudeosVm" {
   ami                                  = var.cloudeos_ami
@@ -144,8 +120,7 @@ resource "aws_instance" "cloudeosVm" {
     network_interface_id = aws_network_interface.allIntfs[0].id
     device_index         = 0
   }
-  user_data = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
-  //user_data = cloudeos_router_config.router[0].bootstrap_cfg
+  user_data = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg}) : templatefile(var.filename)
   tags                 = var.tags
   iam_instance_profile = var.iam_instance_profile
 }
