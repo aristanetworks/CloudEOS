@@ -1,33 +1,29 @@
-# Introduction 
+# Introduction
+The `module` folder has Terraform modules with multiple resources that are used together. We have created modules for VPC/VNET, Subnets, Routers and hosts.
+These modules are used to deploy and setup the Cloud Provider underlay on which CloudEOS overlay network fabric will be created. The `example` folder has pre defined network topologies that use these modules to
+build out a topology for you.
 
-This folder has Terraform scripts to launch and configure CloudEOS in various public clouds.
+## Modules
+The modules folder consists of the `cloudeos` folder which has subdirectories for `aws` and `azure`.
 
+# Deploying Topologies
+
+## Prerequisites
 *Note that following the instructions will cause instances to be launched in your public cloud and incur expenses. Make sure you destroy the resources after testing*
 
-# Prerequisites
-
-1) Public cloud account credentials eg AWS Access key and secret
+1) Public cloud account credentials eg. AWS Access key and secret
 2) Terraform installed on your laptop/server
-3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision, Security webtoken for CloudVision, CloudEOS Terraform provider plugins 
-4) Subscribe to Arista CloudEOS PAYG offer in the cloud marketplace
+3) CloudVision access - Please contact your Arista rep or sales@arista.com to get access to CloudVision(CVaaS) and create a security web token in CVaaS.
+4) Subscribe to the Arista CloudEOS PAYG offer in the cloud marketplace
 5) Create a Container in CloudVision which will be used to provision the routers. Steps are outlined in "CloudEOS MultiCloud Deployment Guide" (Please contact your Arista rep or sales@arista.com to get the guide)
 
 ## Installing Terraform
 
-Follow the steps at https://learn.hashicorp.com/terraform/getting-started/install.html 
-
-## Get AWS and CloudEOS providers
-
-Since the CloudEOS Terraform provider isn't bundled with terraform yet please contact Arista to get terraform-cloudeos-plugin_latest.tar.gz and save it CloudEOS/terraform folder.
-
-'''
-cd CloudEOS/terraform
-./setup.sh
-'''
+Follow the steps at https://learn.hashicorp.com/terraform/getting-started/install.html
 
 ## Setup AWS Credentials
 
-Security credentials for AWS from your IT Team or from your AWS account; Terraform will need these to authenticate with AWS and create resources. 
+Security credentials for AWS from your IT Team or from your AWS account; Terraform will need these to authenticate with AWS and create resources.
 
 Set the following environment variables in your shell
 - AWS_ACCESS_KEY_ID
@@ -36,21 +32,25 @@ Set the following environment variables in your shell
 
 Run the terraform deployment with the above environment variables set.
 
+## Setup Azure Credentials
+
+Follow the guidelines to create and setup the keys for Azure [here](https://www.terraform.io/docs/providers/azurerm/index.html#authenticating-to-azure).
+
+
 # Deploying Topologies
 
-The examples directory contains terraform files for various topologies that you can deploy. While you will only have to modify the input_vars.tfvars file to get the topologies to work, feel free to modify the code to create your own topologies to suit your requirement. 
+The examples directory contains terraform files for various topologies that you can deploy. While you will only have to modify the input_vars.tfvars file to get the topologies to work, feel free to modify the code to create your own topologies to suit your requirement.
 
 ## Change directory to the example topology
 
-It is recommended that if this is the first time, try out "aws_oneregion_multipleleaf" and then "aws_tworegion_cloudha"
-
+For example, if you want to deploy a topology in AWS in a single region,
 ```bash
 cd examples/aws_oneregion_multipleleaf
 ```
 
 ## Update Input variables
 
-Please update the input parameters in **input_vars.tfvars** for the example topology before you deploy them. 
+Please update the input parameters in **input_vars.tfvars** for the example topology before you deploy them.
 
 ## Create Topology, Route Reflector, Edge and Leaf Routers
 
@@ -62,9 +62,9 @@ It's necessary to create resources in the following order.
 ## For MAC OS
 1. To create Topology and Route Reflector
 
-*Please note that in some topologies like aws_tworegion_clos this step is combined with the next step of creating edge resources. In that case you can skip this step and start with step 2 (create edge resources)*
+*Please note that in some topologies like aws_tworegion_clos this step is combined with creating edge resources. In that case, you can skip this step and start with step 2 (create edge resources)*
 
-Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf". Execute to below commands to create topology and route reflector.
+Assuming the current directory to be "examples/name-of-topology" (eg. "examples/aws_oneregion_multipleleaf"). Execute the commands below to create your topology and route reflector resources.
 
 ```bash
 cd topology
@@ -133,7 +133,7 @@ terraform apply -var-file=../input_vars.tfvars
 
 ## To destroy resources
 
-It's necessary to destroy in following order. Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
+It's necessary to destroy in following order. Assuming current directory to be "examples/name-of-topology" (eg. "examples/aws_oneregion_multipleleaf")
 
 1. Destroy Leaf resources
 
@@ -156,26 +156,26 @@ cd topology
 terraform destroy -var-file=../input_vars.tfvars
 ```
 
-# LINUX host for testing : Setting username and password 
+# LINUX host for testing : Setting username and password
 
-The Linux host comes with iperf3 installed. The Linux host isn't accessible from Internet so you will have to login to edge router, then to leaf and then finally to the host. To login to host you can use various steps listed below:
+The Linux host comes with iperf3 installed. The Linux host isn't accessible from the Internet so you will have to login through the edge and the leaf routers. To login to the host you can use one of the following methods
+to access the hosts.
 
 ## Using pem file
-Copy the pem file to the cloudeos then ssh to device using pem file.
+Copy the pem file to the host and then ssh to the device using pem file.
 
 ## Using default username
-If you have not provided a custom username and passwd in terraform host
-module then you can login to the host using "cloudeos" username and "cloudeos1234!" password.
+If you have not provided a custom username and password ( see below ) to the terraform host module, then you can login to the host using "cloudeos" username and "cloudeos1234!" password.
 
 ## Using custom username and password
-To setup a custom username and password, you need to set the below variables in host terraform module.
+To setup a custom username and password, you need to set the following variables in the host terraform module.
 
 ```
 username = "foo"
 passwd = "$1$SaltSalt$YhgRYajLPrYevs14poKBQ0"
 ```
 
-The above password is generated from plain-test password "secret" using a salt "SaltSalt" usign the following command.
+The above password is generated from plain-test password "secret" using a salt "SaltSalt" using the following command.
 
 ```
 openssl passwd -1 -salt SaltSalt secret
@@ -183,10 +183,13 @@ openssl passwd -1 -salt SaltSalt secret
 
 Example
 
+Use the generated output from the above command as the input to the `password` field in the host module. However, when you SSH
+to the device, use the plain text string that you used above.
+
 ```
 module "Region2Leaf1host1" {
                 source = "../../../module/cloudeos/aws/host"
-                instance_type = "c5.xlarge"                            
+                instance_type = "c5.xlarge"
                 username = "foo"
                 passwd = "$1$SaltSalt$YhgRYajLPrYevs14poKBQ0"
                 // ...
