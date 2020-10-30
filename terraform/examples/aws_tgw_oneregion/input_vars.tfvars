@@ -75,3 +75,13 @@ host_amis = {
   us-east-2 : "ami-083064f66d3878ff7"
 }
 
+tgwLeafHosts = {
+  leaf3 = {
+	region = "us-east-1",
+	subnetids = ["subnet-02973b860c334efcb", "subnet-0eb8f54b319fc2bd5"]
+  }
+  leaf4 = {
+	region = "us-east-1",
+        subnetids = ["subnet-0f1b9b3802a84650a", "subnet-0c71774d6b4ee7b9a"]
+  }
+}

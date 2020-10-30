@@ -1,6 +1,5 @@
 variable "tags" {
   description = "Tags for the new VPC"
-  type        = map(string)
   default     = {}
 }
 
@@ -93,4 +92,9 @@ variable "cross_account_peering" {
 variable "peer_owner_id" {
   description = "Peer VPC Owners Account ID"
   default     = ""
+}
+
+variable "vpc_peering" {
+  description = "VPC Peering between Leaf and Edge VPC"
+  default = true
 }
