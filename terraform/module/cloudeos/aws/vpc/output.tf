@@ -30,14 +30,14 @@ output "sg_default_id" {
 }
 
 locals {
-  peer_id       = length(aws_vpc_peering_connection.vpc_peer.*.id) > 0 ? aws_vpc_peering_connection.vpc_peer.*.id : []
-  igw_id        = length(aws_internet_gateway.internetGateway.*.id) > 0 ? [aws_internet_gateway.internetGateway[0].id] : []
-  sg_id_edge    = var.role == "CloudEdge" && length(aws_security_group.allowSSHIKE.*.id) > 0 ? [aws_security_group.allowSSHIKE[0].id] : []
-  sg_id_leaf    = var.role == "CloudLeaf" && length(aws_security_group.leafSG.*.id) > 0 ? [aws_security_group.leafSG[0].id] : []
+  peer_id         = length(aws_vpc_peering_connection.vpc_peer.*.id) > 0 ? aws_vpc_peering_connection.vpc_peer.*.id : []
+  igw_id          = length(aws_internet_gateway.internetGateway.*.id) > 0 ? [aws_internet_gateway.internetGateway[0].id] : []
+  sg_id_edge      = var.role == "CloudEdge" && length(aws_security_group.allowSSHIKE.*.id) > 0 ? [aws_security_group.allowSSHIKE[0].id] : []
+  sg_id_leaf      = var.role == "CloudLeaf" && length(aws_security_group.leafSG.*.id) > 0 ? [aws_security_group.leafSG[0].id] : []
   cloudeos_vpc_id = length(cloudeos_vpc_status.vpc.*.id) > 0 ? cloudeos_vpc_status.vpc[0].id : ""
-  peervpcidr    = var.role == "CloudLeaf" && length(cloudeos_vpc_config.vpc.*.id) > 0 ? cloudeos_vpc_config.vpc[0].peervpcidr : "0.0.0.0/0"
-  sg_default_id = length(aws_default_security_group.default.*.id) > 0 ? aws_default_security_group.default.*.id : []
-  sg_id         = var.role == "CloudEdge" ? local.sg_id_edge : local.sg_id_leaf
+  peervpcidr      = var.role == "CloudLeaf" && length(cloudeos_vpc_config.vpc.*.id) > 0 ? cloudeos_vpc_config.vpc[0].peervpcidr : "0.0.0.0/0"
+  sg_default_id   = length(aws_default_security_group.default.*.id) > 0 ? aws_default_security_group.default.*.id : []
+  sg_id           = var.role == "CloudEdge" ? local.sg_id_edge : local.sg_id_leaf
 }
 
 output "vpc_info" {

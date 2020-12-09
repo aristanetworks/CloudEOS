@@ -96,3 +96,13 @@ variable "clos_id" {
   description = "TF ID of the cloudeos_clos resource"
   default     = ""
 }
+
+variable "ssh_security_group_cidrs" {
+  description = "Allow SSH only from a specific cidr range"
+  default     = ["0.0.0.0/0"]
+}
+
+variable "vpc_peering" {
+  description = "Leaf VPC peers with the Edge VPC"
+  default     = true
+}
