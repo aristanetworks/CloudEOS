@@ -60,6 +60,7 @@ resource "azurerm_public_ip" "publicip" {
   location            = local.rg_location
   resource_group_name = local.rg_name
   allocation_method   = "Static"
+  sku                 = "Standard"
   zones               = var.availability_zone
 }
 
@@ -116,7 +117,7 @@ resource "azurerm_virtual_machine" "cloudeosVm" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg}) : templatefile(var.filename)
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, { bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg }) : templatefile(var.filename)
   }
 
   plan {
@@ -164,7 +165,7 @@ resource "azurerm_virtual_machine" "cloudeosVm1" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg}) : templatefile(var.filename)
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, { bootstrap_cfg = cloudeos_router_config.router[0].bootstrap_cfg }) : templatefile(var.filename)
   }
 
   plan {
