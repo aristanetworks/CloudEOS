@@ -48,28 +48,27 @@ aws_regions = {
   region3 : "us-east-2"
 }
 
-## Currently private AMIs. Contact Arista for access
 eos_amis = {
-  us-east-2 : "ami-0f288d79d6c54df9c",
-  us-east-1 : "ami-09294bb4c66837ba9",
-  us-west-1 : "ami-023b9d398d45e5d1e",
-  us-west-2 : "ami-01bda3983d6485129",
-  ap-east-1 : "ami-02416a3369c25adf4",
-  ap-south-1 : "ami-02ffb289a15e749f2",
-  ap-northeast-2 : "ami-05afb6df71e95b345",
-  ap-southeast-1 : "ami-0c022f2d5f4bf735c",
-  ap-southeast-2 : "ami-05d16e7c75bcdbb5c",
-  ap-northeast-1 : "ami-0aeab162992b5d86b",
-  ca-central-1 : "ami-0c5a12e947d33b477",
-  eu-central-1 : "ami-0d36a790c9f9184e8",
-  eu-west-1 : "ami-06457449fb0c0a67f",
-  eu-west-2 : "ami-05c3ead0a3bb34188",
-  eu-west-3 : "ami-07f2f957eab49eb25",
-  eu-north-1 : "ami-0da73caeb2cd3be33",
-  me-south-1 : "ami-08f26941374da7c2d",
-  sa-east-1 : "ami-01b10014647135f51",
-  us-gov-east-1 : "ami-919f73e0",
-  us-gov-west-1 : "ami-c2b285a3",
+  us-east-2 : "ami-040bdeb60b08e1d49",
+  us-east-1 : "ami-036a5d80077d33df2",
+  us-west-1 : "ami-03fad7766e0b75f6f",
+  us-west-2 : "ami-0b79ee29825b3572d",
+  ap-east-1 : "ami-04c20631185dbf232",
+  ap-south-1 : "ami-0695f8ce878519fd8",
+  ap-northeast-2 : "ami-0b5b16761c092ea73",
+  ap-southeast-1 : "ami-0b963dd70c4dbf1c9",
+  ap-southeast-2 : "ami-0181c2d94c63daf1d",
+  ap-northeast-1 : "ami-004fd8b20a2820008",
+  ca-central-1 : "ami-094db4a5eda8f5a41",
+  eu-central-1 : "ami-090a73c4f72292ff1",
+  eu-west-1 : "ami-06400e4914b6139b3",
+  eu-west-2 : "ami-0d549eba7f4bddd04",
+  eu-west-3 : "ami-0bab55b4126ba77c0",
+  eu-north-1 : "ami-0323ca3f0e3c7c3fa",
+  me-south-1 : "ami-0f418921435870c30",
+  sa-east-1 : "ami-042e8b81d03e84285",
+  us-gov-east-1 : "ami-05906714d9e7a6520",
+  us-gov-west-1 : "ami-080be51bffd37f337",
 }
 
 availability_zone = {
