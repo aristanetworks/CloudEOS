@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine" "cloudeosVm" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
-  availability_set_id = var.availablity_set_id
+  availability_set_id = var.availability_set_id
 
   os_profile {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""

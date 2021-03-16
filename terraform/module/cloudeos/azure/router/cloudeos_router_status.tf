@@ -23,7 +23,7 @@ resource "cloudeos_router_status" "router" {
   intf_type                    = values(var.interface_types)
   ha_name                      = var.cloud_ha
   availability_zone            = var.availability_zone != [] ? var.availability_zone[0] : ""
-  availability_set_id          = var.availablity_set_id
+  availability_set_id          = var.availability_set_id
   tf_id                        = cloudeos_router_config.router[0].tf_id
   private_rt_table_ids         = azurerm_route_table.privateRoutetable.*.id
   is_rr                        = var.is_rr
