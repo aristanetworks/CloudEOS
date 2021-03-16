@@ -74,7 +74,7 @@ variable "availability_zone" {
   default     = []
 }
 
-variable "availablity_set_id" {
+variable "availability_set_id" {
   default     = ""
   description = "Availability set id"
 }
