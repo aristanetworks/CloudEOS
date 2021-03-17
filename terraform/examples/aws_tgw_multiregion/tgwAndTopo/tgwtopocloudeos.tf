@@ -179,7 +179,7 @@ module "Leaf2ProdTgwVpc" {
   cidr_block    = ["102.1.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf2ProdTgwVpc"
-    Cnps = "dev"
+    Cnps = "prod"
   }
   region      = var.aws_regions["region2"]
   vpc_peering = false
