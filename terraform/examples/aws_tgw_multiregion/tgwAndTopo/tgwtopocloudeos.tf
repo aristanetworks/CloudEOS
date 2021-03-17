@@ -244,3 +244,24 @@ module "tgwProd" {
   vpc_attach_vpcs       = [module.Leaf2ProdTgwVpc.vpc_id[0]]
   vpc_attach_subnets    = [module.Leaf2ProdTgwSubnet.vpc_subnets[0]]
 }
+
+// Point default route to TGW in order to be able to route traffic to and from host VPCs
+data "aws_route_table" "Leaf1DevTgwRt" {
+  vpc_id = module.Leaf1DevTgwVpc.vpc_id[0]
+}
+
+resource "aws_route" "Leaf1DevTgwRoute" {
+  route_table_id            = data.aws_route_table.Leaf1DevTgwRt.id
+  destination_cidr_block    = "0.0.0.0/0"
+  transit_gateway_id = module.tgw.tgw_id
+}
+
+data "aws_route_table" "Leaf2ProdTgwRt" {
+  vpc_id = module.Leaf2ProdTgwVpc.vpc_id[0]
+}
+
+resource "aws_route" "Leaf2ProdTgwRoute" {
+  route_table_id            = data.aws_route_table.Leaf2ProdTgwRt.id
+  destination_cidr_block    = "0.0.0.0/0"
+  transit_gateway_id = module.tgw.tgw_id
+}
