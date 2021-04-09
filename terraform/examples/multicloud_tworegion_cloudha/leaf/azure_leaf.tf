@@ -182,7 +182,7 @@ module "azureLeaf2cloudeos1" {
 
 module "azureLeaf2host1" {
   source      = "../../../module/cloudeos/azure/host"
-  rg_name     = module.azureLeaf1.rg_name
+  rg_name     = module.azureLeaf2.rg_name
   rg_location = "westus2"
   intf_name   = "host2Intf0"
   subnet_id   = module.azureLeaf2Subnet.vnet_subnets[1]
@@ -229,7 +229,7 @@ module "azureLeaf2cloudeos2" {
 
 module "azureLeaf2host2" {
   source      = "../../../module/cloudeos/azure/host"
-  rg_name     = module.azureLeaf1.rg_name
+  rg_name     = module.azureLeaf2.rg_name
   rg_location = "westus2"
   intf_name   = "leaf2host2Intf0"
   subnet_id   = module.azureLeaf2Subnet.vnet_subnets[3]
