@@ -93,7 +93,6 @@ variable "interface_types" {
 }
 
 variable "private_ips" {
-  description = "List of interface IPs. First IP in the list will be considered as primary."
   default = {}
 }
 variable "tags" {

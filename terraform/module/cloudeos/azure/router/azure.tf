@@ -72,22 +72,14 @@ resource "azurerm_network_interface" "allIntfs" {
   enable_accelerated_networking = true
   enable_ip_forwarding          = true
 
-  dynamic "ip_configuration" {
-    for_each = [for s in lookup(var.private_ips, tostring(count.index), []): {
-      name                          = var.intf_names[count.index]
-      subnet_id                     = lookup(var.subnetids, var.intf_names[count.index], null)
-      private_ip_address_allocation = lookup(var.private_ips, tostring(count.index), []) != [] ? "Static" : "Dynamic"
-      private_ip_address            = s
-    }]
-    content {
-      name                          = format("%s%s", ip_configuration.value.name, ip_configuration.key)
-      subnet_id                     = ip_configuration.value.subnet_id
-      private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      private_ip_address            = ip_configuration.value.private_ip_address
-      primary                       = ip_configuration.key == 0 ? true : false
-      public_ip_address_id          = ip_configuration.key == 0 && lookup(var.interface_types, var.intf_names[count.index], "") == "public" && length(azurerm_public_ip.publicip.*.id) > 0 ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
-    }
+  ip_configuration {
+    name                          = var.intf_names[count.index]
+    subnet_id                     = lookup(var.subnetids, var.intf_names[count.index], null)
+    private_ip_address_allocation = lookup(var.private_ips, tostring(count.index), []) != [] ? "Static" : "Dynamic"
+    private_ip_address            = lookup(var.private_ips, tostring(count.index), []) != [] ? lookup(var.private_ips, tostring(count.index), "")[0] : null
+    public_ip_address_id          = lookup(var.interface_types, var.intf_names[count.index], "") == "public" && length(azurerm_public_ip.publicip.*.id) > 0 ? azurerm_public_ip.publicip.*.id[index(matchkeys(keys(var.interface_types), values(var.interface_types), ["public"]), var.intf_names[count.index])] : null
   }
+
 }
 
 resource "azurerm_network_interface_security_group_association" "nsg" {
