@@ -27,4 +27,5 @@ resource "cloudeos_router_status" "router" {
   tf_id                        = cloudeos_router_config.router[0].tf_id
   private_rt_table_ids         = azurerm_route_table.privateRoutetable.*.id
   is_rr                        = var.is_rr
+  deploy_mode                  = cloudeos_router_config.router[0].deploy_mode
 }

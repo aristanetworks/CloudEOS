@@ -26,4 +26,5 @@ resource "cloudeos_router_status" "router" {
   tf_id                        = cloudeos_router_config.router[0].tf_id
   is_rr                        = var.is_rr
   routing_resource_info        = flatten([aws_route.wan_default_route.*.id, aws_route.lan_default_route.*.id, aws_route.internal_default_route.*.id, aws_route_table_association.route_map_public.*.id, aws_route_table_association.route_map_internal.*.id, aws_route_table_association.route_map_private.*.id, aws_network_interface_attachment.secondary_intf.*.id])
+  deploy_mode                  = cloudeos_router_config.router[0].deploy_mode
 }
