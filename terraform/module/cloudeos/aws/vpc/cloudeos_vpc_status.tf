@@ -17,4 +17,5 @@ resource "cloudeos_vpc_status" "vpc" {
   region            = var.region
   tf_id             = cloudeos_vpc_config.vpc[0].tf_id
   account           = data.aws_caller_identity.current.account_id
+  deploy_mode       = cloudeos_vpc_config.vpc[0].deploy_mode
 }

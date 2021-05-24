@@ -20,4 +20,5 @@ resource "cloudeos_vpc_status" "vpc" {
   tf_id             = cloudeos_vpc_config.vpc[0].tf_id
   cnps              = lookup(var.tags, "Cnps", "")
   account           = data.azurerm_client_config.current.subscription_id
+  deploy_mode       = cloudeos_vpc_config.vpc[0].deploy_mode
 }
