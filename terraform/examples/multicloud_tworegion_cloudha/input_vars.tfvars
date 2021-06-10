@@ -122,8 +122,8 @@ cloudeos_info = {
     route_name             = "azrr1Rt"
     routetable_name        = "azrr1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
   }
   edge1cloudeos1 : {
@@ -138,8 +138,8 @@ cloudeos_info = {
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
   }
   edge1cloudeos2 : {
@@ -154,14 +154,14 @@ cloudeos_info = {
     route_name             = "azedge1cloudeos2Rt"
     routetable_name        = "azedge1cloudeos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
 
   }
   leaf1cloudeos1 = {
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
     intf_names             = ["leaf1cloudeos1Intf0", "leaf1cloudeos1Intf1"]
     interface_types = {
@@ -180,8 +180,8 @@ cloudeos_info = {
 
   }
   leaf1cloudeos2 = {
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
     intf_names             = ["leaf1cloudeos2Intf0", "leaf1cloudeos2Intf1"]
     interface_types = {
@@ -210,8 +210,8 @@ cloudeos_info = {
     route_name             = "leaf2Rt1"
     routetable_name        = "leaf2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
@@ -227,8 +227,8 @@ cloudeos_info = {
     route_name             = "leaf2cloudeos2Rt1"
     routetable_name        = "leaf2cloudeos2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.24.01"
-    cloudeos_image_name    = "cloudeos-4_24_0-payg-free"
+    cloudeos_image_version = "4.24.32"
+    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
