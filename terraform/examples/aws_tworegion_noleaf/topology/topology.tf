@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Arista Networks, Inc.
+// Copyright (c) 2021 Arista Networks, Inc.
 // Use of this source code is governed by the Apache License 2.0
 // that can be found in the LICENSE file.
 module "globals" {
@@ -50,7 +50,7 @@ module "RRVpc" {
   wan_name      = cloudeos_wan.wan.name
   role          = "CloudEdge"
   igw_name      = "${module.globals.topology}-RRVpcIgw"
-  cidr_block    = ["10.0.0.0/16"]
+  cidr_block    = ["${var.west1_rr_cidr_block}"]
   tags = {
     Name = "${module.globals.topology}-RRVpc"
     Cnps = "dev"
@@ -61,10 +61,10 @@ module "RRVpc" {
 module "RRSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "10.0.0.0/24" = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
+    "${var.west1_rr_subnet0}" = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
   }
   subnet_names = {
-    "10.0.0.0/24" = "${module.globals.topology}-RRSubnet0"
+    "${var.west1_rr_subnet0}" = "${module.globals.topology}-RRSubnet0"
   }
   vpc_id        = module.RRVpc.vpc_id[0]
   topology_name = module.RRVpc.topology_name
@@ -86,7 +86,7 @@ module "CloudEOSRR1" {
     "${module.globals.topology}-RRIntf0" = module.RRSubnet.vpc_subnets[0]
   }
   private_ips = {
-    "0" : ["10.0.0.101"]
+    "0" : ["${var.west1_rr_intf0}"]
   }
   availability_zone = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
   region            = module.RRVpc.region
