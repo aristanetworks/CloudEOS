@@ -12,6 +12,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
+locals {
+  Edge1 = "${var.topology}-CloudEOSEdge1"
+  Edge2 = "${var.topology}-CloudEOSEdge2"
+}
+
 // Topology Resources
 resource "cloudeos_topology" "topology" {
   topology_name         = var.topology
@@ -50,6 +55,7 @@ module "EdgeVpc" {
   wan_id      = cloudeos_wan.wan.tf_id
   clos_id     = cloudeos_clos.clos.tf_id
 }
+
 module "EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
@@ -67,13 +73,6 @@ module "EdgeSubnet" {
   vpc_id        = module.EdgeVpc.vpc_id[0]
   topology_name = module.EdgeVpc.topology_name
   region        = module.EdgeVpc.region
-}
-
-output EdgePublicIPs {
-  value = { "Edge1" : module.CloudEOSEdge1.eip_public }
-}
-output edgePrivateIps {
-  value = { "Edge1" : module.CloudEOSEdge1.intf_private_ips }
 }
 
 module "CloudEOSEdge1" {
@@ -96,14 +95,12 @@ module "CloudEOSEdge1" {
   availability_zone = var.availability_zone[module.EdgeVpc.region]["zone1"]
   region            = module.EdgeVpc.region
   tags = {
-    "Name" = "${var.topology}-CloudEOSEdge1"
+    "Name" = local.Edge1
   }
   primary            = true
   filename           = "../../../userdata/eos_ipsec_config.tpl"
-  // remote_vpn_gateway = true
 }
 
-/*
 module "CloudEOSEdge2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
@@ -124,14 +121,12 @@ module "CloudEOSEdge2" {
   availability_zone = var.availability_zone[module.EdgeVpc.region]["zone2"]
   region            = module.EdgeVpc.region
   tags = {
-    "Name" = "${var.topology}-CloudEOSEdge2"
+    "Name" = local.Edge2
   }
   filename                = "../../../userdata/eos_ipsec_config.tpl"
   public_route_table_id   = module.CloudEOSEdge1.route_table_public
   internal_route_table_id = module.CloudEOSEdge1.route_table_internal
-  remote_vpn_gateway      = true
 }
-*/
 
 //Leaf VPCs to TGW
 module "Leaf1DevTgwVpc" {
@@ -228,8 +223,7 @@ module "tgw" {
 module "tgwDev" {
   source                = "../../../module/cloudeos/aws/tgwcnps"
   tgw_id                = module.tgw.tgw_id
-  router_info           = [module.CloudEOSEdge1.router_info]
-  // router_info           = [module.CloudEOSEdge1.router_info, module.CloudEOSEdge2.router_info]
+  router_info           = [module.CloudEOSEdge1.router_info, module.CloudEOSEdge2.router_info]
   cnps                  = module.tgw.tgw_cnps[0]
   cnps_route_table_info = module.tgw.tgw_rttable_id[0]
   bandwidth_gbps        = 1
@@ -244,8 +238,7 @@ module "tgwProd" {
   source                = "../../../module/cloudeos/aws/tgwcnps"
   tgw_id                = module.tgw.tgw_id
   cnps                  = module.tgw.tgw_cnps[1]
-  router_info           = [module.CloudEOSEdge1.router_info]
-  // router_info           = [module.CloudEOSEdge1.router_info, module.CloudEOSEdge2.router_info]
+  router_info           = [module.CloudEOSEdge1.router_info, module.CloudEOSEdge2.router_info]
   cnps_route_table_info = module.tgw.tgw_rttable_id[1]
   bandwidth_gbps        = 2
   vpc_id                = module.EdgeVpc.vpc_id[0]
@@ -274,4 +267,56 @@ resource "aws_route" "Leaf2ProdTgwRoute" {
   route_table_id            = data.aws_route_table.Leaf2ProdTgwRt.id
   destination_cidr_block    = "0.0.0.0/0"
   transit_gateway_id = module.tgw.tgw_id
+}
+
+// Outputs for use in Creating AWS Connect
+output python_path {
+  value = { "python_path" : "/usr/bin/python3" }
+}
+output cvaas_server {
+  value = { "cvaas_server": var.cvaas["server"] }
+}
+output cvaas_service_account_token {
+  value = { "cvaas_service_account_token": var.cvaas["service_token"] }
+}
+output connect_vpc_subnet_id {
+  value = { "Edge1": module.EdgeSubnet.vpc_subnets[1], "Edge2": module.EdgeSubnet.vpc_subnets[3] }
+}
+output connect_vpc_subnet_route_table_id {
+  value = { "Edge1": module.CloudEOSEdge1.route_table_internal, "Edge2": module.CloudEOSEdge2.route_table_internal }
+}
+output underlay_ip {
+  value = { "Edge1": element(tolist(lookup(module.CloudEOSEdge1.intf_private_ips, lookup(module.CloudEOSEdge1.intfname_to_id, "${var.topology}-Edge1Intf1"))), 0),
+            "Edge2": element(tolist(lookup(module.CloudEOSEdge2.intf_private_ips, lookup(module.CloudEOSEdge2.intfname_to_id, "${var.topology}-Edge2Intf1"))), 0) }
+}
+output bgp_asn {
+  value = { "Edge1": module.CloudEOSEdge1.router_info[2], "Edge2": module.CloudEOSEdge2.router_info[2] }
+}
+output bgp_peering_cidr {
+  value = { "Edge1": { "dev": "169.254.6.0/29", "prod": "169.254.6.8/29" }, "Edge2": { "dev": "169.254.6.16/29", "prod": "169.254.6.32/29" } }
+}
+
+output aws_region {
+  value = { "aws_region": module.EdgeVpc.region }
+}
+output connect_vpc_id {
+  value = { "connect_vpc_id": module.EdgeVpc.vpc_info[0][0] }
+}
+output tgw_id {
+  value = { "tgw_id": module.tgw.tgw_id }
+}
+output tgw_cidr {
+  value = { "tgw_cidr": "1.1.1.0/24" }
+}
+output tag_prefix {
+  value = { "tag_prefix": "tgw-connect-exp" }
+}
+output segments {
+  value = { "segments": module.tgw.tgw_cnps }
+}
+output tgw_route_table_id {
+  value = { "tgw_route_table_id" : { "dev": module.tgw.tgw_rttable_id[0], "prod": module.tgw.tgw_rttable_id[1] } }
+}
+output EdgeNames {
+  value = { "Edge1" : local.Edge1, "Edge2" : local.Edge2 }
 }
