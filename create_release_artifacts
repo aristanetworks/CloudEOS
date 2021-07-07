@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# The latest version of the modules is available in version.txt.
+# This script simply bumps up the version and generates a tar.
+# In order to do a release:
+# - Ensure that autotests have run against the release candidate.
+# - Ensure that backwards incompatible changes are only introduced
+#   in major version increments and the migration procedure is clearly
+#   documented in UPGRADE.md
+# - Update the changelog with the new version.
+# - Invoke this script to bump the version and generate the tar.
+# - Merge all the changes made above and ensure that the public
+#   master on github is in sync.
+# - Do a github release. Upload the tar generated above and set
+#   the tag = version in version.txt in master.
+vfile="./version.txt"
+if [ -f "$vfile" ]; then
+    version=$(cat $vfile | grep latest | grep -oP [0-9]+.[0-9]+.[0-9]+)
+else
+   version="0.0.0"
+fi
+echo CloudEOS current version $version
+
+oldversion=$version
+IFS='.'
+read -ra ADDR <<< "$version"
+d=${ADDR[2]}
+IFS=$OLDIFS
+version="${ADDR[0]}.${ADDR[1]}.$((d+1))"
+echo Cloudeos version $oldversion to $version
+
+# Wrtie the new version back to version file
+sed -i "s/$oldversion/$version/g" "$vfile"
+
+tar -czvf terraform-cloudeos-$version.tar.gz terraform CHANGELOG.md LICENSE README.md UPGRADE.md version.txt
