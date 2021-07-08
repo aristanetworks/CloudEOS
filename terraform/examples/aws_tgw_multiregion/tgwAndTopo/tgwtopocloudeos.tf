@@ -8,7 +8,7 @@ provider "cloudeos" {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_regions["region2"]
 }
 
 //Topology Resources
@@ -216,7 +216,7 @@ module "tgw" {
   source        = "../../../module/cloudeos/aws/tgw"
   cnps          = ["dev", "prod"]
   cloudeos_cnps = false
-  region        = "us-east-1"
+  region        = var.aws_regions["region2"]
 }
 
 module "tgwDev" {
@@ -227,7 +227,7 @@ module "tgwDev" {
   cnps_route_table_info = module.tgw.tgw_rttable_id[0]
   bandwidth_gbps        = 1
   vpc_id                = module.EdgeVpc.vpc_id[0]
-  region                = "us-east-1"
+  region                = var.aws_regions["region2"]
   vpc_attach_vpcs       = [module.Leaf1DevTgwVpc.vpc_id[0]]
   vpc_attach_subnets    = [module.Leaf1DevSubnet.vpc_subnets[0]]
 }
@@ -240,7 +240,7 @@ module "tgwProd" {
   cnps_route_table_info = module.tgw.tgw_rttable_id[1]
   bandwidth_gbps        = 2
   vpc_id                = module.EdgeVpc.vpc_id[0]
-  region                = "us-east-1"
+  region                = var.aws_regions["region2"]
   vpc_attach_vpcs       = [module.Leaf2ProdTgwVpc.vpc_id[0]]
   vpc_attach_subnets    = [module.Leaf2ProdTgwSubnet.vpc_subnets[0]]
 }
@@ -255,7 +255,6 @@ resource "aws_route" "Leaf1DevTgwRoute" {
   destination_cidr_block    = "0.0.0.0/0"
   transit_gateway_id = module.tgw.tgw_id
 }
-
 data "aws_route_table" "Leaf2ProdTgwRt" {
   vpc_id = module.Leaf2ProdTgwVpc.vpc_id[0]
 }
