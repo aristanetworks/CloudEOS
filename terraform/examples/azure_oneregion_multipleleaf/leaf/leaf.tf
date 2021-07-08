@@ -9,6 +9,10 @@ provider "cloudeos" {
   service_account_web_token = var.cvaas["service_token"]
 }
 
+locals {
+  sanitized_topology = lower(replace("${var.topology}", "-", ""))
+}
+
 variable "username" {}
 variable "password" {}
 
@@ -43,7 +47,9 @@ module "azureLeaf1cloudeos1" {
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf1eos1store")
+  # Storage account names must be between 3 and 24 characters in length and may contain
+  # numbers and lowercase letters only. Storage account names must be unique within Azure
+  storage_name  = format("%s%s",local.sanitized_topology,"leaf1eos1store")
 
   subnetids = {
     "leaf1cloudeos1Intf0" = module.azureLeaf1Subnet.vnet_subnets[0]
@@ -72,8 +78,7 @@ module "azureLeaf1cloudeos2" {
   vpc_info      = module.azureLeaf1.vpc_info
   topology_name = module.azureLeaf1.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf1eos2store")
-
+  storage_name  = format("%s%s",local.sanitized_topology,"leaf1eos2store")
   subnetids = {
     "leaf1cloudeos2Intf0" = module.azureLeaf1Subnet.vnet_subnets[2]
     "leaf1cloudeos2Intf1" = module.azureLeaf1Subnet.vnet_subnets[3]
@@ -158,7 +163,7 @@ module "azureLeaf2cloudeos1" {
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf2eos1store")
+  storage_name  = format("%s%s",local.sanitized_topology,"leaf2eos1store")
   tags          = { "Name" : "${var.topology}leaf2cloudeos1", "Cnps" : "dev" }
 
   subnetids = {
@@ -202,7 +207,7 @@ module "azureLeaf2cloudeos2" {
   vpc_info      = module.azureLeaf2.vpc_info
   topology_name = module.azureLeaf2.topology_name
   role          = "CloudLeaf"
-  storage_name  = lower("${var.topology}leaf2eos2store")
+  storage_name  = format("%s%s",local.sanitized_topology,"leaf2eos2store")
   tags          = { "Name" : "${var.topology}leaf2cloudeos2", "Cnps" : "dev" }
 
   subnetids = {

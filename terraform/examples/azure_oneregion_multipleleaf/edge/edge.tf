@@ -9,6 +9,10 @@ provider "cloudeos" {
   service_account_web_token = var.cvaas["service_token"]
 }
 
+locals {
+  sanitized_topology = lower(replace("${var.topology}", "-", ""))
+}
+
 variable "username" {}
 variable "password" {}
 
@@ -65,7 +69,9 @@ module "azureedge1cloudeos1" {
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1cloudeos1" }
-  storage_name  = lower("${var.topology}edge1cloudeos1store")
+  # Storage account names must be between 3 and 24 characters in length and may contain
+  # numbers and lowercase letters only. Storage account names must be unique within Azure
+  storage_name  = format("%s%s",local.sanitized_topology,"edge1eos1store")
   subnetids = {
     "edge1cloudeos1Intf0" = module.edge1Subnet.vnet_subnets[0]
     "edge1cloudeos1Intf1" = module.edge1Subnet.vnet_subnets[1]
@@ -93,7 +99,7 @@ module "azureedge1cloudeos2" {
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1cloudeos2" }
-  storage_name  = lower("${var.topology}edge1cloudeos2store")
+  storage_name  = format("%s%s",local.sanitized_topology,"edge1eos2store")
   subnetids = {
     "edge1cloudeos2Intf0" = module.edge1Subnet.vnet_subnets[2]
     "edge1cloudeos2Intf1" = module.edge1Subnet.vnet_subnets[3]
@@ -128,7 +134,7 @@ module "azureRR1" {
   interface_types        = var.cloudeos_info["rr1"]["interface_types"]
   tags                   = var.cloudeos_info["rr1"]["tags"]
   disk_name              = var.cloudeos_info["rr1"]["disk_name"]
-  storage_name           = var.cloudeos_info["rr1"]["storage_name"]
+  storage_name           = format("%s%s",local.sanitized_topology,"rr1store")
   private_ips            = var.cloudeos_info["rr1"]["private_ips"]
   route_name             = var.cloudeos_info["rr1"]["route_name"]
   routetable_name        = var.cloudeos_info["rr1"]["routetable_name"]

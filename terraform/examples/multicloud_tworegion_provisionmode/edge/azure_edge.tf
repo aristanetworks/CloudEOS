@@ -39,7 +39,7 @@ module "azureedge1cloudeos1" {
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1cloudeos1" }
-  storage_name  = "edge1eos1stre"
+  storage_name  = format("%s%s",lower(replace("${var.topology}", "-", "")),"edge1eos1store")
   subnetids = {
     "edge1cloudeos1Intf0" = module.edge1Subnet.vnet_subnets[0]
     "edge1cloudeos1Intf1" = module.edge1Subnet.vnet_subnets[1]
