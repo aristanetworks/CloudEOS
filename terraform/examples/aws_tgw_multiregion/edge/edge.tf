@@ -8,7 +8,7 @@ provider "cloudeos" {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_regions["region3"]
 }
 
 resource "cloudeos_clos" "clos3" {

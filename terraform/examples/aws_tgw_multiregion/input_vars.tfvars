@@ -13,6 +13,7 @@ cvaas = {
 ## If you don't have keypairs create them on AWS console for the following regions
 keypair_name = {
   us-east-1 : "your-east-1-keypair", #mandatory
+  us-east-2 : "your-east-1-keypair"
 }
 
 ## Cutomization of the parameters below are *optional*
@@ -35,7 +36,8 @@ instance_type = {
 }
 
 aws_regions = {
-  region2 : "us-east-1",
+  region2 : "us-east-2",
+  region3 : "us-east-1"
 }
 
 ## Currently private AMIs. Contact Arista for access
