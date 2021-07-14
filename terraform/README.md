@@ -59,43 +59,6 @@ It's necessary to create resources in the following order.
 2. Edge
 3. Leaf
 
-## For MAC OS
-1. To create Topology and Route Reflector
-
-*Please note that in some topologies like aws_tworegion_clos this step is combined with creating edge resources. In that case, you can skip this step and start with step 2 (create edge resources)*
-
-Assuming the current directory to be "examples/name-of-topology" (eg. "examples/aws_oneregion_multipleleaf"). Execute the commands below to create your topology and route reflector resources.
-
-```bash
-cd topology
-terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
-terraform plan -var-file=../input_vars.tfvars
-terraform apply -var-file=../input_vars.tfvars
-```
-
-2. To create Edge resources
-Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
-
-```bash
-cd edge
-terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
-terraform plan -var-file=../input_vars.tfvars
-terraform apply -var-file=../input_vars.tfvars
-```
-
-3. To create Leaf resources
-Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf"
-
-```bash
-cd leaf
-terraform init --plugin-dir=../../../.terraform/plugins/darwin_amd64/
-terraform plan -var-file=../input_vars.tfvars
-terraform apply -var-file=../input_vars.tfvars
-```
-
-**Don't forget to terraform destroy..see steps at the end**
-
-## For Linux
 1. To create Topology and Route Reflector
 
 Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_oneregion_multipleleaf". Execute to below commands to create topology and route reflector.
@@ -105,7 +68,7 @@ Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_on
 
 ```bash
 cd topology
-terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform init
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
@@ -115,7 +78,7 @@ Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_on
 
 ```bash
 cd edge
-terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform init
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
@@ -126,7 +89,7 @@ Assuming current directory to be "examples/name-of-topology" Eg "examples/aws_on
 
 ```bash
 cd leaf
-terraform init --plugin-dir=../../../.terraform/plugins/linux_amd64/
+terraform init
 terraform plan -var-file=../input_vars.tfvars
 terraform apply -var-file=../input_vars.tfvars
 ```
