@@ -6,6 +6,10 @@ provider "azurerm" {
 variable "username" {}
 variable "password" {}
 
+locals {
+  sanitized_topology = lower(replace(var.topology, "-", ""))
+}
+
 module "edge1" {
   source        = "../../../module/cloudeos/azure/rg"
   address_space = "12.0.0.0/16"
@@ -39,7 +43,9 @@ module "azureedge1cloudeos1" {
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1cloudeos1", "autostop" : "no", "autoterminate" : "no" }
-  storage_name  = lower("${var.topology}edge1eos1store")
+  # Storage account names must be between 3 and 24 characters in length and may contain
+  # numbers and lowercase letters only. Storage account names must be unique within Azure
+  storage_name  = format("%s%s",local.sanitized_topology,"edge1eos1store")
   subnetids = {
     "edge1cloudeos1Intf0" = module.edge1Subnet.vnet_subnets[0]
     "edge1cloudeos1Intf1" = module.edge1Subnet.vnet_subnets[1]
@@ -67,7 +73,7 @@ module "azureedge1cloudeos2" {
   topology_name = module.edge1.topology_name
   role          = "CloudEdge"
   tags          = { "Name" : "${var.topology}Edge1cloudeos2", "autostop" : "no", "autoterminate" : "no" }
-  storage_name  = lower("${var.topology}edge1eos2store")
+  storage_name  = format("%s%s",local.sanitized_topology,"edge1eos2store")
   subnetids = {
     "edge1cloudeos2Intf0" = module.edge1Subnet.vnet_subnets[2]
     "edge1cloudeos2Intf1" = module.edge1Subnet.vnet_subnets[3]

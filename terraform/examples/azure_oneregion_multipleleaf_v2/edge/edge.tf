@@ -8,7 +8,7 @@ provider "azurerm" {
 }
 
 locals {
-  sanitized_topology = lower(replace("${var.topology}", "-", ""))
+  sanitized_topology = lower(replace(var.topology, "-", ""))
 }
 
 provider "cloudeos" {

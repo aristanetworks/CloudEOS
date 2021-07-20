@@ -10,7 +10,7 @@ provider "cloudeos" {
 }
 
 locals {
-  sanitized_topology = lower(replace("${var.topology}", "-", ""))
+  sanitized_topology = lower(replace(var.topology, "-", ""))
 }
 
 variable "username" {}
