@@ -8,7 +8,6 @@ import argparse
 import json
 import subprocess
 import sys
-import Tac
 
 def getArgsParser():
    parser = argparse.ArgumentParser(
