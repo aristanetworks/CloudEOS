@@ -79,27 +79,21 @@ host_amis = {
   us-east-2 : "ami-083064f66d3878ff7"
 }
 # Topology specific variables
-east1_edge_cidr_block = "200.2.0.0/16"
-east1_edge_subnet0 = "200.2.0.0/24"
-east1_edge_subnet1 = "200.2.1.0/24"
-east1_edge_subnet2 = "200.2.2.0/24"
-east1_edge_subnet3 = "200.2.3.0/24"
-
-east1_edge_intf0 = "200.2.0.101"
-east1_edge_intf1 = "200.2.1.101"
-
-east2_edge_cidr_block = "200.3.0.0/16"
-east2_edge_subnet0 = "200.3.0.0/24"
-east2_edge_subnet1 = "200.3.1.0/24"
-east2_edge_subnet2 = "200.3.2.0/24"
-east2_edge_subnet3 = "200.3.3.0/24"
-
-east2_edge1_intf0 = "200.3.0.101"
-east2_edge1_intf1 = "200.3.1.101"
-east2_edge2_intf0 = "200.3.2.101"
-east2_edge2_intf1 = "200.3.3.101"
-
-west1_rr_cidr_block = "10.0.0.0/16"
-west1_rr_subnet0 = "10.0.0.0/24"
-west1_rr_intf0 = "10.0.0.101"
+vpc_info = {
+  east1_edge1_vpc =  {
+    vpc_cidr = "200.2.0.0/16"
+    subnet_cidr = ["200.2.0.0/24", "200.2.1.0/24", "200.2.2.0/24", "200.2.3.0/24"]
+    interface_ips = ["200.2.0.101", "200.2.1.101"]
+  }
+  east2_edge1_vpc =  {
+    vpc_cidr = "200.3.0.0/16"
+    subnet_cidr = ["200.3.0.0/24", "200.3.1.0/24", "200.3.2.0/24", "200.3.3.0/24"]
+    interface_ips = ["200.3.0.101", "200.3.1.101", "200.3.2.101", "200.3.3.101"]
+  }
+  west1_rr_vpc =  {
+    vpc_cidr = "10.0.0.0/16"
+    subnet_cidr = ["10.0.0.0/24"]
+    interface_ips = ["10.0.0.101"]
+  }
+}
 

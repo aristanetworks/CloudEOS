@@ -50,7 +50,7 @@ module "RRVpc" {
   wan_name      = cloudeos_wan.wan.name
   role          = "CloudEdge"
   igw_name      = "${module.globals.topology}-RRVpcIgw"
-  cidr_block    = ["${var.west1_rr_cidr_block}"]
+  cidr_block    = [(var.vpc_info["west1_rr_vpc"]["vpc_cidr"])]
   tags = {
     Name = "${module.globals.topology}-RRVpc"
     Cnps = "dev"
@@ -61,10 +61,10 @@ module "RRVpc" {
 module "RRSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "${var.west1_rr_subnet0}" = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
+    (var.vpc_info["west1_rr_vpc"]["subnet_cidr"][0] ) = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
   }
   subnet_names = {
-    "${var.west1_rr_subnet0}" = "${module.globals.topology}-RRSubnet0"
+    (var.vpc_info["west1_rr_vpc"]["subnet_cidr"][0] ) = "${module.globals.topology}-RRSubnet0"
   }
   vpc_id        = module.RRVpc.vpc_id[0]
   topology_name = module.RRVpc.topology_name
@@ -86,7 +86,7 @@ module "CloudEOSRR1" {
     "${module.globals.topology}-RRIntf0" = module.RRSubnet.vpc_subnets[0]
   }
   private_ips = {
-    "0" : ["${var.west1_rr_intf0}"]
+    "0" : [(var.vpc_info["west1_rr_vpc"]["interface_ips"][0])]
   }
   availability_zone = lookup(module.globals.availability_zone[module.RRVpc.region], "zone1", "")
   region            = module.RRVpc.region

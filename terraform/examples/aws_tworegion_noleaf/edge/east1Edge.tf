@@ -9,7 +9,7 @@ module "East1EdgeVpc" {
   wan_name      = "${module.globals.topology}-wan"
   role          = "CloudEdge"
   igw_name      = "${module.globals.topology}-East1VpcIgw"
-  cidr_block    = ["${var.east1_edge_cidr_block}"]
+  cidr_block    = [(var.vpc_info["east1_edge1_vpc"]["vpc_cidr"])]
   tags = {
     Name = "${module.globals.topology}-East1EdgeVpc"
   }
@@ -19,16 +19,16 @@ module "East1EdgeVpc" {
 module "East1EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "${var.east1_edge_subnet0}" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
-    "${var.east1_edge_subnet1}" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
-    "${var.east1_edge_subnet2}" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone2", "")
-    "${var.east1_edge_subnet3}" = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone2", "")
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][0] ) = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][1] ) = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][2] ) = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone2", "")
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][3] ) = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone2", "")
   }
   subnet_names = {
-    "${var.east1_edge_subnet0}" = "${module.globals.topology}-East1EdgeSubnet0"
-    "${var.east1_edge_subnet1}" = "${module.globals.topology}-East1EdgeSubnet1"
-    "${var.east1_edge_subnet2}" = "${module.globals.topology}-East1EdgeSubnet2"
-    "${var.east1_edge_subnet3}" = "${module.globals.topology}-East1EdgeSubnet3"
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][0] ) = "${module.globals.topology}-East1EdgeSubnet0"
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][1] ) = "${module.globals.topology}-East1EdgeSubnet1"
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][2] ) = "${module.globals.topology}-East1EdgeSubnet2"
+    (var.vpc_info["east1_edge1_vpc"]["subnet_cidr"][3] ) = "${module.globals.topology}-East1EdgeSubnet3"
   }
   vpc_id        = module.East1EdgeVpc.vpc_id[0]
   topology_name = module.East1EdgeVpc.topology_name
@@ -51,7 +51,7 @@ module "East1CloudEOSEdge1" {
     "${module.globals.topology}-East1Edge1Intf0" = module.East1EdgeSubnet.vpc_subnets[0]
     "${module.globals.topology}-East1Edge1Intf1" = module.East1EdgeSubnet.vpc_subnets[1]
   }
-  private_ips       = { "0" : ["${var.east1_edge_intf0}"], "1" : ["${var.east1_edge_intf1}"] }
+  private_ips       = { "0" : [ (var.vpc_info["east1_edge1_vpc"]["interface_ips"][0]) ], "1" : [(var.vpc_info["east1_edge1_vpc"]["interface_ips"][1])] }
   availability_zone = lookup(module.globals.availability_zone[module.East1EdgeVpc.region], "zone1", "")
   region            = module.East1EdgeVpc.region
   tags = {
