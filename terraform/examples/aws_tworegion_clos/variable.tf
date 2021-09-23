@@ -14,3 +14,5 @@ variable "terminattr_ip_cidr" {}
 variable "dps_controlplane_cidr" {}
 variable "clos_cv_container" {}
 variable "wan_cv_container" {}
+// SW-VPC variables
+variable "vpc_info" {}
