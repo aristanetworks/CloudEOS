@@ -18,3 +18,5 @@ variable "eos_byol_amis" {}
 locals {
    eos_amis = var.cloudeos_image_offer == "cloudeos-router-payg" ? var.eos_payg_amis : var.eos_byol_amis
 }
+// SW-VPC variables
+variable "vpc_info" {}
