@@ -134,6 +134,9 @@ resource "azurerm_virtual_machine" "cloudeosVm" {
     storage_uri = azurerm_storage_account.storage.primary_blob_endpoint
   }
   tags = var.tags
+  depends_on = [ azurerm_network_interface_backend_address_pool_association.intfpoolassociation,
+                 azurerm_network_interface_security_group_association.nsg
+               ]
 }
 
 resource "azurerm_virtual_machine" "cloudeosVm1" {
@@ -182,6 +185,9 @@ resource "azurerm_virtual_machine" "cloudeosVm1" {
     storage_uri = azurerm_storage_account.storage.primary_blob_endpoint
   }
   tags = var.tags
+  depends_on = [ azurerm_network_interface_backend_address_pool_association.intfpoolassociation,
+                 azurerm_network_interface_security_group_association.nsg
+               ]
 }
 
 resource "azurerm_storage_account" "storage" {
