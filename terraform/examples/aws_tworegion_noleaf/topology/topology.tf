@@ -8,7 +8,7 @@ module "globals" {
   cvaas             = var.cvaas
   instance_type     = var.instance_type
   aws_regions       = var.aws_regions
-  eos_amis          = var.eos_amis
+  eos_amis          = local.eos_amis
   availability_zone = var.availability_zone
   host_amis         = var.host_amis
 }
@@ -94,8 +94,10 @@ module "CloudEOSRR1" {
     "Name"           = "${module.globals.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr         = true
-  primary       = true
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type = var.instance_type["rr"]
+  is_rr                = true
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["rr"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }

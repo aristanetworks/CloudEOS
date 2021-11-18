@@ -55,6 +55,7 @@ module "azureLeaf1cloudeos1" {
   cloudeos_image_version = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["leaf1cloudeos1"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["leaf1cloudeos1"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf1"
@@ -84,6 +85,7 @@ module "azureLeaf1cloudeos2" {
   cloudeos_image_version = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["leaf1cloudeos2"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["leaf1cloudeos2"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf1"
@@ -174,6 +176,7 @@ module "azureLeaf2cloudeos1" {
   cloudeos_image_version = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["leaf2cloudeos1"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["leaf2cloudeos1"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf2"
@@ -220,6 +223,7 @@ module "azureLeaf2cloudeos2" {
   cloudeos_image_version = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["leaf2cloudeos2"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["leaf2cloudeos2"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
   cloud_ha               = "leaf2"

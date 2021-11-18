@@ -152,3 +152,14 @@ variable "remote_vpn_gateway" {
   default     = false
   description = "Router is a Remote VPN Gateway for Azure/AWS VPN connections"
 }
+
+variable "cloudeos_image_offer" {
+  description = "CloudEOS License Type"
+}
+
+variable "licenses" {
+  description = "Mapping of license type to file path"
+  default = {}
+}
+
+

@@ -89,6 +89,7 @@ module "azureedge1cloudeos1" {
   cloudeos_image_version = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["edge1cloudeos1"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
 }
@@ -116,6 +117,7 @@ module "azureedge1cloudeos2" {
   cloudeos_image_version = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["edge1cloudeos2"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["edge1cloudeos2"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
 }
@@ -141,6 +143,8 @@ module "azureRR1" {
   filename               = var.cloudeos_info["rr1"]["filename"]
   cloudeos_image_version = var.cloudeos_info["rr1"]["cloudeos_image_version"]
   cloudeos_image_sku     = var.cloudeos_info["rr1"]["cloudeos_image_sku"]
+  cloudeos_image_offer   = var.cloudeos_info["rr1"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["rr1"], "licenses", {})
   is_rr                  = true
   admin_password         = var.password
   admin_username         = var.username

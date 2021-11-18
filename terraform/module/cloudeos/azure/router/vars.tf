@@ -166,3 +166,8 @@ variable "frontend_ilb_ip" {
 variable "vm_size" {
   default = "Standard_D2_v2"
 }
+
+variable "licenses" {
+  description = "Mapping of license type to file path"
+  default = {}
+}

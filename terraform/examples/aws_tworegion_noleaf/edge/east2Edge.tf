@@ -57,9 +57,11 @@ module "East2CloudEOSEdge1" {
   tags = {
     "Name" = "${module.globals.topology}-East2CloudEOSEdge1"
   }
-  primary       = true
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type = var.instance_type["edge"]
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["edge"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "East2CloudEOSEdge2" {
@@ -88,4 +90,6 @@ module "East2CloudEOSEdge2" {
   public_route_table_id   = module.East2CloudEOSEdge1.route_table_public
   internal_route_table_id = module.East2CloudEOSEdge1.route_table_internal
   instance_type           = var.instance_type["edge"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }

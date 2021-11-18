@@ -4,7 +4,6 @@ variable "cvaas" {}
 variable "instance_type" {}
 variable "aws_regions" {}
 variable "azure_regions"{}
-variable "eos_amis" {}
 variable "availability_zone" {}
 variable "host_amis" {}
 variable "vtep_ip_cidr" {}
@@ -17,3 +16,10 @@ variable "subnet_info"{}
 variable "cloudeos_info"{}
 variable "username"{}
 variable "password"{}
+variable "licenses" {}
+variable "cloudeos_image_offer" {}
+variable "eos_payg_amis" {}
+variable "eos_byol_amis" {}
+locals {
+   eos_amis = var.cloudeos_image_offer == "cloudeos-router-payg" ? var.eos_payg_amis : var.eos_byol_amis
+}

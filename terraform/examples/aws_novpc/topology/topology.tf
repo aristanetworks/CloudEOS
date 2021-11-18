@@ -55,7 +55,7 @@ module "RRSubnet" {
 module "CloudEOSRR1" {
   source          = "../../../module/cloudeos/aws/router"
   topology_name   = module.RRVpc.topology_name
-  cloudeos_ami    = var.eos_amis[module.RRVpc.region]
+  cloudeos_ami    = local.eos_amis[module.RRVpc.region]
   keypair_name    = var.keypair_name[module.RRVpc.region]
   vpc_info        = module.RRVpc.vpc_info
   role            = var.router_info["rr1"]["role"]
@@ -66,17 +66,19 @@ module "CloudEOSRR1" {
   subnetids = {
     "${var.topology}-RRIntf0" = module.RRSubnet.vpc_subnets[0]
   }
-  availability_zone = var.availability_zone[module.RRVpc.region]["zone1"]
-  region            = module.RRVpc.region
-  primary           = true
-  is_rr             = true
-  filename          = "../../../userdata/eos_ipsec_config.tpl"
+  availability_zone    = var.availability_zone[module.RRVpc.region]["zone1"]
+  region               = module.RRVpc.region
+  primary              = true
+  is_rr                = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "CloudEOSRR2" {
   source          = "../../../module/cloudeos/aws/router"
   topology_name   = module.RRVpc.topology_name
-  cloudeos_ami    = var.eos_amis[module.RRVpc.region]
+  cloudeos_ami    = local.eos_amis[module.RRVpc.region]
   keypair_name    = var.keypair_name[module.RRVpc.region]
   vpc_info        = module.RRVpc.vpc_info
   is_rr           = true
@@ -88,8 +90,10 @@ module "CloudEOSRR2" {
   subnetids = {
     "${var.topology}-RR2Intf0" = module.RRSubnet.vpc_subnets[1]
   }
-  availability_zone = var.availability_zone[module.RRVpc.region]["zone1"]
-  region            = module.RRVpc.region
-  filename          = "../../../userdata/eos_ipsec_config.tpl"
-  primary           = true
+  availability_zone    = var.availability_zone[module.RRVpc.region]["zone1"]
+  region               = module.RRVpc.region
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }

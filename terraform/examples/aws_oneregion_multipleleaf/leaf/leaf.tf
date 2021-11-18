@@ -61,7 +61,7 @@ module "Leaf1CloudEOS1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf1Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf1Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf1Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf1Vpc.region]
   vpc_info      = module.Leaf1Vpc.vpc_info
   intf_names = [
@@ -88,13 +88,15 @@ module "Leaf1CloudEOS1" {
   iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf1CloudEOS2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf1Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf1Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf1Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf1Vpc.region]
   vpc_info      = module.Leaf1Vpc.vpc_info
   intf_names = [
@@ -123,6 +125,8 @@ module "Leaf1CloudEOS2" {
   primary_internal_subnetids = [module.Leaf1Subnet.vpc_subnets[0]]
   intra_az_ha                = true
   instance_type              = var.instance_type["leaf"]
+  licenses                   = var.licenses
+  cloudeos_image_offer       = var.cloudeos_image_offer
 }
 
 module "Leaf1host1" {
@@ -174,7 +178,7 @@ module "Leaf2CloudEOS1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf2Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf2Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf2Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf2Vpc.region]
   vpc_info      = module.Leaf2Vpc.vpc_info
   intf_names = [
@@ -201,13 +205,15 @@ module "Leaf2CloudEOS1" {
   iam_instance_profile = "awslogs2"
   filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf2CloudEOS2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf2Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf2Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf2Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf2Vpc.region]
   vpc_info      = module.Leaf2Vpc.vpc_info
   intf_names = [
@@ -235,6 +241,8 @@ module "Leaf2CloudEOS2" {
   cloud_ha                   = "leaf2"
   iam_instance_profile       = "awslogs2"
   primary_internal_subnetids = [module.Leaf2Subnet.vpc_subnets[0]]
+  licenses                   = var.licenses
+  cloudeos_image_offer       = var.cloudeos_image_offer
 }
 
 module "Leaf2host1" {
@@ -287,7 +295,7 @@ module "Leaf3CloudEOS1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf3Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf3Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf3Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf3Vpc.region]
   vpc_info      = module.Leaf3Vpc.vpc_info
   intf_names = [
@@ -312,13 +320,15 @@ module "Leaf3CloudEOS1" {
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf3CloudEOS2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf3Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf3Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf3Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf3Vpc.region]
   vpc_info      = module.Leaf3Vpc.vpc_info
   intf_names = [
@@ -340,9 +350,11 @@ module "Leaf3CloudEOS2" {
     "Name" = "${var.topology}-Leaf3CloudEOS2"
     "Cnps" = "dev"
   }
-  internal_route_table_id    = module.Leaf3CloudEOS1.route_table_internal
-  filename                   = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  internal_route_table_id = module.Leaf3CloudEOS1.route_table_internal
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 
 module "Leaf3host1" {
@@ -396,7 +408,7 @@ module "Leaf4CloudEOS1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf4Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf4Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf4Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf4Vpc.region]
   vpc_info      = module.Leaf4Vpc.vpc_info
   intf_names = [
@@ -421,13 +433,15 @@ module "Leaf4CloudEOS1" {
   primary              = true
   filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf4CloudEOS2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudLeaf"
   topology_name = module.Leaf4Vpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Leaf4Vpc.region]
+  cloudeos_ami  = local.eos_amis[module.Leaf4Vpc.region]
   keypair_name  = var.keypair_name[module.Leaf4Vpc.region]
   vpc_info      = module.Leaf4Vpc.vpc_info
   intf_names = [
@@ -449,9 +463,11 @@ module "Leaf4CloudEOS2" {
     "Name" = "${var.topology}-Leaf4CloudEOS2"
     "Cnps" = "prod"
   }
-  internal_route_table_id    = module.Leaf4CloudEOS1.route_table_internal
-  filename                   = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  internal_route_table_id = module.Leaf4CloudEOS1.route_table_internal
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 module "Leaf4host1" {
   region        = var.aws_regions["region2"]
@@ -504,7 +520,7 @@ module "Leaf5CloudEOS1" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf5Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf5Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf5Vpc.region]
   keypair_name = var.keypair_name[module.Leaf5Vpc.region]
   vpc_info = module.Leaf5Vpc.vpc_info
   intf_names = [
@@ -526,16 +542,18 @@ module "Leaf5CloudEOS1" {
          "Name" = "${var.topology}-Leaf5CloudEOS1"
          "Cnps" = "prod"
   }
-  primary = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf5CloudEOS2" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf5Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf5Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf5Vpc.region]
   keypair_name = var.keypair_name[module.Leaf5Vpc.region]
   vpc_info = module.Leaf5Vpc.vpc_info
   intf_names = [
@@ -558,8 +576,10 @@ module "Leaf5CloudEOS2" {
          "Cnps" = "prod"
   }
   internal_route_table_id = module.Leaf5CloudEOS1.route_table_internal
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 
 //Leaf6
@@ -599,7 +619,7 @@ module "Leaf6CloudEOS1" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf6Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf6Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf6Vpc.region]
   keypair_name = var.keypair_name[module.Leaf6Vpc.region]
   vpc_info = module.Leaf6Vpc.vpc_info
   intf_names = [
@@ -621,16 +641,18 @@ module "Leaf6CloudEOS1" {
          "Name" = "${var.topology}-Leaf6CloudEOS1"
          "Cnps" = "prod"
   }
-  primary = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf6CloudEOS2" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf6Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf6Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf6Vpc.region]
   keypair_name = var.keypair_name[module.Leaf6Vpc.region]
   vpc_info = module.Leaf6Vpc.vpc_info
   intf_names = [
@@ -653,8 +675,10 @@ module "Leaf6CloudEOS2" {
          "Cnps" = "prod"
   }
   internal_route_table_id = module.Leaf6CloudEOS1.route_table_internal
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 //Leaf7
 module "Leaf7Vpc" {
@@ -693,7 +717,7 @@ module "Leaf7CloudEOS1" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf7Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf7Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf7Vpc.region]
   keypair_name = var.keypair_name[module.Leaf7Vpc.region]
   vpc_info = module.Leaf7Vpc.vpc_info
   intf_names = [
@@ -715,16 +739,18 @@ module "Leaf7CloudEOS1" {
          "Name" = "${var.topology}-Leaf7CloudEOS1"
          "Cnps" = "prod"
   }
-  primary = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf7CloudEOS2" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf7Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf7Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf7Vpc.region]
   keypair_name = var.keypair_name[module.Leaf7Vpc.region]
   vpc_info = module.Leaf7Vpc.vpc_info
   intf_names = [
@@ -747,8 +773,10 @@ module "Leaf7CloudEOS2" {
          "Cnps" = "prod"
   }
   internal_route_table_id = module.Leaf7CloudEOS1.route_table_internal
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 //Leaf8
 module "Leaf8Vpc" {
@@ -787,7 +815,7 @@ module "Leaf8CloudEOS1" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf8Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf8Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf8Vpc.region]
   keypair_name = var.keypair_name[module.Leaf8Vpc.region]
   vpc_info = module.Leaf8Vpc.vpc_info
   intf_names = [
@@ -809,16 +837,18 @@ module "Leaf8CloudEOS1" {
          "Name" = "${var.topology}-Leaf8CloudEOS1"
          "Cnps" = "prod"
   }
-  primary = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf8CloudEOS2" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf8Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf8Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf8Vpc.region]
   keypair_name = var.keypair_name[module.Leaf8Vpc.region]
   vpc_info = module.Leaf8Vpc.vpc_info
   intf_names = [
@@ -841,8 +871,10 @@ module "Leaf8CloudEOS2" {
          "Cnps" = "prod"
   }
   internal_route_table_id = module.Leaf8CloudEOS1.route_table_internal
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 //Leaf9
 module "Leaf9Vpc" {
@@ -881,7 +913,7 @@ module "Leaf9CloudEOS1" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf9Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf9Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf9Vpc.region]
   keypair_name = var.keypair_name[module.Leaf9Vpc.region]
   vpc_info = module.Leaf9Vpc.vpc_info
   intf_names = [
@@ -903,16 +935,18 @@ module "Leaf9CloudEOS1" {
          "Name" = "${var.topology}-Leaf9CloudEOS1"
          "Cnps" = "prod"
   }
-  primary = true
-  filename = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
   instance_type        = var.instance_type["leaf"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "Leaf9CloudEOS2" {
   source = "../../../module/cloudeos/aws/router"
   role = "CloudLeaf"
   topology_name = module.Leaf9Vpc.topology_name
-  cloudeos_ami = var.eos_amis[module.Leaf9Vpc.region]
+  cloudeos_ami = local.eos_amis[module.Leaf9Vpc.region]
   keypair_name = var.keypair_name[module.Leaf9Vpc.region]
   vpc_info = module.Leaf9Vpc.vpc_info
   intf_names = [
@@ -935,7 +969,9 @@ module "Leaf9CloudEOS2" {
          "Cnps" = "prod"
   }
   internal_route_table_id = module.Leaf9CloudEOS1.route_table_internal
-  filename = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["leaf"]
+  filename                = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type           = var.instance_type["leaf"]
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 */

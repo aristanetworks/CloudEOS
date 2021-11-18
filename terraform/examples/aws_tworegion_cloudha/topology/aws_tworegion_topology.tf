@@ -58,7 +58,7 @@ module "CloudEOSRR1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.RRVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.RRVpc.region]
+  cloudeos_ami  = local.eos_amis[module.RRVpc.region]
   keypair_name  = var.keypair_name[module.RRVpc.region]
   vpc_info      = module.RRVpc.vpc_info
   intf_names    = ["${var.topology}-RRIntf0"]
@@ -77,8 +77,10 @@ module "CloudEOSRR1" {
     "Name"           = "${var.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr         = true
-  primary       = true
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type = var.instance_type["rr"]
+  is_rr                = true
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["rr"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }

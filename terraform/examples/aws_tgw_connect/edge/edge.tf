@@ -60,7 +60,7 @@ module "Region3CloudEOSEdge1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region3EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Region3EdgeVpc.region]
+  cloudeos_ami  = local.eos_amis[module.Region3EdgeVpc.region]
   keypair_name  = var.keypair_name[module.Region3EdgeVpc.region]
   vpc_info      = module.Region3EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-Region3Edge1Intf0", "${var.topology}-Region3Edge1Intf1"]
@@ -79,8 +79,10 @@ module "Region3CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-Region3CloudEOSEdge1"
   }
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type = var.instance_type["edge"]
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["edge"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 /*
@@ -88,7 +90,7 @@ module "Region3CloudEOSEdge2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region3EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Region3EdgeVpc.region]
+  cloudeos_ami  = local.eos_amis[module.Region3EdgeVpc.region]
   keypair_name  = var.keypair_name[module.Region3EdgeVpc.region]
   vpc_info      = module.Region3EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-Region3Edge2Intf0", "${var.topology}-Region3Edge2Intf1"]
@@ -110,6 +112,8 @@ module "Region3CloudEOSEdge2" {
   instance_type           = var.instance_type["edge"]
   public_route_table_id   = module.Region3CloudEOSEdge1.route_table_public
   internal_route_table_id = module.Region3CloudEOSEdge1.route_table_internal
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 */
 
@@ -117,7 +121,7 @@ module "CloudEOSRR1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.Region3EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.Region3EdgeVpc.region]
+  cloudeos_ami  = local.eos_amis[module.Region3EdgeVpc.region]
   keypair_name  = var.keypair_name[module.Region3EdgeVpc.region]
   vpc_info      = module.Region3EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-RRIntf0"]
@@ -136,9 +140,10 @@ module "CloudEOSRR1" {
     "Name"           = "${var.topology}-CloudEosRR1"
     "RouteReflector" = "True"
   }
-  is_rr         = true
-  primary       = true
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type = var.instance_type["rr"]
+  is_rr                = true
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  instance_type        = var.instance_type["rr"]
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
-

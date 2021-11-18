@@ -63,6 +63,7 @@ module "azureedge1cloudeos1" {
   cloudeos_image_version = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_version"]
   cloudeos_image_name    = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_name"]
   cloudeos_image_offer   = var.cloudeos_info["edge1cloudeos1"]["cloudeos_image_offer"]
+  licenses               = lookup(var.cloudeos_info["edge1cloudeos1"], "licenses", {})
   admin_password         = var.password
   admin_username         = var.username
 }

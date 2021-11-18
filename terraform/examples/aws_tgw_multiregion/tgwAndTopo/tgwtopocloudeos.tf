@@ -79,7 +79,7 @@ module "CloudEOSEdge1" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.EdgeVpc.region]
+  cloudeos_ami  = local.eos_amis[module.EdgeVpc.region]
   keypair_name  = var.keypair_name[module.EdgeVpc.region]
   vpc_info      = module.EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-Edge1Intf0", "${var.topology}-Edge1Intf1"]
@@ -97,16 +97,18 @@ module "CloudEOSEdge1" {
   tags = {
     "Name" = "${var.topology}-CloudEOSEdge1"
   }
-  primary            = true
-  filename           = "../../../userdata/eos_ipsec_config.tpl"
-  remote_vpn_gateway = true
+  primary              = true
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  remote_vpn_gateway   = true
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "CloudEOSEdge2" {
   source        = "../../../module/cloudeos/aws/router"
   role          = "CloudEdge"
   topology_name = module.EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.EdgeVpc.region]
+  cloudeos_ami  = local.eos_amis[module.EdgeVpc.region]
   keypair_name  = var.keypair_name[module.EdgeVpc.region]
   vpc_info      = module.EdgeVpc.vpc_info
   intf_names    = ["${var.topology}-Edge2Intf0", "${var.topology}-Edge2Intf1"]
@@ -128,6 +130,8 @@ module "CloudEOSEdge2" {
   public_route_table_id   = module.CloudEOSEdge1.route_table_public
   internal_route_table_id = module.CloudEOSEdge1.route_table_internal
   remote_vpn_gateway      = true
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }
 
 //Leaf VPCs to TGW

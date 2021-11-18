@@ -45,13 +45,15 @@ module "CloudEOSEdge1" {
     "${var.topology}-EdgeIntf0" = module.EdgeSubnet.vpc_subnets[0]
     "${var.topology}-EdgeIntf1" = module.EdgeSubnet.vpc_subnets[1]
   }
-  primary       = true
-  topology_name = module.EdgeVpc.topology_name
-  cloudeos_ami  = var.eos_amis[module.EdgeVpc.region]
-  keypair_name  = var.keypair_name[module.EdgeVpc.region]
-  vpc_info      = module.EdgeVpc.vpc_info
-  region        = module.EdgeVpc.region
-  filename      = "../../../userdata/eos_ipsec_config.tpl"
+  primary              = true
+  topology_name        = module.EdgeVpc.topology_name
+  cloudeos_ami         = local.eos_amis[module.EdgeVpc.region]
+  keypair_name         = var.keypair_name[module.EdgeVpc.region]
+  vpc_info             = module.EdgeVpc.vpc_info
+  region               = module.EdgeVpc.region
+  filename             = "../../../userdata/eos_ipsec_config.tpl"
+  licenses             = var.licenses
+  cloudeos_image_offer = var.cloudeos_image_offer
 }
 
 module "CloudEOSEdge2" {
@@ -68,10 +70,12 @@ module "CloudEOSEdge2" {
   availability_zone       = var.availability_zone[module.EdgeVpc.region]["zone2"]
   region                  = module.EdgeVpc.region
   topology_name           = module.EdgeVpc.topology_name
-  cloudeos_ami            = var.eos_amis[module.EdgeVpc.region]
+  cloudeos_ami            = local.eos_amis[module.EdgeVpc.region]
   keypair_name            = var.keypair_name[module.EdgeVpc.region]
   vpc_info                = module.EdgeVpc.vpc_info
   public_route_table_id   = module.CloudEOSEdge1.route_table_public
   internal_route_table_id = module.CloudEOSEdge1.route_table_internal
   filename                = "../../../userdata/eos_ipsec_config.tpl"
+  licenses                = var.licenses
+  cloudeos_image_offer    = var.cloudeos_image_offer
 }

@@ -55,6 +55,16 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
   }
   edge1cloudeos2 : {
     publicip_name = "edge1cloudeos2Pip"
@@ -71,6 +81,16 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
 
   }
   rr1 = {
@@ -88,11 +108,31 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
   }
   leaf1cloudeos1 = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
     intf_names             = ["leaf1cloudeos1Intf0", "leaf1cloudeos1Intf1"]
     interface_types = {
       "leaf1cloudeos1Intf0" = "internal"
@@ -112,6 +152,16 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
     intf_names             = ["leaf1cloudeos2Intf0", "leaf1cloudeos2Intf1"]
     interface_types = {
       "leaf1cloudeos2Intf0" = "internal"
@@ -141,6 +191,16 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
   leaf2cloudeos2 = {
@@ -158,6 +218,16 @@ cloudeos_info = {
     cloudeos_image_version = "4.24.32"
     cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
+    #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
+    # values by uncommenting and commenting above. 
+    # When using BYOL, you need to provide paths to licenses.
+    #cloudeos_image_version = "4.24.31"
+    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_offer   = "cloudeos-router-byol"
+    #licenses = {
+    #   ipsec = "../../../userdata/eos_ipsec_license.json"
+    #   bandwidth = "../../../userdata/eos_bw_license.json"
+    #}
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
 }
