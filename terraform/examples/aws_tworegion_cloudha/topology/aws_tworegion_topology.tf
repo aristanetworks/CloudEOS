@@ -34,7 +34,7 @@ module "RRVpc" {
   wan_name      = cloudeos_wan.wan.name
   role          = "CloudEdge"
   igw_name      = "${var.topology}-RRVpcIgw"
-  cidr_block    = ["10.0.0.0/16"]
+  cidr_block    = [(var.vpc_info["region1_rr1_vpc"]["vpc_cidr"])]
   tags = {
     Name = "${var.topology}-RRVpc"
   }
@@ -44,10 +44,10 @@ module "RRVpc" {
 module "RRSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "10.0.0.0/24" = var.availability_zone[module.RRVpc.region]["zone1"]
+    (var.vpc_info["region1_rr1_vpc"]["subnet_cidr"][0]) = var.availability_zone[module.RRVpc.region]["zone1"]
   }
   subnet_names = {
-    "10.0.0.0/24" = "${var.topology}-RRSubnet0"
+    (var.vpc_info["region1_rr1_vpc"]["subnet_cidr"][0]) = "${var.topology}-RRSubnet0"
   }
   vpc_id        = module.RRVpc.vpc_id[0]
   topology_name = module.RRVpc.topology_name
@@ -69,7 +69,7 @@ module "CloudEOSRR1" {
     "${var.topology}-RRIntf0" = module.RRSubnet.vpc_subnets[0]
   }
   private_ips = {
-    "0" : ["10.0.0.101"]
+    "0" : [(var.vpc_info["region1_rr1_vpc"]["interface_ips"][0])]
   }
   availability_zone = var.availability_zone[module.RRVpc.region]["zone1"]
   region            = module.RRVpc.region

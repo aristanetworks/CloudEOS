@@ -121,6 +121,11 @@ host_amis = {
 
 # Topology specific variables
 vpc_info = {
+  region1_rr1_vpc =  {
+    vpc_cidr = "10.0.0.0/16"
+    subnet_cidr = ["10.0.0.0/24"]
+    interface_ips = ["10.0.0.101" ]
+  }
   region2_edge1_vpc =  {
     vpc_cidr = "100.2.0.0/16"
     subnet_cidr = ["100.2.0.0/24", "100.2.1.0/24", "100.2.2.0/24", "100.2.3.0/24", "100.2.4.0/24"]
