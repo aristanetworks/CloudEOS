@@ -11,6 +11,7 @@ variable "dps_controlplane_cidr" {}
 variable "clos_cv_container" {}
 variable "wan_cv_container" {}
 variable "licenses" {}
+variable "vpc_info" {}
 variable "cloudeos_image_offer" {}
 variable "eos_payg_amis" {}
 variable "eos_byol_amis" {}
