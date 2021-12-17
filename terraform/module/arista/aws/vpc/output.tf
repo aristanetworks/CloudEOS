@@ -6,11 +6,11 @@ output "vpc_id" {
 }
 
 output "vpc_name_toid" {
-  value = map(var.tags["Name"], aws_vpc.vpc.*.id[0])
+  value = { (var.tags["Name"]) = aws_vpc.vpc.*.id[0] }
 }
 
 output "vpc_cidr" {
-  value = map(aws_vpc.vpc.*.id[0], aws_vpc.vpc.*.cidr_block[0])
+  value = { (aws_vpc.vpc.*.id[0]) = aws_vpc.vpc.*.cidr_block[0] }
 }
 
 output "internet_gateway_id" {
