@@ -11,8 +11,10 @@ cvaas = {
 
 ## Enter keypairs that will be used to login to AWS instances
 ## If you don't have keypairs create them on AWS console for the following regions
+## only keypairs for regions mentioned in aws_regions block is needed
 keypair_name = {
-  us-east-1 : "your-east-1-keypair", #mandatory
+  us-east-1 : "your-east-1-keypair",
+  us-west-2 : "your-west-2-keypair",
 }
 
 ## Cutomization of the parameters below are *optional*
@@ -99,14 +101,16 @@ eos_byol_amis = {
 availability_zone = {
   us-west-1 : { zone1 : "us-west-1b", zone2 : "us-west-1c" },
   us-east-1 : { zone1 : "us-east-1b", zone2 : "us-east-1c" },
-  us-east-2 : { zone1 : "us-east-2b", zone2 : "us-east-2c" }
+  us-east-2 : { zone1 : "us-east-2b", zone2 : "us-east-2c" },
+  us-west-2 : { zone1 : "us-west-2b", zone2 : "us-west-2c" }
 }
 
 ## Currently private AMIs. Contact Arista for access
 host_amis = {
   us-west-1 : "ami-035dbbb5f679b91cd",
   us-east-1 : "ami-0b161e951484253ab",
-  us-east-2 : "ami-083064f66d3878ff7"
+  us-east-2 : "ami-083064f66d3878ff7",
+  us-west-2 : "ami-0205b2cab53dacf39"
 }
 
 vpc_info = {
