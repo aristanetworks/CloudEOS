@@ -7,5 +7,5 @@ This topology uses Cloudeos modules that allow users to deploy an AWS transit ga
 In another region, there is a CloudEOS Edge vpc with a RouteReflector and an Edge router and two CloudEOS Leaf vpcs each with a Leaf router. These leaf routers each have a host behind them with iperf3 installed.
 The two Edge routers are connected to each other and the RouteReflector as well.
 
-[!Topology](./AWS_Tgw_Connect.png)
+![Topology](./AWS_Tgw_Connect.png)
 
