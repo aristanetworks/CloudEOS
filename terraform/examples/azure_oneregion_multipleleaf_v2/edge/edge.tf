@@ -9,6 +9,17 @@ provider "azurerm" {
 
 locals {
   sanitized_topology = lower(replace(var.topology, "-", ""))
+  edge1cloudeos1_private_ips = {
+  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][0] ],
+  "1" : [ var.vpc_info["edge1_vpc"]["interface_ips"][1] ]
+  }
+  edge1cloudeos2_private_ips = {
+  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][2] ],
+  "1" : [ var.vpc_info["edge1_vpc"]["interface_ips"][3] ]
+  }
+  rr1_private_ips = {
+  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][4] ]
+  }
 }
 
 provider "cloudeos" {
@@ -39,7 +50,7 @@ resource "cloudeos_wan" "wan" {
 
 module "edge1" {
   source        = "../../../module/cloudeos/azure/rg"
-  address_space = "12.0.0.0/16"
+  address_space = var.vpc_info["edge1_vpc"]["vpc_cidr"]
   nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"
@@ -56,7 +67,7 @@ module "edge1" {
 
 module "edge1Subnet" {
   source          = "../../../module/cloudeos/azure/subnet"
-  subnet_prefixes = var.subnet_info["edge1subnet"]["subnet_prefixes"]
+  subnet_prefixes = var.vpc_info["edge1_vpc"]["subnet_cidr"]
   subnet_names    = var.subnet_info["edge1subnet"]["subnet_names"]
   vnet_name       = module.edge1.vnet_name
   vnet_id         = module.edge1.vnet_id
@@ -83,7 +94,7 @@ module "azureedge1cloudeos1" {
 
   availability_set_id     = module.edge1.availability_set_id
   disk_name              = var.cloudeos_info["edge1cloudeos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1cloudeos1"]["private_ips"]
+  private_ips            = local.edge1cloudeos1_private_ips
   route_name             = var.cloudeos_info["edge1cloudeos1"]["route_name"]
   routetable_name        = var.cloudeos_info["edge1cloudeos1"]["routetable_name"]
   filename               = var.cloudeos_info["edge1cloudeos1"]["filename"]
@@ -111,7 +122,7 @@ module "azureedge1cloudeos2" {
   intf_names             = var.cloudeos_info["edge1cloudeos2"]["intf_names"]
   interface_types        = var.cloudeos_info["edge1cloudeos2"]["interface_types"]
   disk_name              = var.cloudeos_info["edge1cloudeos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1cloudeos2"]["private_ips"]
+  private_ips            = local.edge1cloudeos2_private_ips
   route_name             = var.cloudeos_info["edge1cloudeos2"]["route_name"]
   routetable_name        = var.cloudeos_info["edge1cloudeos2"]["routetable_name"]
   filename               = var.cloudeos_info["edge1cloudeos2"]["filename"]
@@ -138,7 +149,7 @@ module "azureRR1" {
   tags                   = var.cloudeos_info["rr1"]["tags"]
   disk_name              = var.cloudeos_info["rr1"]["disk_name"]
   storage_name           = format("%s%s",local.sanitized_topology,"rr1store")
-  private_ips            = var.cloudeos_info["rr1"]["private_ips"]
+  private_ips            = local.rr1_private_ips
   route_name             = var.cloudeos_info["rr1"]["route_name"]
   routetable_name        = var.cloudeos_info["rr1"]["routetable_name"]
   filename               = var.cloudeos_info["rr1"]["filename"]

@@ -15,6 +15,23 @@ provider "cloudeos" {
 
 locals {
   sanitized_topology = lower(replace(var.topology, "-", ""))
+  leaf1cloudeos1_private_ips = {
+  "0" : [ var.vpc_info["leaf1_vpc"]["interface_ips"][0] ],
+  "1" : [ var.vpc_info["leaf1_vpc"]["interface_ips"][1] ]
+  }
+  leaf1cloudeos2_private_ips = {
+  "0" : [ var.vpc_info["leaf1_vpc"]["interface_ips"][2] ],
+  "1" : [ var.vpc_info["leaf1_vpc"]["interface_ips"][3] ]
+  }
+  leaf2cloudeos1_private_ips = {
+  "0" : [ var.vpc_info["leaf2_vpc"]["interface_ips"][0] ],
+  "1" : [ var.vpc_info["leaf2_vpc"]["interface_ips"][1] ]
+  }
+
+  leaf2cloudeos2_private_ips = {
+  "0" : [ var.vpc_info["leaf2_vpc"]["interface_ips"][2] ],
+  "1" : [ var.vpc_info["leaf2_vpc"]["interface_ips"][3] ]
+  }
 }
 
 module "azureLeaf1" {
@@ -23,7 +40,7 @@ module "azureLeaf1" {
   role          = "CloudLeaf"
   rg_location   = "westus2"
   vnet_name     = "${var.topology}Leaf1Vnet"
-  address_space = "16.0.0.0/16"
+  address_space = var.vpc_info["leaf1_vpc"]["vpc_cidr"]
   nsg_name      = "${var.topology}Leaf1Nsg"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
@@ -35,7 +52,7 @@ module "azureLeaf1" {
 
 module "azureLeaf1Subnet" {
   source          = "../../../module/cloudeos/azure/subnet"
-  subnet_prefixes = var.subnet_info["leaf1subnet"]["subnet_prefixes"]
+  subnet_prefixes = var.vpc_info["leaf1_vpc"]["subnet_cidr"]
   subnet_names    = var.subnet_info["leaf1subnet"]["subnet_names"]
   vnet_name       = module.azureLeaf1.vnet_name
   vnet_id         = module.azureLeaf1.vnet_id
@@ -60,7 +77,7 @@ module "azureLeaf1cloudeos1" {
   interface_types        = var.cloudeos_info["leaf1cloudeos1"]["interface_types"]
   tags                   = { "Name" : "${var.topology}leaf1cloudeos1", "Cnps" : "dev" }
   disk_name              = var.cloudeos_info["leaf1cloudeos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf1cloudeos1"]["private_ips"]
+  private_ips            = local.leaf1cloudeos1_private_ips
   availability_zone      = var.cloudeos_info["leaf1cloudeos1"]["availability_zone"]
   route_name             = var.cloudeos_info["leaf1cloudeos1"]["route_name"]
   routetable_name        = var.cloudeos_info["leaf1cloudeos1"]["routetable_name"]
@@ -89,7 +106,7 @@ module "azureLeaf1cloudeos2" {
   interface_types        = var.cloudeos_info["leaf1cloudeos2"]["interface_types"]
   tags                   = { "Name" : "${var.topology}leaf1cloudeos2", "Cnps" : "dev" }
   disk_name              = var.cloudeos_info["leaf1cloudeos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf1cloudeos2"]["private_ips"]
+  private_ips            = local.leaf1cloudeos2_private_ips
   availability_zone      = var.cloudeos_info["leaf1cloudeos2"]["availability_zone"]
   route_name             = var.cloudeos_info["leaf1cloudeos2"]["route_name"]
   routetable_name        = var.cloudeos_info["leaf1cloudeos2"]["routetable_name"]
@@ -141,7 +158,7 @@ module "azureLeaf2" {
   role          = "CloudLeaf"
   rg_location   = "westus2"
   vnet_name     = "${var.topology}Leaf2Vnet"
-  address_space = "17.0.0.0/16"
+  address_space = var.vpc_info["leaf2_vpc"]["vpc_cidr"]
   nsg_name      = "${var.topology}Leaf2Nsg"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos"
@@ -153,7 +170,7 @@ module "azureLeaf2" {
 
 module "azureLeaf2Subnet" {
   source          = "../../../module/cloudeos/azure/subnet"
-  subnet_prefixes = var.subnet_info["leaf2subnet"]["subnet_prefixes"]
+  subnet_prefixes = var.vpc_info["leaf2_vpc"]["subnet_cidr"]
   subnet_names    = var.subnet_info["leaf2subnet"]["subnet_names"]
   vnet_name       = module.azureLeaf2.vnet_name
   vnet_id         = module.azureLeaf2.vnet_id
@@ -177,7 +194,7 @@ module "azureLeaf2cloudeos1" {
   interface_types        = var.cloudeos_info["leaf2cloudeos1"]["interface_types"]
   availability_zone      = var.cloudeos_info["leaf2cloudeos1"]["availability_zone"]
   disk_name              = var.cloudeos_info["leaf2cloudeos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf2cloudeos1"]["private_ips"]
+  private_ips            = local.leaf2cloudeos1_private_ips
   route_name             = var.cloudeos_info["leaf2cloudeos1"]["route_name"]
   routetable_name        = var.cloudeos_info["leaf2cloudeos1"]["routetable_name"]
   filename               = var.cloudeos_info["leaf2cloudeos1"]["filename"]
@@ -222,7 +239,7 @@ module "azureLeaf2cloudeos2" {
   interface_types        = var.cloudeos_info["leaf2cloudeos2"]["interface_types"]
   availability_zone      = var.cloudeos_info["leaf2cloudeos2"]["availability_zone"]
   disk_name              = var.cloudeos_info["leaf2cloudeos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["leaf2cloudeos2"]["private_ips"]
+  private_ips            = local.leaf2cloudeos2_private_ips
   route_name             = var.cloudeos_info["leaf2cloudeos2"]["route_name"]
   routetable_name        = var.cloudeos_info["leaf2cloudeos2"]["routetable_name"]
   filename               = var.cloudeos_info["leaf2cloudeos2"]["filename"]
