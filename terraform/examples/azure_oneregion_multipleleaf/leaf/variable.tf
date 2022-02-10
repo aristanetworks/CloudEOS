@@ -9,5 +9,6 @@ variable "terminattr_ip_cidr" {}
 variable "dps_controlplane_cidr" {}
 variable "clos_cv_container" {}
 variable "wan_cv_container" {}
+variable "vpc_info" {}
 variable "subnet_info" {}
 variable "cloudeos_info" {}
