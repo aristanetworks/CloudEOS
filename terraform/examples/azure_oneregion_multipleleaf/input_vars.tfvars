@@ -68,8 +68,8 @@ cloudeos_info = {
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -93,8 +93,8 @@ cloudeos_info = {
     route_name             = "azedge1cloudeos2Rt"
     routetable_name        = "azedge1cloudeos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -119,8 +119,8 @@ cloudeos_info = {
     route_name             = "adedge1Rt"
     routetable_name        = "adedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -134,8 +134,8 @@ cloudeos_info = {
     #}
   }
   leaf1cloudeos1 = {
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -162,8 +162,8 @@ cloudeos_info = {
 
   }
   leaf1cloudeos2 = {
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -199,8 +199,8 @@ cloudeos_info = {
     route_name             = "leaf2Rt1"
     routetable_name        = "leaf2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
@@ -225,8 +225,8 @@ cloudeos_info = {
     route_name             = "leaf2cloudeos2Rt1"
     routetable_name        = "leaf2cloudeos2RtTable1"
     cloud_ha               = "leaf2"
-    cloudeos_image_version = "4.24.32"
-    cloudeos_image_name    = "cloudeos-4_24_3_2-payg"
+    cloudeos_image_version = "4.27.3"
+    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following 
     # values by uncommenting and commenting above. 
