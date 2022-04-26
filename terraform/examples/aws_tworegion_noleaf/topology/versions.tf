@@ -7,8 +7,5 @@ terraform {
     cloudeos = {
       source = "aristanetworks/cloudeos"
     }
-    template = {
-      source = "hashicorp/template"
-    }
   }
 }

@@ -6,4 +6,3 @@ provider "azurerm" {
   skip_provider_registration = true
   features {}
 }
-data "template_file" "user_data_precreated" {}

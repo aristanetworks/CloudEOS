@@ -87,19 +87,6 @@ resource "azurerm_network_interface_security_group_association" "nsg" {
   network_security_group_id = var.role == "CloudEdge" ? var.vpc_info[5] : var.vpc_info[6]
 }
 
-data "template_file" "user_data_precreated" {
-  count    = var.existing_userdata == true ? 1 : 0
-  template = file(var.filename)
-}
-
-data "template_file" "user_data_specific" {
-  count    = var.existing_userdata == false ? 1 : 0
-  template = file(var.filename)
-  vars = {
-    bootstrap_cfg = arista_veos_config.veos[0].bootstrap_cfg
-  }
-}
-
 resource "azurerm_virtual_machine" "veosVm" {
   count                         = var.availability_zone == [] ? 1 : 0
   name                          = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
@@ -129,7 +116,7 @@ resource "azurerm_virtual_machine" "veosVm" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = arista_veos_config.veos[0].bootstrap_cfg}) : templatefile(var.filename)
   }
 
   plan {
@@ -177,7 +164,7 @@ resource "azurerm_virtual_machine" "veosVm1" {
     computer_name  = length([for i, z in var.tags : i if i == "Name"]) > 0 ? var.tags["Name"] : ""
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.existing_userdata == false ? data.template_file.user_data_specific[0].rendered : data.template_file.user_data_precreated[0].rendered
+    custom_data    = var.existing_userdata == false ? templatefile(var.filename, {bootstrap_cfg = arista_veos_config.veos[0].bootstrap_cfg}) : templatefile(var.filename)
   }
   plan {
     name      = var.cloudeos_image_name

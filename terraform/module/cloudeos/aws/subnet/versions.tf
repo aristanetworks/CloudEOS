@@ -8,8 +8,5 @@ terraform {
       source = "aristanetworks/cloudeos"
       version = ">= 1.1.3"
     }
-    template = {
-      source = "hashicorp/template"
-    }
   }
 }

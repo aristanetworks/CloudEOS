@@ -13,16 +13,7 @@ resource "aws_network_interface" "intf" {
   }
 }
 
-data "template_file" "init-script" {
-  template = file("${path.module}/user_data.tpl")
-
-  vars = {
-    username = var.username
-    passwd   = var.passwd
-  }
-}
-
-data "template_cloudinit_config" "cloudinit" {
+data "cloudinit_config" "cloudinit" {
   gzip          = false
   base64_encode = false
 
@@ -33,7 +24,10 @@ data "template_cloudinit_config" "cloudinit" {
 
   part {
     content_type = "text/cloud-config"
-    content      = data.template_file.init-script.rendered
+    content      = templatefile("${path.module}/user_data.tpl", {
+      username = var.username,
+      passwd   = var.passwd
+    })
   }
 }
 
@@ -42,7 +36,7 @@ resource "aws_instance" "host" {
   instance_type = var.instance_type
   tags          = var.tags
   key_name      = var.keypair_name
-  user_data     = data.template_cloudinit_config.cloudinit.rendered
+  user_data     = data.cloudinit_config.cloudinit.rendered
   network_interface {
     network_interface_id = aws_network_interface.intf.id
     device_index         = 0
