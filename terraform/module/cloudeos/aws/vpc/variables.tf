@@ -106,3 +106,8 @@ variable "vpc_peering" {
   description = "Leaf VPC peers with the Edge VPC"
   default     = true
 }
+
+variable "default_ingress_sg_cidrs" {
+  description = "Allow ingress from a specifc cidr range for Ipsec/DPS/ICMP traffic"
+  default = ["0.0.0.0/0"]
+}
