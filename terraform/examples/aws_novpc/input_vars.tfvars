@@ -118,7 +118,7 @@ host_amis = {
 vpc_info = {
   edge_vpc = {
     role     = "CloudEdge"
-    vpc_cidr = "100.0.0.0/16"
+    vpc_cidr = "10.0.0.0/16"
     vpc_id   = "vpc-0cab572639b8d6c8f"
     tags = {
       Name = "aristaQHTest"
@@ -128,7 +128,7 @@ vpc_info = {
   }
   rr_vpc = {
     role     = "CloudEdge"
-    vpc_cidr = "10.0.0.0/16"
+    vpc_cidr = "10.1.0.0/16"
     vpc_id   = "vpc-061b7b0cc3726df18"
     tags = {
       Name = "aristaQHRR"
@@ -138,7 +138,7 @@ vpc_info = {
   }
   leaf1_vpc = {
     role     = "CloudLeaf"
-    vpc_cidr = "101.0.0.0/16"
+    vpc_cidr = "10.2.0.0/16"
     vpc_id   = "vpc-0f99749769af4455a"
     tags = {
       Name = "aristaQHLeaf1"
@@ -152,19 +152,19 @@ subnet_info = {
   edge_subnet = {
     subnet_names      = ["aristaQHTestEdgeSubnet1", "aristaQHTestEdgeSubnet2", "aristaQHEdgeSubnet3", "aristaQHEdgeSubnet4"],
     subnet_id         = ["subnet-0071a6b1fcd21858e", "subnet-0fdf79012d81c354a", "subnet-0520b752154bb9d85", "subnet-0f263f745b5ab9597"],
-    subnet_cidr       = ["100.0.1.0/24", "100.0.2.0/24", "100.0.3.0/24", "100.0.4.0/24"]
+    subnet_cidr       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b", "us-west-1c", "us-west-1c"]
   }
   rr_subnet = {
     subnet_names      = ["aristaQHRRSubnet1", "aristaQHRRSubnet2"]
     subnet_id         = ["subnet-0050f59bd747a1c19", "subnet-01b590529519cff85"]
-    subnet_cidr       = ["10.0.0.0/24", "10.0.1.0/24"]
+    subnet_cidr       = ["10.1.0.0/24", "10.1.1.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b"]
   }
   leaf1_subnet = {
     subnet_names      = ["aristaQHLeafSubnet1", "aristaQHLeafSubnet2", "aristaQHLeafSubnet3", "aristaQHLeafSubnet4"]
     subnet_id         = ["subnet-0cb41b2c3950c3896", "subnet-0a71763d419aacfa8", "subnet-01872e66c237a662d", "subnet-042b5ac0c6349affe"]
-    subnet_cidr       = ["101.0.0.0/24", "101.0.1.0/24", "101.0.2.0/24", "101.0.3.0/24"]
+    subnet_cidr       = ["10.2.0.0/24", "10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
     availability_zone = ["us-west-1b", "us-west-1b", "us-west-1b", "us-west-1b"]
   }
 }
@@ -177,7 +177,7 @@ router_info = {
       "aristaQHTest-RRIntf0" = "public"
     }
     private_ips = {
-      "0" : ["10.0.0.101"]
+      "0" : ["10.1.0.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosRR1"
@@ -190,7 +190,7 @@ router_info = {
       "aristaQHTest-RR2Intf0" = "public"
     }
     private_ips = {
-      "0" : ["10.0.1.101"]
+      "0" : ["10.1.1.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosRR2"
@@ -204,8 +204,8 @@ router_info = {
       "aristaQHTest-EdgeIntf1" = "internal"
     }
     private_ips = {
-      "0" : ["100.0.1.101"]
-      "1" : ["100.0.2.101"]
+      "0" : ["10.0.1.101"]
+      "1" : ["10.0.2.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosEdge1"
@@ -219,8 +219,8 @@ router_info = {
       "aristaQHTest-Edge2Intf1" = "internal"
     }
     private_ips = {
-      "0" : ["100.0.3.101"]
-      "1" : ["100.0.4.101"]
+      "0" : ["10.0.3.101"]
+      "1" : ["10.0.4.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosEdge2"
@@ -233,8 +233,8 @@ router_info = {
       "aristaQHTest-Leaf1Intf1" = "private"
     }
     private_ips = {
-      "0" : ["101.0.0.101"]
-      "1" : ["101.0.1.101"]
+      "0" : ["10.2.0.101"]
+      "1" : ["10.2.1.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosLeaf1"
@@ -248,8 +248,8 @@ router_info = {
       "aristaQHTest-Leaf2Intf1" = "private"
     }
     private_ips = {
-      "0" : ["101.0.2.101"]
-      "1" : ["101.0.3.101"]
+      "0" : ["10.2.2.101"]
+      "1" : ["10.2.3.101"]
     }
     tags = {
       "Name" = "aristaQHTest-CloudEosLeaf2"

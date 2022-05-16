@@ -130,19 +130,19 @@ host_amis = {
 #azure cloudeos info
 subnet_info = {
   azureRR1Subnet : {
-    subnet_prefixes = ["11.0.0.0/24", "11.0.1.0/24", "11.0.2.0/24", "11.0.3.0/24"]
+    subnet_prefixes = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
     subnet_names    = ["rr1Subnet0", "rr1Subnet1", "rr1Subnet2", "rr1Subnet3"]
   }
   edge1subnet : {
-    subnet_prefixes = ["12.0.0.0/24", "12.0.1.0/24", "12.0.2.0/24", "12.0.3.0/24", "12.0.4.0/24"]
+    subnet_prefixes = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24", "10.1.4.0/24"]
     subnet_names    = ["edge1Subnet0", "edge1Subnet1", "edge1Subnet2", "edge1Subnet3","rr1subnet0"]
   }
   leaf1subnet = {
-    subnet_prefixes = ["18.0.0.0/24", "18.0.1.0/24", "18.0.2.0/24", "18.0.3.0/24"]
+    subnet_prefixes = ["10.2.0.0/24", "10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
     subnet_names    = ["leaf1Subnet0", "leaf1Subnet1", "leaf1Subnet2", "leaf1Subnet3"]
   }
   leaf2subnet = {
-    subnet_prefixes = ["19.0.0.0/24", "19.0.1.0/24", "19.0.2.0/24", "19.0.3.0/24"]
+    subnet_prefixes = ["10.3.0.0/24", "10.3.1.0/24", "10.3.2.0/24", "10.033.0/24"]
     subnet_names    = ["leaf2Subnet0", "leaf2Subnet1", "leaf2Subnet2", "leaf2Subnet3"]
   }
 }
@@ -156,7 +156,7 @@ cloudeos_info = {
     }
     disk_name              = "rr1cloudeos1disk"
     storage_name           = "rr1cloudeos1disk"
-    private_ips            = { "0" : ["12.0.4.101"] }
+    private_ips            = { "0" : ["10.1.4.101"] }
     route_name             = "azrr1Rt"
     routetable_name        = "azrr1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
@@ -182,7 +182,7 @@ cloudeos_info = {
       "edge1cloudeos1Intf1" = "internal"
     }
     disk_name              = "edge1cloudeos1disk"
-    private_ips            = { "0" : ["12.0.0.101"], "1" : ["12.0.1.101"] }
+    private_ips            = { "0" : ["10.1.0.101"], "1" : ["10.1.1.101"] }
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
@@ -208,7 +208,7 @@ cloudeos_info = {
       "edge1cloudeos2Intf1" = "internal"
     }
     disk_name              = "edge1cloudeos2disk"
-    private_ips            = { "0" : ["12.0.2.101"], "1" : ["12.0.3.101"] }
+    private_ips            = { "0" : ["10.1.2.101"], "1" : ["10.1.3.101"] }
     route_name             = "azedge1cloudeos2Rt"
     routetable_name        = "azedge1cloudeos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
@@ -246,7 +246,7 @@ cloudeos_info = {
       "leaf1cloudeos1Intf0" = "internal"
       "leaf1cloudeos1Intf1" = "private"
     }
-    private_ips       = { "0" : ["18.0.0.101"], "1" : ["18.0.1.101"] }
+    private_ips       = { "0" : ["10.2.0.101"], "1" : ["10.2.1.101"] }
     tags              = { "Name" : "azleaf1cloudeos1", "Cnps" : "dev" }
     disk_name         = "leaf1cloudeos1disk"
     storage_name      = "azleaf1cloudeos1storage"
@@ -276,7 +276,7 @@ cloudeos_info = {
       "leaf1cloudeos2Intf0" = "internal"
       "leaf1cloudeos2Intf1" = "private"
     }
-    private_ips       = { "0" : ["18.0.2.102"], "1" : ["18.0.3.102"] }
+    private_ips       = { "0" : ["10.2.2.102"], "1" : ["10.2.3.102"] }
     tags              = { "Name" : "azleaf1cloudeos2", "Cnps" : "dev" }
     disk_name         = "leaf1cloudeos2disk"
     route_name        = "leaf1cloudeos2Rt1"
@@ -292,7 +292,7 @@ cloudeos_info = {
       "leaf2cloudeos1Intf1" = "private"
     }
     availability_zone      = [2]
-    private_ips            = { "0" : ["19.0.0.101"], "1" : ["19.0.1.101"] }
+    private_ips            = { "0" : ["10.3.0.101"], "1" : ["10.3.1.101"] }
     disk_name              = "leaf2cloudeos1disk"
     storage_name           = "leaf2cloudeos1storage"
     route_name             = "leaf2Rt1"
@@ -320,7 +320,7 @@ cloudeos_info = {
       "leaf2cloudeos2Intf1" = "private"
     }
     availability_zone      = [3]
-    private_ips            = { "0" : ["19.0.2.102"], "1" : ["19.0.3.102"] }
+    private_ips            = { "0" : ["10.3.2.102"], "1" : ["10.3.3.102"] }
     disk_name              = "leaf2cloudeos2disk"
     route_name             = "leaf2cloudeos2Rt1"
     routetable_name        = "leaf2cloudeos2RtTable1"

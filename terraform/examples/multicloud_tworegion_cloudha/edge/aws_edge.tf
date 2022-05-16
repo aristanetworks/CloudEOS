@@ -18,7 +18,7 @@ module "Region2EdgeVpc" {
   wan_name      = "${var.topology}-wan"
   role          = "CloudEdge"
   igw_name      = "${var.topology}-Region2VpcIgw"
-  cidr_block    = ["100.2.0.0/16"]
+  cidr_block    = ["10.5.0.0/16"]
   tags = {
     Name = "${var.topology}-Region2EdgeVpc"
   }
@@ -28,16 +28,16 @@ module "Region2EdgeVpc" {
 module "Region2EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "100.2.0.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
-    "100.2.1.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
-    "100.2.2.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
-    "100.2.3.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
+    "10.5.0.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
+    "10.5.1.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
+    "10.5.2.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
+    "10.5.3.0/24" = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
   }
   subnet_names = {
-    "100.2.0.0/24" = "${var.topology}-Region2EdgeSubnet0"
-    "100.2.1.0/24" = "${var.topology}-Region2EdgeSubnet1"
-    "100.2.2.0/24" = "${var.topology}-Region2EdgeSubnet2"
-    "100.2.3.0/24" = "${var.topology}-Region2EdgeSubnet3"
+    "10.5.0.0/24" = "${var.topology}-Region2EdgeSubnet0"
+    "10.5.1.0/24" = "${var.topology}-Region2EdgeSubnet1"
+    "10.5.2.0/24" = "${var.topology}-Region2EdgeSubnet2"
+    "10.5.3.0/24" = "${var.topology}-Region2EdgeSubnet3"
   }
   vpc_id        = module.Region2EdgeVpc.vpc_id[0]
   topology_name = module.Region2EdgeVpc.topology_name
@@ -60,7 +60,7 @@ module "Region2CloudEOSEdge1" {
     "${var.topology}-Region2Edge1Intf0" = module.Region2EdgeSubnet.vpc_subnets[0]
     "${var.topology}-Region2Edge1Intf1" = module.Region2EdgeSubnet.vpc_subnets[1]
   }
-  private_ips       = { "0" : ["100.2.0.101"], "1" : ["100.2.1.101"] }
+  private_ips       = { "0" : ["10.5.0.101"], "1" : ["10.5.1.101"] }
   availability_zone = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
   region            = module.Region2EdgeVpc.region
   tags = {
@@ -90,7 +90,7 @@ module "Region2CloudEOSEdge2" {
     "${var.topology}-Region2Edge2Intf0" = module.Region2EdgeSubnet.vpc_subnets[2]
     "${var.topology}-Region2Edge2Intf1" = module.Region2EdgeSubnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : ["100.2.2.101"], "1" : ["100.2.3.101"] }
+  private_ips       = { "0" : ["10.5.2.101"], "1" : ["10.5.3.101"] }
   availability_zone = var.availability_zone[module.Region2EdgeVpc.region]["zone2"]
   region            = module.Region2EdgeVpc.region
   tags = {
@@ -112,7 +112,7 @@ module "Region3EdgeVpc" {
   wan_name      = "${var.topology}-wan"
   role          = "CloudEdge"
   igw_name      = "${var.topology}-Region3VpcIgw"
-  cidr_block    = ["100.3.0.0/16"]
+  cidr_block    = ["10.6.0.0/16"]
   tags = {
     Name = "${var.topology}-Region3EdgeVpc"
   }
@@ -122,16 +122,16 @@ module "Region3EdgeVpc" {
 module "Region3EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-    "100.3.0.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
-    "100.3.1.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
-    "100.3.2.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone2"]
-    "100.3.3.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone2"]
+    "10.6.0.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
+    "10.6.1.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
+    "10.6.2.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone2"]
+    "10.6.3.0/24" = var.availability_zone[module.Region3EdgeVpc.region]["zone2"]
   }
   subnet_names = {
-    "100.3.0.0/24" = "${var.topology}-Region3EdgeSubnet0"
-    "100.3.1.0/24" = "${var.topology}-Region3EdgeSubnet1"
-    "100.3.2.0/24" = "${var.topology}-Region3EdgeSubnet2"
-    "100.3.3.0/24" = "${var.topology}-Region3EdgeSubnet3"
+    "10.6.0.0/24" = "${var.topology}-Region3EdgeSubnet0"
+    "10.6.1.0/24" = "${var.topology}-Region3EdgeSubnet1"
+    "10.6.2.0/24" = "${var.topology}-Region3EdgeSubnet2"
+    "10.6.3.0/24" = "${var.topology}-Region3EdgeSubnet3"
   }
   vpc_id        = module.Region3EdgeVpc.vpc_id[0]
   topology_name = module.Region3EdgeVpc.topology_name
@@ -154,7 +154,7 @@ module "Region3CloudEOSEdge1" {
     "${var.topology}-Region3Edge1Intf0" = module.Region3EdgeSubnet.vpc_subnets[0]
     "${var.topology}-Region3Edge1Intf1" = module.Region3EdgeSubnet.vpc_subnets[1]
   }
-  private_ips       = { "0" : ["100.3.0.101"], "1" : ["100.3.1.101"] }
+  private_ips       = { "0" : ["10.6.0.101"], "1" : ["10.6.1.101"] }
   availability_zone = var.availability_zone[module.Region3EdgeVpc.region]["zone1"]
   region            = module.Region3EdgeVpc.region
   tags = {
@@ -184,7 +184,7 @@ module "Region3CloudEOSEdge2" {
     "${var.topology}-Region3Edge2Intf0" = module.Region3EdgeSubnet.vpc_subnets[2]
     "${var.topology}-Region3Edge2Intf1" = module.Region3EdgeSubnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : ["100.3.2.101"], "1" : ["100.3.3.101"] }
+  private_ips       = { "0" : ["10.6.2.101"], "1" : ["10.6.3.101"] }
   availability_zone = var.availability_zone[module.Region3EdgeVpc.region]["zone2"]
   region            = module.Region3EdgeVpc.region
   tags = {
@@ -197,36 +197,3 @@ module "Region3CloudEOSEdge2" {
   licenses                = var.licenses
   cloudeos_image_offer    = var.cloudeos_image_offer
 }
-
-/*
-module "CloudEOSRR1" {
-  source = "../../../module/cloudeos/aws/router"
-  role = "CloudEdge"
-  topology_name = module.Region2EdgeVpc.topology_name
-  cloudeos_ami = local.eos_amis[module.Region2EdgeVpc.region]
-  keypair_name = var.keypair_name[module.Region2EdgeVpc.region]
-  vpc_info = module.Region2EdgeVpc.vpc_info
-  intf_names = ["${var.topology}-RRIntf0"]
-  interface_types = {
-    "${var.topology}-RRIntf0" = "public"
-  }
-  subnetids = {
-    "${var.topology}-RRIntf0" = module.Region2EdgeSubnet.vpc_subnets[4]
-  }
-  private_ips = {
-    "0": ["100.2.4.101"]
-  }
-  availability_zone = var.availability_zone[module.Region2EdgeVpc.region]["zone1"]
-  region = module.Region2EdgeVpc.region
-  tags = {
-    "Name" = "${var.topology}-CloudEosRR1"
-    "RouteReflector" = "True"
-  }
-  is_rr                = true
-  primary              = true
-  filename             = "../../../userdata/eos_ipsec_config.tpl"
-  instance_type        = var.instance_type["edge"]
-  licenses             = var.licenses
-  cloudeos_image_offer = var.cloudeos_image_offer
-}
-*/

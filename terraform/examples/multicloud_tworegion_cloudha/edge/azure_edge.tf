@@ -12,7 +12,7 @@ locals {
 
 module "edge1" {
   source        = "../../../module/cloudeos/azure/rg"
-  address_space = "12.0.0.0/16"
+  address_space = "10.1.0.0/16"
   nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"

@@ -137,7 +137,7 @@ host_amis = {
 #azure cloudeos info
 subnet_info = {
   edge1subnet : {
-    subnet_prefixes = ["12.0.0.0/24", "12.0.1.0/24"]
+    subnet_prefixes = ["10.0.0.0/24", "10.0.1.0/24"]
     subnet_names    = ["edge1Subnet0", "edge1Subnet1"]
   }
 }
@@ -151,7 +151,7 @@ cloudeos_info = {
       "edge1cloudeos1Intf1" = "internal"
     }
     disk_name              = "edge1cloudeos1disk"
-    private_ips            = { "0" : ["12.0.0.101"], "1" : ["12.0.1.101"] }
+    private_ips            = { "0" : ["10.0.0.101"], "1" : ["10.0.1.101"] }
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"

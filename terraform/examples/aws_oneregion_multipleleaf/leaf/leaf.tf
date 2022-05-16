@@ -489,7 +489,7 @@ module "Leaf5Vpc" {
   topology_name  = var.topology
   clos_name      = "${var.topology}-clos"
   role           = "CloudLeaf"
-  cidr_block     = ["105.2.0.0/16"]
+  cidr_block     = ["10.5.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf5Vpc"
     Cnps = "prod"
@@ -500,16 +500,16 @@ module "Leaf5Vpc" {
 module "Leaf5Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "105.2.0.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
-     "105.2.1.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
-     "105.2.2.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
-     "105.2.3.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
+     "10.5.0.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
+     "10.5.1.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
+     "10.5.2.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
+     "10.5.3.0/24" = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
   }
   subnet_names = {
-     "105.2.0.0/24" = "${var.topology}-Leaf5Subnet0"
-     "105.2.1.0/24" = "${var.topology}-Leaf5Subnet1"
-     "105.2.2.0/24" = "${var.topology}-Leaf5Subnet2"
-     "105.2.3.0/24" = "${var.topology}-Leaf5Subnet3"
+     "10.5.0.0/24" = "${var.topology}-Leaf5Subnet0"
+     "10.5.1.0/24" = "${var.topology}-Leaf5Subnet1"
+     "10.5.2.0/24" = "${var.topology}-Leaf5Subnet2"
+     "10.5.3.0/24" = "${var.topology}-Leaf5Subnet3"
    }
   vpc_id = module.Leaf5Vpc.vpc_id[0]
   topology_name = module.Leaf5Vpc.topology_name
@@ -535,7 +535,7 @@ module "Leaf5CloudEOS1" {
       "${var.topology}-Leaf5CloudEOS1Intf0" = module.Leaf5Subnet.vpc_subnets[0]
       "${var.topology}-Leaf5CloudEOS1Intf1" = module.Leaf5Subnet.vpc_subnets[1]
   }
-  private_ips = {"0": ["105.2.0.101"], "1": ["105.2.1.101"]}
+  private_ips = {"0": ["10.5.0.101"], "1": ["10.5.1.101"]}
   availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone1"]
   region            = module.Leaf5Vpc.region
   tags = {
@@ -568,7 +568,7 @@ module "Leaf5CloudEOS2" {
       "${var.topology}-Leaf5CloudEOS2Intf0" = module.Leaf5Subnet.vpc_subnets[2]
       "${var.topology}-Leaf5CloudEOS2Intf1" = module.Leaf5Subnet.vpc_subnets[3]
   }
-  private_ips = {"0": ["105.2.2.101"], "1": ["105.2.3.101"]}
+  private_ips = {"0": ["10.5.2.101"], "1": ["10.5.3.101"]}
   availability_zone = var.availability_zone[module.Leaf5Vpc.region]["zone2"]
   region            = module.Leaf5Vpc.region
   tags = {
@@ -588,7 +588,7 @@ module "Leaf6Vpc" {
   topology_name  = var.topology
   clos_name      = "${var.topology}-clos"
   role           = "CloudLeaf"
-  cidr_block     = ["106.2.0.0/16"]
+  cidr_block     = ["10.6.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf6Vpc"
     Cnps = "prod"
@@ -599,16 +599,16 @@ module "Leaf6Vpc" {
 module "Leaf6Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "106.2.0.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
-     "106.2.1.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
-     "106.2.2.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
-     "106.2.3.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
+     "10.6.0.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
+     "10.6.1.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
+     "10.6.2.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
+     "10.6.3.0/24" = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
   }
   subnet_names = {
-     "106.2.0.0/24" = "${var.topology}-Leaf6Subnet0"
-     "106.2.1.0/24" = "${var.topology}-Leaf6Subnet1"
-     "106.2.2.0/24" = "${var.topology}-Leaf6Subnet2"
-     "106.2.3.0/24" = "${var.topology}-Leaf6Subnet3"
+     "10.6.0.0/24" = "${var.topology}-Leaf6Subnet0"
+     "10.6.1.0/24" = "${var.topology}-Leaf6Subnet1"
+     "10.6.2.0/24" = "${var.topology}-Leaf6Subnet2"
+     "10.6.3.0/24" = "${var.topology}-Leaf6Subnet3"
    }
   vpc_id = module.Leaf6Vpc.vpc_id[0]
   topology_name = module.Leaf6Vpc.topology_name
@@ -634,7 +634,7 @@ module "Leaf6CloudEOS1" {
       "${var.topology}-Leaf6CloudEOS1Intf0" = module.Leaf6Subnet.vpc_subnets[0]
       "${var.topology}-Leaf6CloudEOS1Intf1" = module.Leaf6Subnet.vpc_subnets[1]
   }
-  private_ips = {"0": ["106.2.0.101"], "1": ["106.2.1.101"]}
+  private_ips = {"0": ["10.6.0.101"], "1": ["10.6.1.101"]}
   availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone1"]
   region            = module.Leaf6Vpc.region
   tags = {
@@ -667,7 +667,7 @@ module "Leaf6CloudEOS2" {
       "${var.topology}-Leaf6CloudEOS2Intf0" = module.Leaf6Subnet.vpc_subnets[2]
       "${var.topology}-Leaf6CloudEOS2Intf1" = module.Leaf6Subnet.vpc_subnets[3]
   }
-  private_ips = {"0": ["106.2.2.101"], "1": ["106.2.3.101"]}
+  private_ips = {"0": ["10.6.2.101"], "1": ["10.6.3.101"]}
   availability_zone = var.availability_zone[module.Leaf6Vpc.region]["zone2"]
   region            = module.Leaf6Vpc.region
   tags = {
@@ -686,7 +686,7 @@ module "Leaf7Vpc" {
   topology_name  = var.topology
   clos_name      = "${var.topology}-clos"
   role           = "CloudLeaf"
-  cidr_block     = ["107.2.0.0/16"]
+  cidr_block     = ["10.7.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf7Vpc"
     Cnps = "prod"
@@ -697,16 +697,16 @@ module "Leaf7Vpc" {
 module "Leaf7Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "107.2.0.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
-     "107.2.1.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
-     "107.2.2.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
-     "107.2.3.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
+     "10.7.0.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
+     "10.7.1.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
+     "10.7.2.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
+     "10.7.3.0/24" = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
   }
   subnet_names = {
-     "107.2.0.0/24" = "${var.topology}-Leaf7Subnet0"
-     "107.2.1.0/24" = "${var.topology}-Leaf7Subnet1"
-     "107.2.2.0/24" = "${var.topology}-Leaf7Subnet2"
-     "107.2.3.0/24" = "${var.topology}-Leaf7Subnet3"
+     "10.7.0.0/24" = "${var.topology}-Leaf7Subnet0"
+     "10.7.1.0/24" = "${var.topology}-Leaf7Subnet1"
+     "10.7.2.0/24" = "${var.topology}-Leaf7Subnet2"
+     "10.7.3.0/24" = "${var.topology}-Leaf7Subnet3"
    }
   vpc_id = module.Leaf7Vpc.vpc_id[0]
   topology_name = module.Leaf7Vpc.topology_name
@@ -732,7 +732,7 @@ module "Leaf7CloudEOS1" {
       "${var.topology}-Leaf7CloudEOS1Intf0" = module.Leaf7Subnet.vpc_subnets[0]
       "${var.topology}-Leaf7CloudEOS1Intf1" = module.Leaf7Subnet.vpc_subnets[1]
   }
-  private_ips = {"0": ["107.2.0.101"], "1": ["107.2.1.101"]}
+  private_ips = {"0": ["10.7.0.101"], "1": ["10.7.1.101"]}
   availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone1"]
   region            = module.Leaf7Vpc.region
   tags = {
@@ -765,7 +765,7 @@ module "Leaf7CloudEOS2" {
       "${var.topology}-Leaf7CloudEOS2Intf0" = module.Leaf7Subnet.vpc_subnets[2]
       "${var.topology}-Leaf7CloudEOS2Intf1" = module.Leaf7Subnet.vpc_subnets[3]
   }
-  private_ips = {"0": ["107.2.2.101"], "1": ["107.2.3.101"]}
+  private_ips = {"0": ["10.7.2.101"], "1": ["10.7.3.101"]}
   availability_zone = var.availability_zone[module.Leaf7Vpc.region]["zone2"]
   region            = module.Leaf7Vpc.region
   tags = {
@@ -784,7 +784,7 @@ module "Leaf8Vpc" {
   topology_name  = var.topology
   clos_name      = "${var.topology}-clos"
   role           = "CloudLeaf"
-  cidr_block     = ["108.2.0.0/16"]
+  cidr_block     = ["10.8.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf8Vpc"
     Cnps = "prod"
@@ -795,16 +795,16 @@ module "Leaf8Vpc" {
 module "Leaf8Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "108.2.0.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
-     "108.2.1.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
-     "108.2.2.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
-     "108.2.3.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
+     "10.8.0.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
+     "10.8.1.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
+     "10.8.2.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
+     "10.8.3.0/24" = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
   }
   subnet_names = {
-     "108.2.0.0/24" = "${var.topology}-Leaf8Subnet0"
-     "108.2.1.0/24" = "${var.topology}-Leaf8Subnet1"
-     "108.2.2.0/24" = "${var.topology}-Leaf8Subnet2"
-     "108.2.3.0/24" = "${var.topology}-Leaf8Subnet3"
+     "10.8.0.0/24" = "${var.topology}-Leaf8Subnet0"
+     "10.8.1.0/24" = "${var.topology}-Leaf8Subnet1"
+     "10.8.2.0/24" = "${var.topology}-Leaf8Subnet2"
+     "10.8.3.0/24" = "${var.topology}-Leaf8Subnet3"
    }
   vpc_id = module.Leaf8Vpc.vpc_id[0]
   topology_name = module.Leaf8Vpc.topology_name
@@ -830,7 +830,7 @@ module "Leaf8CloudEOS1" {
       "${var.topology}-Leaf8CloudEOS1Intf0" = module.Leaf8Subnet.vpc_subnets[0]
       "${var.topology}-Leaf8CloudEOS1Intf1" = module.Leaf8Subnet.vpc_subnets[1]
   }
-  private_ips = {"0": ["108.2.0.101"], "1": ["108.2.1.101"]}
+  private_ips = {"0": ["10.8.0.101"], "1": ["10.8.1.101"]}
   availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone1"]
   region            = module.Leaf8Vpc.region
   tags = {
@@ -863,7 +863,7 @@ module "Leaf8CloudEOS2" {
       "${var.topology}-Leaf8CloudEOS2Intf0" = module.Leaf8Subnet.vpc_subnets[2]
       "${var.topology}-Leaf8CloudEOS2Intf1" = module.Leaf8Subnet.vpc_subnets[3]
   }
-  private_ips = {"0": ["108.2.2.101"], "1": ["108.2.3.101"]}
+  private_ips = {"0": ["10.8.2.101"], "1": ["10.8.3.101"]}
   availability_zone = var.availability_zone[module.Leaf8Vpc.region]["zone2"]
   region            = module.Leaf8Vpc.region
   tags = {
@@ -882,7 +882,7 @@ module "Leaf9Vpc" {
   topology_name  = var.topology
   clos_name      = "${var.topology}-clos"
   role           = "CloudLeaf"
-  cidr_block     = ["109.2.0.0/16"]
+  cidr_block     = ["10.9.0.0/16"]
   tags = {
     Name = "${var.topology}-Leaf9Vpc"
     Cnps = "prod"
@@ -893,16 +893,16 @@ module "Leaf9Vpc" {
 module "Leaf9Subnet" {
   source = "../../../module/cloudeos/aws/subnet"
   subnet_zones = {
-     "109.2.0.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
-     "109.2.1.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
-     "109.2.2.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
-     "109.2.3.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
+     "10.9.0.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
+     "10.9.1.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
+     "10.9.2.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
+     "10.9.3.0/24" = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
   }
   subnet_names = {
-     "109.2.0.0/24" = "${var.topology}-Leaf9Subnet0"
-     "109.2.1.0/24" = "${var.topology}-Leaf9Subnet1"
-     "109.2.2.0/24" = "${var.topology}-Leaf9Subnet2"
-     "109.2.3.0/24" = "${var.topology}-Leaf9Subnet3"
+     "10.9.0.0/24" = "${var.topology}-Leaf9Subnet0"
+     "10.9.1.0/24" = "${var.topology}-Leaf9Subnet1"
+     "10.9.2.0/24" = "${var.topology}-Leaf9Subnet2"
+     "10.9.3.0/24" = "${var.topology}-Leaf9Subnet3"
    }
   vpc_id = module.Leaf9Vpc.vpc_id[0]
   topology_name = module.Leaf9Vpc.topology_name
@@ -928,7 +928,7 @@ module "Leaf9CloudEOS1" {
       "${var.topology}-Leaf9CloudEOS1Intf0" = module.Leaf9Subnet.vpc_subnets[0]
       "${var.topology}-Leaf9CloudEOS1Intf1" = module.Leaf9Subnet.vpc_subnets[1]
   }
-  private_ips = {"0": ["109.2.0.101"], "1": ["109.2.1.101"]}
+  private_ips = {"0": ["10.9.0.101"], "1": ["10.9.1.101"]}
   availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone1"]
   region            = module.Leaf9Vpc.region
   tags = {
@@ -961,7 +961,7 @@ module "Leaf9CloudEOS2" {
       "${var.topology}-Leaf9CloudEOS2Intf0" = module.Leaf9Subnet.vpc_subnets[2]
       "${var.topology}-Leaf9CloudEOS2Intf1" = module.Leaf9Subnet.vpc_subnets[3]
   }
-  private_ips = {"0": ["109.2.2.101"], "1": ["109.2.3.101"]}
+  private_ips = {"0": ["10.9.2.101"], "1": ["10.9.3.101"]}
   availability_zone = var.availability_zone[module.Leaf9Vpc.region]["zone2"]
   region            = module.Leaf9Vpc.region
   tags = {

@@ -12,7 +12,7 @@ module "azureLeaf1" {
   role          = "CloudLeaf"
   rg_location   = "westus2"
   vnet_name     = "${var.topology}Leaf1Vnet"
-  address_space = "18.0.0.0/16"
+  address_space = "10.2.0/16"
   nsg_name      = "${var.topology}Leaf1Nsg"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos-azure"
@@ -99,7 +99,7 @@ module "azureLeaf1host1" {
   rg_location = "westus2"
   intf_name   = "host1Intf0"
   subnet_id   = module.azureLeaf1Subnet.vnet_subnets[1]
-  private_ip  = "18.0.1.10"
+  private_ip  = "10.2.1.10"
   disk_name   = "leaf1host1disk"
   tags = {
     "Name" : "host1azureLeaf1"
@@ -116,7 +116,7 @@ module "azureLeaf1host2" {
   rg_location = "westus2"
   intf_name   = "azurehost2Intf1"
   subnet_id   = module.azureLeaf1Subnet.vnet_subnets[3]
-  private_ip  = "18.0.3.10"
+  private_ip  = "10.2.3.10"
   disk_name   = "azureleaf1host2"
   tags = {
     "Name" : "azureleaf1host2"
@@ -131,7 +131,7 @@ module "azureLeaf2" {
   role          = "CloudLeaf"
   rg_location   = "westus2"
   vnet_name     = "${var.topology}Leaf2Vnet"
-  address_space = "19.0.0.0/16"
+  address_space = "10.3.0.0/16"
   nsg_name      = "${var.topology}Leaf2Nsg"
   topology_name = var.topology
   clos_name     = "${var.topology}-clos-azure"
@@ -189,7 +189,7 @@ module "azureLeaf2host1" {
   rg_location = "westus2"
   intf_name   = "host2Intf0"
   subnet_id   = module.azureLeaf2Subnet.vnet_subnets[1]
-  private_ip  = "19.0.1.10"
+  private_ip  = "10.3.1.10"
   disk_name   = "leaf2host1disk"
   tags = {
     "Name" : "host1azureLeaf2"
@@ -237,7 +237,7 @@ module "azureLeaf2host2" {
   rg_location = "westus2"
   intf_name   = "leaf2host2Intf0"
   subnet_id   = module.azureLeaf2Subnet.vnet_subnets[3]
-  private_ip  = "19.0.3.10"
+  private_ip  = "10.3.3.10"
   disk_name   = "leaf2host2disk"
   tags = {
     "Name" : "host2azureLeaf2"
