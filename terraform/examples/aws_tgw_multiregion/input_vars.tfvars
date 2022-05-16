@@ -145,5 +145,14 @@ vpc_info = {
     subnet_cidr = ["10.5.0.0/24"]
     interface_ips = ["10.5.0.102"]
   }
+}
 
+ingress_allowlist = {
+  edge_vpc = {
+    ssh = ["0.0.0.0/0"]
+    default = ["0.0.0.0/0"]
+  }
+  leaf_vpc = {
+    default = ["0.0.0.0/0"]
+  }
 }

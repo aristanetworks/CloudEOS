@@ -48,6 +48,8 @@ module "EdgeVpc" {
   topology_id = cloudeos_topology.topology.tf_id
   wan_id      = cloudeos_wan.wan.tf_id
   clos_id     = cloudeos_clos.clos.tf_id
+  default_ingress_sg_cidrs = var.ingress_allowlist["edge_vpc"]["default"]
+  ssh_security_group_cidrs = var.ingress_allowlist["edge_vpc"]["ssh"]
 }
 module "EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"
@@ -147,6 +149,7 @@ module "Leaf1DevTgwVpc" {
   }
   region      = var.aws_regions["region2"]
   vpc_peering = false
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf1DevSubnet" {
@@ -186,6 +189,7 @@ module "Leaf2ProdTgwVpc" {
     Cnps = "prod"
   }
   region      = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
   vpc_peering = false
 }
 

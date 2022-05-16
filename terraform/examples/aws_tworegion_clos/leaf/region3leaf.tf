@@ -13,6 +13,7 @@ module "Region3Leaf1Vpc" {
     Cnps = "dev"
   }
   region = var.aws_regions["region3"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Region3Leaf1Subnet" {
@@ -88,6 +89,7 @@ module "Region3Leaf2Vpc" {
     Cnps = "dev"
   }
   region = var.aws_regions["region3"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Region3Leaf2Subnet" {

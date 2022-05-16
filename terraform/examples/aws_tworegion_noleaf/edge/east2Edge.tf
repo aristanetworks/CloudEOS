@@ -14,6 +14,8 @@ module "East2EdgeVpc" {
     Name = "${module.globals.topology}-East2EdgeVpc"
   }
   region = module.globals.aws_regions["region3"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["edge_vpc"]["default"]
+  ssh_security_group_cidrs = var.ingress_allowlist["edge_vpc"]["ssh"]
 }
 
 module "East2EdgeSubnet" {

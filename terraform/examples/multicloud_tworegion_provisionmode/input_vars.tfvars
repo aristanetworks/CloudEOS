@@ -170,3 +170,13 @@ cloudeos_info = {
     #}
   }
 }
+
+ingress_allowlist = {
+  edge_vpc = {
+    ssh = ["0.0.0.0/0"]
+    default = ["0.0.0.0/0"]
+  }
+  leaf_vpc = {
+    default = ["0.0.0.0/0"]
+  }
+}

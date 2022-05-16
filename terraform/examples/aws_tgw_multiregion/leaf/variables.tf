@@ -15,6 +15,7 @@ variable "licenses" {}
 variable "cloudeos_image_offer" {}
 variable "eos_payg_amis" {}
 variable "eos_byol_amis" {}
+variable "ingress_allowlist" {}
 locals {
    eos_amis = var.cloudeos_image_offer == "cloudeos-router-payg" ? var.eos_payg_amis : var.eos_byol_amis
 }

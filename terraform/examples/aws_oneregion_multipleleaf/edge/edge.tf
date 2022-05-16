@@ -18,6 +18,8 @@ module "EdgeVpc" {
     Name = "${var.topology}-EdgeVpc"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["edge_vpc"]["default"]
+  ssh_security_group_cidrs = var.ingress_allowlist["edge_vpc"]["ssh"]
 }
 module "EdgeSubnet" {
   source = "../../../module/cloudeos/aws/subnet"

@@ -341,3 +341,13 @@ cloudeos_info = {
     filename               = "../../../userdata/eos_ipsec_config.tpl"
   }
 }
+
+ingress_allowlist = {
+  edge_vpc = {
+    ssh = ["0.0.0.0/0"]
+    default = ["0.0.0.0/0"]
+  }
+  leaf_vpc = {
+    default = ["0.0.0.0/0"]
+  }
+}

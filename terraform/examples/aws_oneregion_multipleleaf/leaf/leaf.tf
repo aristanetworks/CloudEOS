@@ -36,6 +36,7 @@ module "Leaf1Vpc" {
     Cnps = "dev"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf1Subnet" {
@@ -153,6 +154,7 @@ module "Leaf2Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf2Subnet" {
@@ -270,6 +272,7 @@ module "Leaf3Vpc" {
     Cnps = "dev"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf3Subnet" {
@@ -383,6 +386,7 @@ module "Leaf4Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf4Subnet" {
@@ -495,6 +499,7 @@ module "Leaf5Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf5Subnet" {
@@ -594,6 +599,7 @@ module "Leaf6Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf6Subnet" {
@@ -692,6 +698,7 @@ module "Leaf7Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf7Subnet" {
@@ -790,6 +797,7 @@ module "Leaf8Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf8Subnet" {
@@ -888,6 +896,7 @@ module "Leaf9Vpc" {
     Cnps = "prod"
   }
   region = var.aws_regions["region2"]
+  default_ingress_sg_cidrs = var.ingress_allowlist["leaf_vpc"]["default"]
 }
 
 module "Leaf9Subnet" {
