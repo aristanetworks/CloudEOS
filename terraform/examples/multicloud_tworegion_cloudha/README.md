@@ -5,4 +5,4 @@
 
 This topology creates a WAN fabric across multiple cloud prvoiders. We have 2 AWS regions, and 1 Azire region which constitutes of a Edge VPC with 2 CloudEOS routers, and Leaf VPCs with CloudEOS routers and hosts behind it.
 
-![Topology](Multicloud_tworegion_cloudha.png)
+![Topology](multicloud_tworegion_cloudha.png)

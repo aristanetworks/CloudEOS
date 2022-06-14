@@ -5,5 +5,5 @@
 
 This topology has an Edge VPC with multiple Leaf VPCs(4) connected to it in the same region. Every VPC has 2 CloudEOS instances each. And the Leaf VPCs have hosts behind it with iperf3 installed.
 
-![Topology](./AWS_One_Region_Multiple_Leaf.png)
+![Topology](./aws_oneregion_multipleleaf.png)
 
