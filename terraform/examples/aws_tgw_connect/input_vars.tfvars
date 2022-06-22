@@ -54,52 +54,52 @@ licenses = {
    #bandwidth = "../../../userdata/eos_bw_license.json"
 }
 
-## Currently private AMIs. Contact Arista for access
+## CloudEOS 4.27.3F Marketplace AMIs
 eos_payg_amis = {
-  us-east-2 : "ami-0f288d79d6c54df9c",
-  us-east-1 : "ami-09294bb4c66837ba9",
-  us-west-1 : "ami-023b9d398d45e5d1e",
-  us-west-2 : "ami-01bda3983d6485129",
-  ap-east-1 : "ami-02416a3369c25adf4",
-  ap-south-1 : "ami-02ffb289a15e749f2",
-  ap-northeast-2 : "ami-05afb6df71e95b345",
-  ap-southeast-1 : "ami-0c022f2d5f4bf735c",
-  ap-southeast-2 : "ami-05d16e7c75bcdbb5c",
-  ap-northeast-1 : "ami-0aeab162992b5d86b",
-  ca-central-1 : "ami-0c5a12e947d33b477",
-  eu-central-1 : "ami-0d36a790c9f9184e8",
-  eu-west-1 : "ami-06457449fb0c0a67f",
-  eu-west-2 : "ami-05c3ead0a3bb34188",
-  eu-west-3 : "ami-07f2f957eab49eb25",
-  eu-north-1 : "ami-0da73caeb2cd3be33",
-  me-south-1 : "ami-08f26941374da7c2d",
-  sa-east-1 : "ami-01b10014647135f51",
-  us-gov-east-1 : "ami-919f73e0",
-  us-gov-west-1 : "ami-c2b285a3",
+  us-east-2 : "ami-0c954bc79b1343460",
+  us-east-1 : "ami-0b25960803617132c",
+  us-west-1 : "ami-0e28925a64a092e52",
+  us-west-2 : "ami-0b399219de92cd0e8",
+  ap-east-1 : "ami-0459a44ce39d09619",
+  ap-south-1 : "ami-0784bd854a29dee10",
+  ap-northeast-2 : "ami-045597ce2c159615a",
+  ap-southeast-1 : "ami-077f98b78ebdc71b7",
+  ap-southeast-2 : "ami-033993422f56b3ecf",
+  ap-northeast-1 : "ami-004fd8b20a2820008",
+  ca-central-1 : "ami-0a8cd8929666d53e7",
+  eu-central-1 : "ami-0eb23ac0cc8cec64a",
+  eu-west-1 : "ami-0938471fc2f806a4f",
+  eu-west-2 : "ami-045975d15d0b0cbf3",
+  eu-west-3 : "ami-0aa94ed7881543696",
+  eu-north-1 : "ami-054516419c033fe8e",
+  me-south-1 : "ami-073cf45c8eaaf4bb2",
+  sa-east-1 : "ami-0f19d35afe40fbfcd",
+  us-gov-east-1 : "ami-059baafc9f9b3b183",
+  us-gov-west-1 : "ami-0478a8669a7ba752a",
 }
 
-## Currently private AMIs. Contact Arista for access
+## CloudEOS 4.27.3F Marketplace AMIs
 eos_byol_amis = {
-  us-east-2 : "ami-0b9b9dae8e26dce8f"
-  us-east-1 : "ami-01b3f10b686914a0f"
-  us-west-1 : "ami-05353b133e4111818"
-  us-west-2 : "ami-078397da04136ce0f"
-  ap-east-1 : "ami-06314509ee4a6dd42"
-  ap-south-1 : "ami-0d7521074732ee85d"
-  ap-northeast-2 : "ami-025b68427e6f84151"
-  ap-southeast-1 : "ami-017164487a3707109"
-  ap-southeast-2 : "ami-01d788bb97841f661"
-  ap-northeast-1 : "ami-0101a293f881f3008"
-  ca-central-1 : "ami-0b005ba02058dbe5e"
-  eu-central-1 : "ami-0d635fb4a51b9fac0"
-  eu-west-1 : "ami-0e2b3dcc4c78f3ba7"
-  eu-west-2 : "ami-0e9c5d6d6f423060c"
-  eu-west-3 : "ami-0d8e384e9578f0140"
-  eu-north-1 : "ami-0f75e9e617b728d68"
-  me-south-1 : "ami-073eb9385b115d112"
-  sa-east-1 : "ami-0ad37d4011b233f51"
-  us-gov-east-1 : "ami-0399dce0a2e0058d0"
-  us-gov-west-1 : "ami-03eae1534b4343fe6"
+  us-east-2 : "ami-0ddf4df251d8d7583"
+  us-east-1 : "ami-01aaa6ae80c6f93d6"
+  us-west-1 : "ami-0e0c05273b7debb48"
+  us-west-2 : "ami-0d39124ce43eecc69"
+  ap-east-1 : "ami-05f4a1d8f90eeafae"
+  ap-south-1 : "ami-029f3ead20106a36d"
+  ap-northeast-2 : "ami-0e1888c0406733a0f"
+  ap-southeast-1 : "ami-0c208c79f69e820f9"
+  ap-southeast-2 : "ami-07e4b55cc56b97474"
+  ap-northeast-1 : "ami-0ab88e4174862e536"
+  ca-central-1 : "ami-0b79e13b7cbf280a7"
+  eu-central-1 : "ami-0cf7ddb71ba53729e"
+  eu-west-1 : "ami-07bc425b5dfaeaa70"
+  eu-west-2 : "ami-06ac1d164b3a30f3a"
+  eu-west-3 : "ami-05d9b632ebd02562f"
+  eu-north-1 : "ami-02066bcb990f5bfc0"
+  me-south-1 : "ami-03525b64e8786e103"
+  sa-east-1 : "ami-098b3aac6eaa43da0"
+  us-gov-east-1 : "ami-0dfb8499e56921e16"
+  us-gov-west-1 : "ami-0868cac5fc61075aa"
 }
 
 availability_zone = {
