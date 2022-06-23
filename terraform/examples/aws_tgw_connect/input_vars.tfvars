@@ -151,12 +151,16 @@ vpc_info = {
 
 }
 
+// This is the list of source cidrs from which inbound traffic (of different protocols) should be
+// allowed to the CloudEOS instance via security groups - allowSSHIKE for edges and leafSG for leaves
+// The default - 0.0.0.0/0, allows all source IPs
 ingress_allowlist = {
   edge_vpc = {
-    ssh = ["0.0.0.0/0"]
-    default = ["0.0.0.0/0"]
+    ssh = ["0.0.0.0/0"]         // Source IPs allowed for SSH
+    default = ["0.0.0.0/0"]     // Source IPs allowed for ICMP, DPS (UDP over port 4793), BFD (UDP
+                                // over port 3784) and IPSEC (UDP over port 4500 + 500)
   }
   leaf_vpc = {
-    default = ["0.0.0.0/0"]
+    default = ["0.0.0.0/0"]     // Source IPs for all protocols in the topology
   }
 }
