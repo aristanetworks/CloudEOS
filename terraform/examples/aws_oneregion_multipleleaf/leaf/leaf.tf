@@ -109,11 +109,11 @@ module "Leaf1CloudEOS2" {
     "${var.topology}-Leaf1CloudEOS2Intf1" = "private"
   }
   subnetids = {
-    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[0]
-    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[1]
+    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[2]
+    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[3]
   }
   private_ips       = { "0" : ([var.vpc_info["leaf1_vpc"]["interface_ips"][2]]), "1" : ([var.vpc_info["leaf1_vpc"]["interface_ips"][3]]) }
-  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone1"]
+  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone2"]
   region            = module.Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Leaf1CloudEOS2"
@@ -137,7 +137,7 @@ module "Leaf1host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf1Vpc.region]
   subnet_id     = module.Leaf1Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["leaf1_vpc"]["interface_ips"][4])] 
+  private_ips   = [(var.vpc_info["leaf1_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Leaf1devhost"  }
 }
@@ -254,7 +254,7 @@ module "Leaf2host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf2Vpc.region]
   subnet_id     = module.Leaf2Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["leaf2_vpc"]["interface_ips"][4])] 
+  private_ips   = [(var.vpc_info["leaf2_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Leaf2prodhost1"
   }
@@ -367,7 +367,7 @@ module "Leaf3host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf3Vpc.region]
   subnet_id     = module.Leaf3Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["leaf3_vpc"]["interface_ips"][4])] 
+  private_ips   = [(var.vpc_info["leaf3_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Leaf3devHost"
   }
@@ -480,7 +480,7 @@ module "Leaf4host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Leaf4Vpc.region]
   subnet_id     = module.Leaf4Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["leaf4_vpc"]["interface_ips"][4])] 
+  private_ips   = [(var.vpc_info["leaf4_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Leaf4prodHost"
   }
