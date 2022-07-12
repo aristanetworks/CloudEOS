@@ -9,7 +9,7 @@ provider "cloudeos" {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_regions["region2"]
 }
 
 locals {
@@ -222,7 +222,7 @@ module "tgw" {
   source        = "../../../module/cloudeos/aws/tgw"
   cnps          = ["dev", "prod"]
   cloudeos_cnps = false
-  region        = "us-east-1"
+  region        = var.aws_regions["region2"]
   tags = {
     "Name" = "${var.topology}-tgw"
   }
@@ -236,7 +236,7 @@ module "tgwDev" {
   cnps_route_table_info = module.tgw.tgw_rttable_id[0]
   bandwidth_gbps        = 1
   vpc_id                = module.EdgeVpc.vpc_id[0]
-  region                = "us-east-1"
+  region                = var.aws_regions["region2"]
   vpc_attach_vpcs       = [module.Leaf1DevTgwVpc.vpc_id[0]]
   vpc_attach_subnets    = [module.Leaf1DevSubnet.vpc_subnets[0]]
   create_vpn            = false // An external script will create GRE tunnel
@@ -250,7 +250,7 @@ module "tgwProd" {
   cnps_route_table_info = module.tgw.tgw_rttable_id[1]
   bandwidth_gbps        = 2
   vpc_id                = module.EdgeVpc.vpc_id[0]
-  region                = "us-east-1"
+  region                = var.aws_regions["region2"]
   vpc_attach_vpcs       = [module.Leaf2ProdTgwVpc.vpc_id[0]]
   vpc_attach_subnets    = [module.Leaf2ProdTgwSubnet.vpc_subnets[0]]
   create_vpn            = false // An external script will create GRE tunnel
