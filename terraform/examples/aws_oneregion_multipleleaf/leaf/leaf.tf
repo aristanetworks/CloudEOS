@@ -109,11 +109,11 @@ module "Leaf1CloudEOS2" {
     "${var.topology}-Leaf1CloudEOS2Intf1" = "private"
   }
   subnetids = {
-    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[2]
-    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[3]
+    "${var.topology}-Leaf1CloudEOS2Intf0" = module.Leaf1Subnet.vpc_subnets[0]
+    "${var.topology}-Leaf1CloudEOS2Intf1" = module.Leaf1Subnet.vpc_subnets[1]
   }
   private_ips       = { "0" : ([var.vpc_info["leaf1_vpc"]["interface_ips"][2]]), "1" : ([var.vpc_info["leaf1_vpc"]["interface_ips"][3]]) }
-  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone2"]
+  availability_zone = var.availability_zone[module.Leaf1Vpc.region]["zone1"]
   region            = module.Leaf1Vpc.region
   tags = {
     "Name" = "${var.topology}-Leaf1CloudEOS2"
