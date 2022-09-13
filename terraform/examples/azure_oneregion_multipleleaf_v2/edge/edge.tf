@@ -10,15 +10,15 @@ provider "azurerm" {
 locals {
   sanitized_topology = lower(replace(var.topology, "-", ""))
   edge1cloudeos1_private_ips = {
-  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][0] ],
-  "1" : [ var.vpc_info["edge1_vpc"]["interface_ips"][1] ]
+  "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][0] ],
+  "1" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][1] ]
   }
   edge1cloudeos2_private_ips = {
-  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][2] ],
-  "1" : [ var.vpc_info["edge1_vpc"]["interface_ips"][3] ]
+  "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][2] ],
+  "1" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][3] ]
   }
   rr1_private_ips = {
-  "0" : [ var.vpc_info["edge1_vpc"]["interface_ips"][4] ]
+  "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][4] ]
   }
 }
 
@@ -50,7 +50,7 @@ resource "cloudeos_wan" "wan" {
 
 module "edge1" {
   source        = "../../../module/cloudeos/azure/rg"
-  address_space = var.vpc_info["edge1_vpc"]["vpc_cidr"]
+  address_space = var.vpc_info["azure_edge1_vpc"]["vpc_cidr"]
   nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"
@@ -67,7 +67,7 @@ module "edge1" {
 
 module "edge1Subnet" {
   source          = "../../../module/cloudeos/azure/subnet"
-  subnet_prefixes = var.vpc_info["edge1_vpc"]["subnet_cidr"]
+  subnet_prefixes = var.vpc_info["azure_edge1_vpc"]["subnet_cidr"]
   subnet_names    = var.subnet_info["edge1subnet"]["subnet_names"]
   vnet_name       = module.edge1.vnet_name
   vnet_id         = module.edge1.vnet_id
