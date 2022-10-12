@@ -7,7 +7,7 @@ terraform {
 
     cloudeos = {
       source = "aristanetworks/cloudeos"
-      version = ">= 1.1.3"
+      version = ">= 1.2.0"
     }
   }
 }
