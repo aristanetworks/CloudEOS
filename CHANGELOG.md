@@ -1,3 +1,15 @@
+v1.0.6 (16 Oct 2022)
+ cloudeos/terraform: upgrade cloudeos provider to 1.2.0
+ terraform/examples: Add azure prefix to vpc_info to azure topology
+ terraform/examples: Refactor hardcoded values of us-east-1 in aws_tgw_connect
+ terraform/examples: Add note in readme for aws_oneregion_multipleleaf
+ terraform/examples: Fix leaf error in aws_oneregion_multipleleaf
+ terraform/examples: Fix input_vars for aws_oneregion_multipleleaf
+ terraform/examples: Fix router subnet for aws_oneregion_multipleleaf
+ examples: Document ingress_allowlist
+ terraform/examples: Use latest AMI with CloudEOS4.27.3F
+ examples: Fix readme to refer to the modified image names
+
 v1.0.5 (14 June 2022)
  modules: Drop deprecated template provider as a dependency
  examples: Fix the interface ip for multipleleaf
