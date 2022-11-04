@@ -17,9 +17,11 @@ locals {
   "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][2] ],
   "1" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][3] ]
   }
+  /*
   rr1_private_ips = {
   "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][4] ]
   }
+  */
 }
 
 provider "cloudeos" {
