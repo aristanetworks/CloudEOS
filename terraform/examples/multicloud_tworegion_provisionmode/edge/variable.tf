@@ -8,7 +8,7 @@ variable "availability_zone" {}
 variable "host_amis" {}
 variable "clos_cv_container" {}
 variable "wan_cv_container" {}
-variable "subnet_info" {}
+variable "vpc_info" {}
 variable "cloudeos_info" {}
 variable "creds" {}
 variable "username" {}
