@@ -3,16 +3,23 @@ provider "azurerm" {
   features {}
 }
 
-variable "username" {}
-variable "password" {}
-
 locals {
   sanitized_topology = lower(replace(var.topology, "-", ""))
+   edge1cloudeos1_private_ips = {
+     "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][0] ],
+     "1" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][1] ]
+    }
+
+   edge1cloudeos2_private_ips = {
+     "0" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][2] ],
+     "1" : [ var.vpc_info["azure_edge1_vpc"]["interface_ips"][3] ]
+    }
+  subnet_names    = ["edge1Subnet0", "edge1Subnet1", "edge1Subnet2", "edge1Subnet3"]
 }
 
 module "edge1" {
   source        = "../../../module/cloudeos/azure/rg"
-  address_space = "10.1.0.0/16"
+  address_space = var.vpc_info["azure_edge1_vpc"]["vpc_cidr"]
   nsg_name      = "${var.topology}edge1Nsg"
   role          = "CloudEdge"
   rg_name       = "${var.topology}edge1"
@@ -29,8 +36,8 @@ module "edge1" {
 
 module "edge1Subnet" {
   source          = "../../../module/cloudeos/azure/subnet"
-  subnet_prefixes = var.subnet_info["edge1subnet"]["subnet_prefixes"]
-  subnet_names    = var.subnet_info["edge1subnet"]["subnet_names"]
+  subnet_prefixes = var.vpc_info["azure_edge1_vpc"]["subnet_cidr"]
+  subnet_names    = local.subnet_names
   vnet_name       = module.edge1.vnet_name
   vnet_id         = module.edge1.vnet_id
   rg_name         = module.edge1.rg_name
@@ -56,7 +63,7 @@ module "azureedge1cloudeos1" {
 
   availability_set_id     = module.edge1.availability_set_id
   disk_name              = var.cloudeos_info["edge1cloudeos1"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1cloudeos1"]["private_ips"]
+  private_ips            = local.edge1cloudeos1_private_ips
   route_name             = var.cloudeos_info["edge1cloudeos1"]["route_name"]
   routetable_name        = var.cloudeos_info["edge1cloudeos1"]["routetable_name"]
   filename               = var.cloudeos_info["edge1cloudeos1"]["filename"]
@@ -79,12 +86,12 @@ module "azureedge1cloudeos2" {
     "edge1cloudeos2Intf0" = module.edge1Subnet.vnet_subnets[2]
     "edge1cloudeos2Intf1" = module.edge1Subnet.vnet_subnets[3]
   }
-  availability_set_id     = module.edge1.availability_set_id
+  availability_set_id    = module.edge1.availability_set_id
   publicip_name          = var.cloudeos_info["edge1cloudeos2"]["publicip_name"]
   intf_names             = var.cloudeos_info["edge1cloudeos2"]["intf_names"]
   interface_types        = var.cloudeos_info["edge1cloudeos2"]["interface_types"]
   disk_name              = var.cloudeos_info["edge1cloudeos2"]["disk_name"]
-  private_ips            = var.cloudeos_info["edge1cloudeos2"]["private_ips"]
+  private_ips            = local.edge1cloudeos2_private_ips
   route_name             = var.cloudeos_info["edge1cloudeos2"]["route_name"]
   routetable_name        = var.cloudeos_info["edge1cloudeos2"]["routetable_name"]
   filename               = var.cloudeos_info["edge1cloudeos2"]["filename"]

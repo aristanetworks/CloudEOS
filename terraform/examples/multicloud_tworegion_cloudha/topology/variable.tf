@@ -12,7 +12,7 @@ variable "dps_controlplane_cidr" {}
 variable "clos_cv_container" {}
 variable "wan_cv_container" {}
 variable "aws_iam_instance_profile" {}
-variable "subnet_info"{}
+variable "vpc_info"{}
 variable "cloudeos_info"{}
 variable "username"{}
 variable "password"{}

@@ -19,6 +19,15 @@ keypair_name = {
   us-west-2 : "your-keypair"
 }
 
+
+## Azure credentials
+creds = {
+  client_id = ""
+  subscription_id = ""
+  tenant_id = ""
+  client_secret = ""
+}
+
 ## AWS IAM profile name that allows CloudEdge router to modify AWS routing tables
 ## to setup Cloud HA. Check out "CloudEdge MultiCloud Deployment Guide" or
 ## https://www.arista.com/en/cg-veos-router/veos-router-cloud-configuration
@@ -56,13 +65,18 @@ azure_regions = {
 
 # Arista provides two license models BYOL, PAYG. Choose between the two
 # by using cloudeos-router-byol/cloudeos-router-payg respectively.
-cloudeos_image_offer = "cloudeos-router-byol"
+cloudeos_image_offer = "cloudeos-router-payg"
 
 # For BYOL, please specify the license path.
 licenses = {
    #ipsec = "../../../userdata/eos_ipsec_license.json"
    #bandwidth = "../../../userdata/eos_bw_license.json"
 }
+
+
+## Username and password to be configured on CloudEOS instances
+username = ""
+password = ""
 
 ## CloudEOS 4.27.3F Marketplace AMIs
 eos_payg_amis = {
@@ -127,27 +141,64 @@ host_amis = {
   us-west-2 : "ami-0205b2cab53dacf39"
 }
 
-#azure cloudeos info
-subnet_info = {
-  azureRR1Subnet : {
-    subnet_prefixes = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-    subnet_names    = ["rr1Subnet0", "rr1Subnet1", "rr1Subnet2", "rr1Subnet3"]
-  }
-  edge1subnet : {
-    subnet_prefixes = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24", "10.1.4.0/24"]
-    subnet_names    = ["edge1Subnet0", "edge1Subnet1", "edge1Subnet2", "edge1Subnet3","rr1subnet0"]
-  }
-  leaf1subnet = {
-    subnet_prefixes = ["10.2.0.0/24", "10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
-    subnet_names    = ["leaf1Subnet0", "leaf1Subnet1", "leaf1Subnet2", "leaf1Subnet3"]
-  }
-  leaf2subnet = {
-    subnet_prefixes = ["10.3.0.0/24", "10.3.1.0/24", "10.3.2.0/24", "10.033.0/24"]
-    subnet_names    = ["leaf2Subnet0", "leaf2Subnet1", "leaf2Subnet2", "leaf2Subnet3"]
-  }
+
+## VPCs in AWS and VNET in Azure refer to the same concept.
+## Consider the VPCs here as VNET.
+vpc_info = {
+    azure_edge1_vpc = {
+      vpc_cidr = "10.1.0.0/16"
+      subnet_cidr = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
+      interface_ips = ["10.1.0.101", "10.1.1.101", "10.1.2.101", "10.1.3.101"]
+    }
+    azure_leaf1_vpc = {
+      vpc_cidr = "10.2.0.0/16"
+      subnet_cidr = ["10.2.0.0/24", "10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
+      interface_ips = ["10.2.0.101", "10.2.1.101", "10.2.2.101", "10.2.3.101", "10.2.1.10", "10.2.3.10"]
+    }
+    azure_leaf2_vpc = {
+      vpc_cidr = "10.3.0.0/16"
+      subnet_cidr = ["10.3.0.0/24", "10.3.1.0/24", "10.3.2.0/24", "10.3.3.0/24"]
+      interface_ips = ["10.3.0.101", "10.3.1.101", "10.3.2.101", "10.3.3.101", "10.3.1.10", "10.3.3.10"]
+    }
+    rr_vpc = {
+      vpc_cidr = "10.4.0.0/16"
+      subnet_cidr = ["10.4.0.0/24"]
+      interface_ips = ["10.4.0.101"]
+    }
+    region2_edge_vpc = {
+      vpc_cidr = "10.5.0.0/16"
+      subnet_cidr = ["10.5.0.0/24", "10.5.1.0/24", "10.5.2.0/24", "10.5.3.0/24"]
+      interface_ips = ["10.5.0.101", "10.5.1.101", "10.5.2.101", "10.5.3.101"]
+    }
+    region3_edge_vpc = {
+      vpc_cidr = "10.6.0.0/16"
+      subnet_cidr = ["10.6.0.0/24", "10.6.1.0/24", "10.6.2.0/24", "10.6.3.0/24"]
+      interface_ips = ["10.6.0.101", "10.6.1.101", "10.6.2.101", "10.6.3.101"]
+    }
+    region2_leaf1_vpc = {
+      vpc_cidr = "10.7.0.0/16"
+      subnet_cidr = ["10.7.0.0/24", "10.7.1.0/24", "10.7.2.0/24", "10.7.3.0/24"]
+      interface_ips = ["10.7.0.101", "10.7.1.101", "10.7.2.101", "10.7.3.101", "10.7.1.102", "10.7.3.102"]
+    }
+    region2_leaf2_vpc = {
+      vpc_cidr = "10.8.0.0/16"
+      subnet_cidr = ["10.8.0.0/24", "10.8.1.0/24", "10.8.2.0/24", "10.8.3.0/24"]
+      interface_ips = ["10.8.0.101", "10.8.1.101", "10.8.2.101", "10.8.3.101", "10.8.1.102", "10.8.3.102"]
+    }
+     region3_leaf1_vpc = {
+      vpc_cidr = "10.9.0.0/16"
+      subnet_cidr = ["10.9.0.0/24", "10.9.1.0/24", "10.9.2.0/24", "10.9.3.0/24"]
+      interface_ips = ["10.9.0.101", "10.9.1.101", "10.9.2.101", "10.9.3.101", "10.9.1.102", "10.9.3.102"]
+    }
+     region3_leaf2_vpc = {
+      vpc_cidr = "10.10.0.0/16"
+      subnet_cidr = ["10.10.0.0/24", "10.10.1.0/24", "10.10.2.0/24", "10.10.3.0/24"]
+      interface_ips = ["10.10.0.101", "10.10.1.101", "10.10.2.101", "10.10.3.101", "10.10.1.102", "10.10.3.102"]
+    }
 }
 
 cloudeos_info = {
+  /*
   rr1cloudeos1 : {
     publicip_name = "rr1cloudeos1Pip"
     intf_names    = ["rr1cloudeos1Intf0"]
@@ -174,6 +225,7 @@ cloudeos_info = {
     #   bandwidth = "../../../userdata/eos_bw_license.json"
     #}
   }
+  */
   edge1cloudeos1 : {
     publicip_name = "edge1cloudeos1Pip"
     intf_names    = ["edge1cloudeos1Intf0", "edge1cloudeos1Intf1"]
@@ -182,7 +234,6 @@ cloudeos_info = {
       "edge1cloudeos1Intf1" = "internal"
     }
     disk_name              = "edge1cloudeos1disk"
-    private_ips            = { "0" : ["10.1.0.101"], "1" : ["10.1.1.101"] }
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
@@ -208,7 +259,6 @@ cloudeos_info = {
       "edge1cloudeos2Intf1" = "internal"
     }
     disk_name              = "edge1cloudeos2disk"
-    private_ips            = { "0" : ["10.1.2.101"], "1" : ["10.1.3.101"] }
     route_name             = "azedge1cloudeos2Rt"
     routetable_name        = "azedge1cloudeos2RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
@@ -246,7 +296,6 @@ cloudeos_info = {
       "leaf1cloudeos1Intf0" = "internal"
       "leaf1cloudeos1Intf1" = "private"
     }
-    private_ips       = { "0" : ["10.2.0.101"], "1" : ["10.2.1.101"] }
     tags              = { "Name" : "azleaf1cloudeos1", "Cnps" : "dev" }
     disk_name         = "leaf1cloudeos1disk"
     storage_name      = "azleaf1cloudeos1storage"
@@ -276,7 +325,6 @@ cloudeos_info = {
       "leaf1cloudeos2Intf0" = "internal"
       "leaf1cloudeos2Intf1" = "private"
     }
-    private_ips       = { "0" : ["10.2.2.102"], "1" : ["10.2.3.102"] }
     tags              = { "Name" : "azleaf1cloudeos2", "Cnps" : "dev" }
     disk_name         = "leaf1cloudeos2disk"
     route_name        = "leaf1cloudeos2Rt1"
@@ -292,7 +340,6 @@ cloudeos_info = {
       "leaf2cloudeos1Intf1" = "private"
     }
     availability_zone      = [2]
-    private_ips            = { "0" : ["10.3.0.101"], "1" : ["10.3.1.101"] }
     disk_name              = "leaf2cloudeos1disk"
     storage_name           = "leaf2cloudeos1storage"
     route_name             = "leaf2Rt1"
@@ -320,7 +367,6 @@ cloudeos_info = {
       "leaf2cloudeos2Intf1" = "private"
     }
     availability_zone      = [3]
-    private_ips            = { "0" : ["10.3.2.102"], "1" : ["10.3.3.102"] }
     disk_name              = "leaf2cloudeos2disk"
     route_name             = "leaf2cloudeos2Rt1"
     routetable_name        = "leaf2cloudeos2RtTable1"
