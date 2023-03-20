@@ -101,7 +101,7 @@ module "Region2Leaf1host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf1Vpc.region]
   subnet_id     = module.Region2Leaf1Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][2])]
+  private_ips   = [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Region2Leaf1host1"
   }
@@ -126,7 +126,7 @@ module "Region2Leaf1CloudEOS2" {
     "${var.topology}-Region2Leaf1CloudEOS2Intf0" = module.Region2Leaf1Subnet.vpc_subnets[2]
     "${var.topology}-Region2Leaf1CloudEOS2Intf1" = module.Region2Leaf1Subnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][3])], "1" : [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][4])]  }
+  private_ips       = { "0" : [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][2])], "1" : [(var.vpc_info["region2_leaf1_vpc"]["interface_ips"][3])]  }
   availability_zone = var.availability_zone[module.Region2Leaf1Vpc.region]["zone2"]
   region            = module.Region2Leaf1Vpc.region
   tags = {
@@ -231,7 +231,7 @@ module "Region2Leaf2host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region2Leaf2Vpc.region]
   subnet_id     = module.Region2Leaf2Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][2])]
+  private_ips   = [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Region2Leaf2host"
   }
@@ -256,7 +256,7 @@ module "Region2Leaf2CloudEOS2" {
     "${var.topology}-Region2Leaf2CloudEOS2Intf0" = module.Region2Leaf2Subnet.vpc_subnets[2]
     "${var.topology}-Region2Leaf2CloudEOS2Intf1" = module.Region2Leaf2Subnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][3])], "1" : [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][4])]  }
+  private_ips       = { "0" : [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][2])], "1" : [(var.vpc_info["region2_leaf2_vpc"]["interface_ips"][3])]  }
   availability_zone = var.availability_zone[module.Region2Leaf2Vpc.region]["zone2"]
   region            = module.Region2Leaf2Vpc.region
   tags = {
@@ -363,7 +363,7 @@ module "Region3Leaf1host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf1Vpc.region]
   subnet_id     = module.Region3Leaf1Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][2])]
+  private_ips   = [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Region3Leaf1host1"
   }
@@ -388,7 +388,7 @@ module "Region3Leaf1CloudEOS2" {
     "${var.topology}-Region3Leaf1CloudEOS2Intf0" = module.Region3Leaf1Subnet.vpc_subnets[2]
     "${var.topology}-Region3Leaf1CloudEOS2Intf1" = module.Region3Leaf1Subnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][3])], "1" : [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][4])]  }
+  private_ips       = { "0" : [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][2])], "1" : [(var.vpc_info["region3_leaf1_vpc"]["interface_ips"][3])]  }
   availability_zone = var.availability_zone[module.Region3Leaf1Vpc.region]["zone2"]
   region            = module.Region3Leaf1Vpc.region
   tags = {
@@ -493,7 +493,7 @@ module "Region3Leaf2host1" {
   instance_type = "t2.medium"
   keypair_name  = var.keypair_name[module.Region3Leaf2Vpc.region]
   subnet_id     = module.Region3Leaf2Subnet.vpc_subnets[1]
-  private_ips   = [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][2])]
+  private_ips   = [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][4])]
   tags = {
     "Name" = "${var.topology}-Region3Leaf2host1"
   }
@@ -518,7 +518,7 @@ module "Region3Leaf2CloudEOS2" {
     "${var.topology}-Region3Leaf2CloudEOS2Intf0" = module.Region3Leaf2Subnet.vpc_subnets[2]
     "${var.topology}-Region3Leaf2CloudEOS2Intf1" = module.Region3Leaf2Subnet.vpc_subnets[3]
   }
-  private_ips       = { "0" : [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][3])], "1" : [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][4])]  }
+  private_ips       = { "0" : [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][2])], "1" : [(var.vpc_info["region3_leaf2_vpc"]["interface_ips"][3])]  }
   availability_zone = var.availability_zone[module.Region3Leaf2Vpc.region]["zone2"]
   region            = module.Region3Leaf2Vpc.region
   tags = {
