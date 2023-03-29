@@ -1,5 +1,9 @@
 provider "azurerm" {
   skip_provider_registration = true
+  client_id = var.creds["client_id"]
+  subscription_id = var.creds["subscription_id"]
+  tenant_id = var.creds["tenant_id"]
+  client_secret = var.creds["client_secret"]
   features {}
 }
 
