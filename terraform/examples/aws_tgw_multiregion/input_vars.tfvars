@@ -137,7 +137,7 @@ vpc_info = {
   }
   leaf1_vpc = {
     vpc_cidr = "10.4.0.0/16"
-    subnet_cidr = ["10.4.0/24"]
+    subnet_cidr = ["10.4.0.0/24"]
     interface_ips = ["10.4.0.102"]
   }
   leaf2_vpc = {
