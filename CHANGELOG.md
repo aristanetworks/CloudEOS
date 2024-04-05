@@ -1,3 +1,12 @@
+v1.0.7 (4 April 2024)
+1e020c5 terraform/examples: udpate expired aws host amis
+ac59491 correct input vars for aws_tgw_multiregion
+a7d97e8 multicloud_tworegion_cloudha: add creds to azure provider
+7406115 examples/aws_tworegion_cloudha: fix interface ips
+bff2e2c terraform/examples: seperate out ip addresses at one common place
+3338e7b terraform/examples: refactor cidrs at one common place
+24c5a68 comment route reflector portion as we are not using it
+
 v1.0.6 (16 Oct 2022)
  cloudeos/terraform: upgrade cloudeos provider to 1.2.0
  terraform/examples: Add azure prefix to vpc_info to azure topology
