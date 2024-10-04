@@ -22,9 +22,9 @@ keypair_name = {
 ## Cutomization of the parameters below are *optional*
 
 ## CloudEOS network requires three subnets for control plane
-vtep_ip_cidr          = "172.16.0.0/24" // CIDR block for VTEP IPs
-terminattr_ip_cidr    = "172.16.1.0/24" // Loopback IP range for CloudVision connectivity
-dps_controlplane_cidr = "172.16.2.0/24" // CIDR block for VXLAN/Dps Control Plane IPs
+vtep_ip_cidr          = "172.16.20.0/24" // CIDR block for VTEP IPs
+terminattr_ip_cidr    = "172.16.21.0/24" // Loopback IP range for CloudVision connectivity
+dps_controlplane_cidr = "172.16.22.0/24" // CIDR block for VXLAN/Dps Control Plane IPs
 
 ## CloudVision container names - they need to be created on www.arista.io/cv
 ## before deployment. Steps to create containers on CloudVision are in
