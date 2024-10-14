@@ -1,3 +1,7 @@
+v1.0.8 (23 Sep 2024)
+1115dca terraform/examples: use different ip prefixes for address assignment
+5da234f terraform/examples: update cloudeos provider to v1.2.2 or newer
+
 v1.0.7 (4 April 2024)
 1e020c5 terraform/examples: udpate expired aws host amis
 ac59491 correct input vars for aws_tgw_multiregion
