@@ -172,14 +172,14 @@ cloudeos_info = {
     route_name             = "azedge1Rt"
     routetable_name        = "azedge1RtTable"
     filename               = "../../../userdata/eos_ipsec_config.tpl"
-    cloudeos_image_version = "4.27.3"
-    cloudeos_image_name    = "cloudeos-4_27_3-payg-free"
+    cloudeos_image_version = "4.32.2"
+    cloudeos_image_name    = "cloudeos-4_32_2-payg"
     cloudeos_image_offer   = "cloudeos-router-payg"
     #Arista provides two license models BYOL, PAYG. To use BYOL use the following
     # values by uncommenting and commenting above.
     # When using BYOL, you need to provide paths to licenses.
-    #cloudeos_image_version = "4.24.31"
-    #cloudeos_image_name    = "cloudeos-4_24_3_1-byol"
+    #cloudeos_image_version = "4.32.2"
+    #cloudeos_image_name    = "cloudeos-4_32_2-byol"
     #cloudeos_image_offer   = "cloudeos-router-byol"
     #licenses = {
     #   ipsec = "../../../userdata/eos_ipsec_license.json"
