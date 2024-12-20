@@ -1,3 +1,7 @@
+v2.0.0 (20 Dec 2024)
+f03302e terraform/examples: update azure topologies to use 4.32.2 images
+107ecc9 terraform/examples: change aws ami ids to those for 4.32.2 images
+
 v1.0.8 (23 Sep 2024)
 1115dca terraform/examples: use different ip prefixes for address assignment
 5da234f terraform/examples: update cloudeos provider to v1.2.2 or newer
