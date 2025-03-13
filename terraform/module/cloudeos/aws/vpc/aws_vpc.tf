@@ -30,7 +30,7 @@ resource "aws_default_security_group" "default" {
     self        = false
     from_port   = 0
     to_port     = 0
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.role == "CloudLeaf" ? var.default_ingress_sg_cidrs : []
   }
   egress {
     protocol    = -1
@@ -52,7 +52,7 @@ resource "aws_security_group" "allowSSHIKE" {
     from_port   = 4500
     to_port     = 4500
     protocol    = "udp"
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.control_plane_ingress_cidrs
   }
 
   // Path Telemetry UDP Port for unencrypted traffic
@@ -61,7 +61,7 @@ resource "aws_security_group" "allowSSHIKE" {
     from_port   = 4793
     to_port     = 4793
     protocol    = "udp"
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.control_plane_ingress_cidrs
   }
   
   // BFD
@@ -69,14 +69,14 @@ resource "aws_security_group" "allowSSHIKE" {
     from_port   = 0
     to_port     = 3784
     protocol    = "udp"
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.control_plane_ingress_cidrs
   }
 
   ingress {
     from_port   = 500
     to_port     = 500
     protocol    = "udp"
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.control_plane_ingress_cidrs
   }
   ingress {
     protocol    = "tcp"
@@ -88,7 +88,7 @@ resource "aws_security_group" "allowSSHIKE" {
     protocol    = "icmp"
     from_port   = "-1"
     to_port     = "-1"
-    cidr_blocks = var.default_ingress_sg_cidrs
+    cidr_blocks = var.control_plane_ingress_cidrs
   }
   egress {
     protocol    = -1

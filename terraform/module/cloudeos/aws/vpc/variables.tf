@@ -107,7 +107,12 @@ variable "vpc_peering" {
   default     = true
 }
 
-variable "default_ingress_sg_cidrs" {
-  description = "Allow ingress from a specifc cidr range for Ipsec/DPS/ICMP traffic"
+variable "control_plane_ingress_cidrs" {
+  description = "Allow ingress from a specifc cidr range for BFD/IPsec/DPS/ICMP traffic"
   default = ["0.0.0.0/0"]
+}
+
+variable "default_ingress_sg_cidrs" {
+  description = "Default ingress IPs"
+  default = [""]
 }

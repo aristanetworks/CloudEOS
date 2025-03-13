@@ -400,8 +400,9 @@ cloudeos_info = {
 ingress_allowlist = {
   edge_vpc = {
     ssh = ["0.0.0.0/0"]         // Source IPs allowed for SSH
-    default = ["0.0.0.0/0"]     // Source IPs allowed for ICMP, DPS (UDP over port 4793), BFD (UDP
+    control = ["0.0.0.0/0"]     // Source IPs allowed for ICMP, DPS (UDP over port 4793), BFD (UDP
                                 // over port 3784) and IPSEC (UDP over port 4500 + 500)
+    default = []
   }
   leaf_vpc = {
     default = ["0.0.0.0/0"]     // Source IPs for all protocols in the topology
