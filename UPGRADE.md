@@ -1,3 +1,6 @@
+* v2.0.1 (19 March 2025)
+  - edge vpc ingress allow list change
+
 * v2.0.0 (22 Nov 2024)
   - move azure image names and aws ami ids to use cloudEOS version 4.32.2  
 

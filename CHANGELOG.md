@@ -1,3 +1,6 @@
+v2.0.1 (19 Mar 2025)
+9d0eced terraform/examples: add an edge vpc control plane ingress range
+
 v2.0.0 (20 Dec 2024)
 f03302e terraform/examples: update azure topologies to use 4.32.2 images
 107ecc9 terraform/examples: change aws ami ids to those for 4.32.2 images
